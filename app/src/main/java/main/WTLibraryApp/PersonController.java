@@ -1,4 +1,4 @@
-package com.example.demo;
+package main.WTLibraryApp;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,26 +16,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class PersonController {
 	
 	@Autowired
-	private PersonService service;
+	private WTLibService service;
 	
+	/*
+	 * Wat CRUD templates
 	@RequestMapping(value = "person/{id}")
-	public Optional<Person> findByID(@PathVariable long id) {
+	public Optional<User> findByID(@PathVariable long id) {
 		return service.findByID(id);
 	}
 	
 	@RequestMapping(value = "personen")
-	public List<Person> findAll(){
+	public List<User> findAll(){
 		return service.vindAllePersonen();
 	}
 	
 	@RequestMapping(value = "person/create", method = RequestMethod.POST)
-	public void create(@RequestBody Person p) {
+	public void create(@RequestBody User p) {
 		service.save(p);
 	}
 	
 	@RequestMapping(value = "person/alter/{id}", method = RequestMethod.PUT)
-	public void alter(@RequestBody Person p, @PathVariable long id) {
-		Person ptje = service.findByID(id).get();
+	public void alter(@RequestBody User p, @PathVariable long id) {
+		User ptje = service.findByID(id).get();
 		ptje.setAge(p.getAge());
 		ptje.setName(p.getName());
 		service.save(ptje);
@@ -46,4 +48,5 @@ public class PersonController {
 	public void delete(@PathVariable long id) {
 		service.delete(id);
 	}
+	*/
 }
