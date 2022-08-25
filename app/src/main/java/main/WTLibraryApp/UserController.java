@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(maxAge=3600)
-public class PersonController {
+public class UserController {
 	
 	@Autowired
 	private WTLibService service;
