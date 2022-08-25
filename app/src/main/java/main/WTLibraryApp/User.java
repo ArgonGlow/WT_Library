@@ -1,4 +1,4 @@
-package com.example.demo;
+package main.WTLibraryApp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Person {
+public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,16 +14,25 @@ public class Person {
 	
 	private String name;
 	
-	private int age;
+	private String surName;
 	
-	private int murders;
+	private String email;
 	
-	public int getMurders() {
-		return murders;
+
+	public String getSurName() {
+		return surName;
 	}
 
-	public void setMurders(int murders) {
-		this.murders = murders;
+	public void setSurName(String surName) {
+		this.surName = surName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public long getId() {
@@ -40,14 +49,6 @@ public class Person {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
 	}
 
 }
