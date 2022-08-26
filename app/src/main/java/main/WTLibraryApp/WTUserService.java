@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WTLibService {
+public class WTUserService {
 	
 	@Autowired
-	private IWTLibraryRepository repo;
+	private IWTUsersRepository repo;
 
 	public void delete(long id) {
 		// TODO Auto-generated method stub
