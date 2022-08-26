@@ -1,4 +1,4 @@
-package libSec; import org.springframework.context.annotation.*;
+/*package libSec; import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.core.userdetails.User;
@@ -25,4 +25,4 @@ antMatchers("/index","/").permitAll()
 .logout()
 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 }
-}
+}*/

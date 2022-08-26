@@ -1,4 +1,4 @@
-package books;
+package main.WTLibraryApp;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class BookController {
 	
 	@RequestMapping(value = "books")
 	public List<Books> findAll(){
-		return service.AllBooks();
+		return service.allBooks();
 	}
 
 }

@@ -1,4 +1,4 @@
-package books;
+package main.WTLibraryApp;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class WTLibBookService {
 	@Autowired
 	private IWTLibBookRepositrory repo;
 	
-	public List<Books> AllBooks(){
+	public List<Books> allBooks(){
 		return repo.findAll();
 	}
 }
