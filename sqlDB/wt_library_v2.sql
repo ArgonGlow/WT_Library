@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `wt_library` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `wt_library` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `wt_library`;
 -- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
 --
@@ -30,7 +30,7 @@ CREATE TABLE `admins` (
   PRIMARY KEY (`admin_id`),
   KEY `fk_user_id_idx` (`user_id`),
   CONSTRAINT `fk_admins_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -58,7 +58,7 @@ CREATE TABLE `book_label` (
   KEY `fk_junction_labels_idx` (`label_id`),
   CONSTRAINT `fk_junction_books` FOREIGN KEY (`book_id`) REFERENCES `books` (`book_id`),
   CONSTRAINT `fk_junction_labels` FOREIGN KEY (`label_id`) REFERENCES `labels` (`label_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,12 +79,12 @@ DROP TABLE IF EXISTS `books`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `books` (
   `book_id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `author` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `isbn` varchar(17) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `title` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `author` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `isbn` varchar(17) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `cover_image` blob,
   PRIMARY KEY (`book_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,7 +106,7 @@ DROP TABLE IF EXISTS `copies`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `copies` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `copy_id` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `copy_id` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `reserved` tinyint DEFAULT NULL,
   `loaned` tinyint DEFAULT NULL,
   `book_id` int DEFAULT NULL,
@@ -117,7 +117,7 @@ CREATE TABLE `copies` (
   KEY `fk_copy_id_idx` (`copy_id`),
   CONSTRAINT `fk_copies_books` FOREIGN KEY (`book_id`) REFERENCES `books` (`book_id`),
   CONSTRAINT `fk_copies_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,9 +138,9 @@ DROP TABLE IF EXISTS `labels`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `labels` (
   `label_id` int NOT NULL,
-  `label_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `label_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`label_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Stores labels assignable to a book for user search purposes.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Stores labels assignable to a book for user search purposes.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,16 +161,16 @@ DROP TABLE IF EXISTS `transactions`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `transactions` (
   `transaction_id` int NOT NULL,
-  `copy_id` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'fk',
+  `copy_id` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'fk',
   `user_id` int DEFAULT NULL,
-  `transaction_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `transaction_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `timestamp` datetime DEFAULT NULL,
   PRIMARY KEY (`transaction_id`),
   KEY `fk_copy_id_idx` (`copy_id`),
   KEY `fk_user_idx` (`user_id`),
   CONSTRAINT `fk_transactions_copies` FOREIGN KEY (`copy_id`) REFERENCES `copies` (`copy_id`),
   CONSTRAINT `fk_transactions_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -197,7 +197,7 @@ CREATE TABLE `users` (
   `password` varchar(32) NOT NULL DEFAULT 'password',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -218,4 +218,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-26 12:26:15
+-- Dump completed on 2022-08-26 13:29:25
