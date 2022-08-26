@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(maxAge=3600)
-public class PersonController {
+public class UserController {
 	
 	@Autowired
-	private WTLibService service;
+	private WTUserService service;
 	
 	/*
-	 * Wat CRUD templates
+	 * Some CRUD templates
 	@RequestMapping(value = "person/{id}")
 	public Optional<User> findByID(@PathVariable long id) {
 		return service.findByID(id);
