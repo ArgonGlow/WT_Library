@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import org.springframework.data.annotation.Id;
 
 @Entity
-public class Book {
+public class Books {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
