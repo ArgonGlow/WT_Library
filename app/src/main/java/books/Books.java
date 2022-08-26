@@ -5,15 +5,14 @@ import java.sql.Blob;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 @Entity
 public class Books {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private long book_id;
 	
 	private String title;
 	
@@ -21,15 +20,7 @@ public class Books {
 	
 	private String author;
 	
-	private Blob foto;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
+	private Blob cover_image;
 
 	public String getTitle() {
 		return title;
@@ -51,16 +42,24 @@ public class Books {
 		return author;
 	}
 
+	public long getBook_id() {
+		return book_id;
+	}
+
+	public void setBook_id(long book_id) {
+		this.book_id = book_id;
+	}
+
+	public Blob getCover_image() {
+		return cover_image;
+	}
+
+	public void setCover_image(Blob cover_image) {
+		this.cover_image = cover_image;
+	}
+
 	public void setAuthor(String author) {
 		this.author = author;
-	}
-
-	public Blob getFoto() {
-		return foto;
-	}
-
-	public void setFoto(Blob foto) {
-		this.foto = foto;
 	}
 
 }
