@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 
+
 @RestController
 @CrossOrigin(maxAge=3600)
 public class BookController {
@@ -39,4 +40,19 @@ public class BookController {
 		service.deleteBook(id);
 	}
 	
+	@RequestMapping(value = "books/edit/{id}", method = RequestMethod.PUT)
+	public void edit(@PathVariable long id, @RequestBody Books newBook) {
+		Books oldBook = service.findBook(id).get();
+		//saves unchanged properties
+		if(newBook.getTitle().length()>0) {
+			oldBook.setTitle(newBook.getTitle());
+		}
+		if(newBook.getIsbn().length()>0) {
+			oldBook.setIsbn(newBook.getIsbn());
+		}
+		if(newBook.getAuthor().length()>0) {
+			oldBook.setAuthor(newBook.getAuthor());
+		}
+		service.createBook(oldBook);
+	} 
 }
