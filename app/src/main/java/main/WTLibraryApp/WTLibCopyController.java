@@ -27,4 +27,9 @@ public class WTLibCopyController {
 	public Optional<Copies> findById(@PathVariable long id) {
 		return service.findCopy(id);
 	}
+	
+	@RequestMapping(value = "copies/delete/{id}", method = RequestMethod.DELETE)
+	public void remove(@PathVariable long id) {
+		service.deleteCopy(id);
+	}
 }

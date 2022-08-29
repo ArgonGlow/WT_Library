@@ -19,4 +19,8 @@ public class WTLibCopyService {
 	public Optional<Copies> findCopy(long id) {
 		return repo.findById(id);
 	}
+	
+	public void deleteCopy(long id) {
+		repo.deleteById(id);
+	}
 }

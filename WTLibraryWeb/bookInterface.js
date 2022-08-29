@@ -87,11 +87,12 @@ function editBook(){
     })
     .then(response => {
         console.log('Is goedgegaan');
+        window.location.reload();
     })
     .catch(error => {
         console.log('Er is iets fouts gegaan');
     });
-    window.location.reload();
+
 
 }
 
