@@ -30,11 +30,12 @@ function createBook() {
     })
     .then(response => {
         console.log('Is goedgegaan');
+        window.location.href='WTlibrary.html';
     })
     .catch(error => {
         console.log('Er is iets fouts gegaan');
     });
-    location.href='WTlibrary.html'
+
 }
 
 

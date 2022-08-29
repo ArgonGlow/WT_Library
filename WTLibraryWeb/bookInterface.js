@@ -37,6 +37,15 @@ function connectToBackend() {
             console.log('error', error);
         });
 }
+
+function deleteCopy(){
+    var index = sessionStorage.getItem("index");
+    fetch("http://localhost:8080/copies/delete/"+index, {
+        method: 'DELETE',
+    })
+    .then(response => response.json()) 
+    .then(response => console.log(response))
+}
 /*
 deletes book from database according to id index
 returns to library page
@@ -49,7 +58,6 @@ function deleteBook(){
     .then(response => response.json()) 
     .then(response => console.log(response))
 
-    location.href='WTlibrary.html'
 }
 /*
 edit book properties according to book index id

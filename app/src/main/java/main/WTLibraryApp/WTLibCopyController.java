@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(maxAge=3600)
-public class IWTLibCopyController {
+public class WTLibCopyController {
 	
 	@Autowired
 	private WTLibCopyService service;
