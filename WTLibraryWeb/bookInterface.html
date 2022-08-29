@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="bookInterface.js"></script>
+    <title>Book interface</title>
+</head>
+
+<body onload="connectToBackend()">
+    <ul>
+        <li><a href='createBook.html'>Create book</a></li>
+        <li><a href='WTlibrary.html'>WT library</a></li>     </ul>
+    <h1>Book interface</h1>
+    <table id="books"></table>
+
+    <button onclick="deleteBook()">delete book</button>
+    <button onclick="deleteCopy()">delete copy</button>
+
+    <p>Edit book:</p>   
+    <p>Title:</p> 
+    <input type="text" name="title" id="title">
+    <p>Isbn:</p> 
+    <input type="text" name="isbn" id="isbn">
+    <p>Author:</p> 
+    <input type="text" name="author" id="author">
+
+    <button onclick="editBook()">Save</button>
+
+</body>
+</html>

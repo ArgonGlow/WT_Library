@@ -6,26 +6,21 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
-public class WTLibBookService {
+public class WTLibCopyService {
 	
 	@Autowired
-	private IWTLibBookRepositrory repo;
+	private IWTLibCopyRepository repo;
 	
-	public List<Books> allBooks(){
+	public List<Copies> allCopies(){
 		return repo.findAll();
 	}
 	
-	public Optional<Books> findBook(long id) {
+	public Optional<Copies> findCopy(long id) {
 		return repo.findById(id);
 	}
 	
-	public void createBook(Books book) {
-		repo.save(book);
-	}
-	
-	public void deleteBook(long id) {
+	public void deleteCopy(long id) {
 		repo.deleteById(id);
 	}
 }
