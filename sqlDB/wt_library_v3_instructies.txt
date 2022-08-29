@@ -1,0 +1,6 @@
+1. Data Import in Workbench.
+2. Import from Self-Contained File
+3. Default Target Schema > wt_library (Belangrijk!)
+4. Start Import
+5. Reconnect/Refresh All
+6. Profit
