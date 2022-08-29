@@ -19,31 +19,47 @@ public class BookController {
 	
 	@Autowired
 	private WTLibBookService service;
-	
+	/*
+	 * creates JSon to display all books.
+	 * returns get for all books
+	 */
 	@RequestMapping(value = "books")
 	public List<Books> findAll(){
 		return service.allBooks();
 	}
 	
+	/*
+	 * creates JSon to display one books item from the database.
+	 * inputs book_id
+	 * returns get for the item
+	 */
 	@RequestMapping(value = "books/{id}")
 	public Optional<Books> findById(@PathVariable long id) {
 		return service.findBook(id);
 	}
-	
+	/*
+	 * saves book item to database
+	 * inputs book properties
+	 */
 	@RequestMapping(value = "books/create", method = RequestMethod.POST)
 	public void create(@RequestBody Books book) {
 		service.createBook(book);
 	}
-	
+	/*
+	 * delete book item form database
+	 * inputs book_id
+	 */
 	@RequestMapping(value = "books/delete/{id}", method = RequestMethod.DELETE)
 	public void remove(@PathVariable long id) {
 		service.deleteBook(id);
 	}
-	
+	/*
+	 * edits book properties, while leaving unchanged properties unchanged
+	 * inputs book_id and new book properties
+	 */
 	@RequestMapping(value = "books/edit/{id}", method = RequestMethod.PUT)
 	public void edit(@PathVariable long id, @RequestBody Books newBook) {
 		Books oldBook = service.findBook(id).get();
-		//saves unchanged properties
 		if(newBook.getTitle().length()>0) {
 			oldBook.setTitle(newBook.getTitle());
 		}
