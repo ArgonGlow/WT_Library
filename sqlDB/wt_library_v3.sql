@@ -107,6 +107,7 @@ CREATE TABLE `copies` (
   `copy_id` int(11) NOT NULL,
   `loaned_by_user` int(11) DEFAULT NULL,
   PRIMARY KEY (`book_id`,`copy_id`),
+  KEY `fk_copies_books_idx` (`book_id`),
   KEY `fk_copies_users_idx` (`loaned_by_user`),
   KEY `copy_id_idx` (`copy_id`),
   CONSTRAINT `fk_copies_books` FOREIGN KEY (`book_id`) REFERENCES `books` (`book_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
