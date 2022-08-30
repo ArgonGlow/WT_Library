@@ -1,20 +1,4 @@
 /*
-removes visible book table
-*/
-function removeTable()
-{
-    document.getElementById("books").remove();
-}
-
-/*
-go to book interface of item with id index
-inputs id index
-*/
-function goToBookInterface(index){
-    sessionStorage.setItem("index", index)
-    location.href='bookInterface.html'
-}
-/*
 creates table of all books
 inputs data from database
 */
@@ -42,10 +26,12 @@ function fillBooksTable(data) {
     document.getElementById("books").innerHTML = booksTableHtml;
 }
 /*
-retrieves data from database
+Search bar that searches for keyWord in database
 */
-function connectToBackend() {
-    fetch("http://localhost:8080/books")
+function search(){
+    keyWord = document.getElementById("searchBar").value;
+
+    fetch("http://localhost:8080/books/search/"+keyWord)
         .then(response => response.json())
         .then(a => {
             console.log('response', a);
@@ -55,4 +41,3 @@ function connectToBackend() {
             console.log('error', error);
         });
 }
-

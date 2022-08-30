@@ -24,12 +24,17 @@ public class WTLibCopyController {
 	}
 	
 	@RequestMapping(value = "copies/{id}")
-	public Optional<Copies> findById(@PathVariable long id) {
+	public Optional<Copies> findById(@PathVariable int id) {
 		return service.findCopy(id);
 	}
 	
+	@RequestMapping(value = "copies/create", method = RequestMethod.POST)
+	public void create(@RequestBody Copies copy) {
+		service.createCopy(copy);
+	}
+	
 	@RequestMapping(value = "copies/delete/{id}", method = RequestMethod.DELETE)
-	public void remove(@PathVariable long id) {
+	public void remove(@PathVariable int id) {
 		service.deleteCopy(id);
 	}
 }

@@ -20,6 +20,10 @@ public class WTLibCopyService {
 		return repo.findById(id);
 	}
 	
+	public void createCopy(Copies copy) {
+		repo.save(copy);
+	}
+	
 	public void deleteCopy(long id) {
 		repo.deleteById(id);
 	}
