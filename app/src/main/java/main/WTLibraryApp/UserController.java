@@ -5,9 +5,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,10 +24,28 @@ public class UserController {
 	@Autowired
 	private WTUserService service;
 	
-//	@GetMapping("/users")
-//	public String showIndex() {
-//		return "index";
-//	}
+	@Autowired
+	private IWTUsersRepository usersRepository;
+	
+	@GetMapping("/users")
+	public String showUsers(Model model) {
+		model.addAttribute("users", usersRepository.findAll());
+		return "/users/users";
+	}
+	
+	@GetMapping("/users/add-user")
+	public String addUser(Users users) {
+		return "/users/add-user";
+	}
+	
+	@PostMapping("/users/add-user-post")
+	public String addUserPost(Users users, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return "/users/add-user";
+		}
+		usersRepository.save(users);
+		return "redirect:/users";
+	}
 	
 	/*
 	 * Some CRUD templates

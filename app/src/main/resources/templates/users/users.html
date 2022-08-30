@@ -1,12 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Working Talent Library - Users</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Users</h1>
-</body>
+    <div th:switch="${users}">
+      <div th:case="*">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="users : ${users}">
+              <td th:text="${user.user_id}"></td>
+              <td th:text="${user.first_name}"></td>
+              <td th:text="${user.last_name}"></td>
+              <td th:text="${user.email}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
 </html>
