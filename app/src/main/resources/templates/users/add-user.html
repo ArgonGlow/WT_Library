@@ -8,5 +8,34 @@
 </head>
 <body>
   <h1>Add User</h1>
+  <form 
+      action="#" 
+      th:action="@{add-user-post}" 
+      th:object="${users}" 
+      method="post" 
+    > 
+      <label for="first_name">First Name: </label> 
+      <input 
+        type="text" 
+        th:field="*{first_name}" 
+        id="firstName" 
+        placeholder="First Name" 
+      />  
+      <label for="last_name">Last Name: </label> 
+      <input 
+        type="text" 
+        th:field="*{last_name}" 
+        id="lastName" 
+        placeholder="Last Name" 
+      /> 
+      <label for="email">Email: </label> 
+      <input 
+        type="text" 
+        th:field="*{email}" 
+        id="email" 
+        placeholder="Email" 
+      /> 
+      <input type="submit" value="Add User" /> 
+    </form>
 </body>
 </html>

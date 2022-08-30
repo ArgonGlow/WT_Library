@@ -21,10 +21,10 @@
           </thead>
           <tbody>
             <tr th:each="users : ${users}">
-              <td th:text="${user.user_id}"></td>
-              <td th:text="${user.first_name}"></td>
-              <td th:text="${user.last_name}"></td>
-              <td th:text="${user.email}"></td>
+              <td th:text="${users.user_id}"></td>
+              <td th:text="${users.first_name}"></td>
+              <td th:text="${users.last_name}"></td>
+              <td th:text="${users.email}"></td>
             </tr>
           </tbody>
         </table>
