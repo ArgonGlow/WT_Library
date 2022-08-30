@@ -38,7 +38,7 @@ public class UserController {
 		return "/users/add-user";
 	}
 	
-	@PostMapping("/users/add-user-post")
+	@PostMapping("/users/add-user")
 	public String addUserPost(Users users, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "/users/add-user";
