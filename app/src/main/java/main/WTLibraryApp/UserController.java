@@ -21,10 +21,10 @@ public class UserController {
 	@Autowired
 	private WTUserService service;
 	
-	@GetMapping("/users")
-	public String showIndex() {
-		return "index";
-	}
+//	@GetMapping("/users")
+//	public String showIndex() {
+//		return "index";
+//	}
 	
 	/*
 	 * Some CRUD templates
