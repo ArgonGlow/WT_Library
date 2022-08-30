@@ -1,4 +1,4 @@
-package libSec; 
+/*package libSec; 
 import org.springframework.context.annotation.*;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,4 +29,4 @@ protected void configure(HttpSecurity http) throws Exception {
 	.logout()
 	.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 	}
-}
+}*/

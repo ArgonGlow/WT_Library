@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+/*package main.WTLibraryApp;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,4 +47,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder getPasswordEncoder(){
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-}
+}*/
