@@ -16,11 +16,11 @@ public class Users implements UserDetails{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long user_id;
-	
+
 	private String first_name;
-	
+
 	private String last_name;
-	
+
 	private String email;
 
 	public long getUser_id() {
@@ -96,7 +96,6 @@ public class Users implements UserDetails{
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
 	
 
 }
