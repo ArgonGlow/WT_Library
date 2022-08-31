@@ -16,8 +16,8 @@ public class WTLibCopyService {
 		return repo.findAll();
 	}
 	
-	public Optional<Copies> findCopy(long id) {
-		return repo.findById(id);
+	public Optional<Copies> findCopy(long bookId, long copyId) {
+		return repo.findByBookIdCopyId(bookId, copyId);
 	}
 	
 	public void deleteCopy(long id) {

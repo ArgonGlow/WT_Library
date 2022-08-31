@@ -14,18 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(maxAge=3600)
 public class WTLibCopyController {
-	
+		
 	@Autowired
 	private WTLibCopyService service;
+	
 	
 	@RequestMapping(value = "copies")
 	public List<Copies> findAll(){
 		return service.allCopies();
 	}
 	
-	@RequestMapping(value = "copies/{id}")
-	public Optional<Copies> findById(@PathVariable long id) {
-		return service.findCopy(id);
+	@RequestMapping(value = "copies/{bookId}/{copyId}")
+	public Optional<Copies> findById(@PathVariable long bookId, @PathVariable long copyId) {
+		return service.findCopy(bookId, copyId);
 	}
 	
 	@RequestMapping(value = "copies/delete/{id}", method = RequestMethod.DELETE)
@@ -33,13 +34,14 @@ public class WTLibCopyController {
 		service.deleteCopy(id);
 	}
 	
-	@RequestMapping(value = "copies/assign/{id}", method = RequestMethod.PUT)
-	public void assignCopy(@PathVariable long id,  @RequestBody Copies copy) {
-		Optional<Copies> reservedCopy = findById(id);
+	@RequestMapping(value = "copies/assign/{bookId}/{copyId}", method = RequestMethod.PUT)
+	public void assignCopy(@PathVariable long bookId, @PathVariable long copyId, @RequestBody Copies copy) {
+		
+		Optional<Copies> reservedCopy = findById(bookId, copyId);
 		
 		// abort if selected id doesn't return a person
 		if (reservedCopy.isEmpty()) {
-			System.out.println("no copy for id: " + id);
+			System.out.println("no copy for id: " + bookId + "." + "copyId");
 			return;
 		}
 		

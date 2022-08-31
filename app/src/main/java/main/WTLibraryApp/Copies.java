@@ -1,36 +1,40 @@
 package main.WTLibraryApp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+
 
 @Entity
+@IdClass(CopiesId.class)
 public class Copies {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String copyId;
-	private int bookId;
-	private int loaned_by_user;
+	private long copyId;
+	@Id
+	private long bookId;
 	
-	public String getCopyId() {
+	@Column(name="loaned_by_user")
+	private long userId;
+	
+	public long getCopyId() {
 		return copyId;
 	}
-	public void setCopyId(String copyId) {
+	public void setCopyId(long copyId) {
 		this.copyId = copyId;
 	}
-	public int getBookId() {
+	public long getBookId() {
 		return bookId;
 	}
-	public void setBookId(int bookId) {
+	public void setBookId(long bookId) {
 		this.bookId = bookId;
 	}
-	public int getUserId() {
-		return loaned_by_user;
+	public long getUserId() {
+		return userId;
 	}
-	public void setUserId(int userId) {
-		this.loaned_by_user = userId;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 	
 	
