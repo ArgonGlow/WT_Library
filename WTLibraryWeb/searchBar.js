@@ -31,25 +31,26 @@ Search bar that searches for keyWord in database
 function search(){
     let keyWordInput = document.getElementById("searchBar").value;
 
-    let searchBook = {
+    let bookSearch = {
         keyWord:keyWordInput,
     }
 
-    fetch("http://localhost:8080/books/search", {
+    fetch("http://localhost:8080/books/search", { 
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(searchBook)
+        body: JSON.stringify(bookSearch)
     })
         .then(response => response.json())
+        .then(console.log(JSON.stringify(bookSearch)))
         .then(a => {
             console.log('response', a);
             fillBooksTable(a);
         })
         .catch(error => {
             console.log('error', error);
-        });
+    });
 }
 
 

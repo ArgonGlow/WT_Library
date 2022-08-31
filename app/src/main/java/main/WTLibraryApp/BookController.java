@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
 @RestController
 @CrossOrigin(maxAge=3600)
 public class BookController {
@@ -80,12 +78,10 @@ public class BookController {
 	 * find book by key word
 	 * inputs key word
 	 */
-	@RequestMapping(value = "books/search", method = RequestMethod.POST)
-	public List<Books> searchBook(@RequestBody Search bookSearch){
+
+	@RequestMapping(method = RequestMethod.POST, value = "books/search")
+	public List<Books> search(@RequestBody Search bookSearch) {
 		String keyWord = bookSearch.getKeyWord();
 		return service.searchBook(keyWord, keyWord, keyWord);
 	}
-	
-
-	
 }
