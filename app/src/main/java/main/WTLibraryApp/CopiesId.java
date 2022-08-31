@@ -19,6 +19,10 @@ public class CopiesId implements Serializable {
 	@JoinColumn(name="bookId")
 	private long copyId;
 	
+	// default constructor, required for findAll() method
+	public CopiesId() {}
+	
+	
 	public CopiesId(long bookId, long copyId) {
 		this.bookId = bookId;
 		this.copyId = copyId;
