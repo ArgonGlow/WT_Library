@@ -26,11 +26,16 @@ public class WTLibCopyController {
 	
 	@RequestMapping(value = "copies/{bookId}/{copyId}")
 	public Optional<Copies> findById(@PathVariable long bookId, @PathVariable long copyId) {
-		return service.findCopy(bookId, copyId);
+		
+		CopiesId id = new CopiesId(bookId, copyId);
+		
+		return service.findCopy(id);
 	}
 	
-	@RequestMapping(value = "copies/delete/{id}", method = RequestMethod.DELETE)
-	public void remove(@PathVariable long id) {
+	@RequestMapping(value = "copies/delete/{bookId}/{copyId}", method = RequestMethod.DELETE)
+	public void remove(@PathVariable long bookId, @PathVariable long copyId) {
+		CopiesId id = new CopiesId(bookId, copyId);
+		
 		service.deleteCopy(id);
 	}
 	

@@ -1,34 +1,25 @@
 package main.WTLibraryApp;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
 
 
 @Entity
-@IdClass(CopiesId.class)
 public class Copies {
 	
-	@Id
-	private long copyId;
-	@Id
-	private long bookId;
+	@EmbeddedId
+	private CopiesId copiesId;
 	
 	@Column(name="loaned_by_user")
 	private long userId;
 	
-	public long getCopyId() {
-		return copyId;
+	// getters and setters
+	public CopiesId getCopiesId() {
+		return copiesId;
 	}
-	public void setCopyId(long copyId) {
-		this.copyId = copyId;
-	}
-	public long getBookId() {
-		return bookId;
-	}
-	public void setBookId(long bookId) {
-		this.bookId = bookId;
+	public void setCopiesId(CopiesId copiesId) {
+		this.copiesId = copiesId;
 	}
 	public long getUserId() {
 		return userId;
