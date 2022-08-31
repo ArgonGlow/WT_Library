@@ -7,15 +7,15 @@ import javax.persistence.Id;
 
 @Entity
 public class Users {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long user_id;
-
+	
 	private String first_name;
-
+	
 	private String last_name;
-
+	
 	private String email;
 
 	public long getUser_id() {
@@ -49,5 +49,7 @@ public class Users {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	
 
 }

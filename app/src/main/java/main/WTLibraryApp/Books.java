@@ -1,7 +1,5 @@
 package main.WTLibraryApp;
 
-import java.sql.Blob;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,15 +11,11 @@ public class Books {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long book_id;
-	
 	private String title;
-	
 	private String isbn;
-	
 	private String author;
+	private byte[] cover_image;
 	
-	private Blob cover_image;
-
 	public String getTitle() {
 		return title;
 	}
@@ -50,11 +44,11 @@ public class Books {
 		this.book_id = book_id;
 	}
 
-	public Blob getCover_image() {
+	public byte[] getCover_image() {
 		return cover_image;
 	}
 
-	public void setCover_image(Blob cover_image) {
+	public void setCover_image(byte[] cover_image) {
 		this.cover_image = cover_image;
 	}
 

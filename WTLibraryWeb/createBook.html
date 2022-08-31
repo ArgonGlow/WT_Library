@@ -17,6 +17,9 @@
         <table id="book"></table>
     
         <form>
+            <label>Id</label>
+            <input type="number" name="id" id="id" />
+            <br>
             <label>Title</label>
             <input type="text" name="title" id="title" />
             <br>
@@ -26,11 +29,21 @@
             <label>Author</label>
             <input type="text" name="author" id="author" />
             <br>
+            <label>Version</label>
+            <input type="number" name="version" id="version" />
+            <br>
 <!--            <label>Version</label>
             <input type="number" name="version" id="version" /> 
 -->                      
-             </form>
-           <button type="button" onclick="createBook()">Save</button> 
-       
+        </form>
+        <button type="button" onclick="createBook()">Save</button> 
+<!--        <button type="button" onclick="createCopy()">Create copy</button> 
+    
+        <h1>Add title version</h1>
+
+        <label>Title</label>
+        <input type="text" name="title" id="title" />
+        <br>
+-->    
     </body>
 </html>
