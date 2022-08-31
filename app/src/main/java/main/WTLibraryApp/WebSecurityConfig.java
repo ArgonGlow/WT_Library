@@ -1,14 +1,18 @@
 package main.WTLibraryApp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    @Override
    protected void configure(HttpSecurity http) throws Exception {
@@ -28,6 +32,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
       auth
          .inMemoryAuthentication()
-         .withUser("user").password("password").roles("USER");
+         .withUser("user").password("{bcrypt}$2a$10$at2qzGSaEgBQuKXjIWiIVeGevA4TPbeRUJUAuEUtYbJrEoRr6miMO").roles("USER");
+      /*
+	  auth.jdbcAuthentication()
+	  	.dataSource(DataSource)
+	  	.users*/
    }
+   
+   /*@Bean
+   public PasswordEncoder passwordEncoder() { 
+      return new BCryptPasswordEncoder(); 
+   } */
 }

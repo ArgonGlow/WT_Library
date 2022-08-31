@@ -1,7 +1,9 @@
 package main.WTLibraryApp;
 
 import java.util.Collection;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +12,9 @@ import javax.persistence.Id;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+/*import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+*/
 @Entity
 public class Users implements UserDetails{
 	
@@ -22,6 +27,11 @@ public class Users implements UserDetails{
 	private String last_name;
 
 	private String email;
+	
+	private String password; 
+	
+	@Column(name = "account_non_locked")
+	private boolean accountNonLocked;
 
 	public long getUser_id() {
 		return user_id;
@@ -55,47 +65,44 @@ public class Users implements UserDetails{
 		this.email = email;
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
+	@Override 
+   public Collection<? extends GrantedAuthority> getAuthorities() { 
+      return List.of(() -> "read"); 
+   }
+   @Override
+   public String getPassword() {    
+      return password; 
+   } 
+   public void setPassword(String password) { 
+      this.password = password; 
+   } 
+   @Override 
+   public String getUsername() { 
+      return email; 
+   } 
+   public void setUsername(String email) { 
+      this.email = email; 
+   } 
+   @Override 
+   public boolean isAccountNonExpired() { 
+      return true; 
+   } 
+   @Override
+   public boolean isAccountNonLocked() { 
+      return accountNonLocked; 
+   } 
+   @Override public boolean isCredentialsNonExpired() { 
+      return true; 
+   } 
+   @Override public boolean isEnabled() { 
+   return true; 
+   } 
+   
+   public void setAccountNonLocked(Boolean accountNonLocked) { 
+      this.accountNonLocked = accountNonLocked; 
+   } 
+   public boolean getAccountNonLocked() { 
+      return accountNonLocked; 
+   }
 
 }
