@@ -27,36 +27,33 @@ public class WTLibCopyController {
 	@RequestMapping(value = "copies/{bookId}/{copyId}")
 	public Optional<Copies> findById(@PathVariable long bookId, @PathVariable long copyId) {
 		
-		CopiesId id = new CopiesId(bookId, copyId);
+		CopiesPK id = new CopiesPK(bookId, copyId);
 		
 		return service.findCopy(id);
 	}
 	
 	@RequestMapping(value = "copies/delete/{bookId}/{copyId}", method = RequestMethod.DELETE)
 	public void remove(@PathVariable long bookId, @PathVariable long copyId) {
-		CopiesId id = new CopiesId(bookId, copyId);
+		CopiesPK id = new CopiesPK(bookId, copyId);
 		
 		service.deleteCopy(id);
 	}
 	
-	@RequestMapping(value = "copies/assign/{bookId}/{copyId}", method = RequestMethod.PUT)
-	public void assignCopy(@PathVariable long bookId, @PathVariable long copyId, @RequestBody Copies copy) {
+	@RequestMapping(value = "copies/assign/{bookId}/{copyId}/{userId}", method = RequestMethod.PUT)
+	public void assignCopy(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId) {
 		
+		// create copy object by combined id
 		Optional<Copies> reservedCopy = findById(bookId, copyId);
 		
-		// abort if selected id doesn't return a person
+		// abort if selected id doesn't return a copy
 		if (reservedCopy.isEmpty()) {
-			System.out.println("no copy for id: " + bookId + "." + "copyId");
+			System.out.println("no copy for id: " + bookId + "." + copyId);
 			return;
 		}
 		
-		// modify temporary object, ready for updating
+		// create copy-object from list and set new userId
 		Copies loanedCopy = reservedCopy.get();
-		if (loanedCopy.getUserId() == 0) {
-			System.out.println("copy already assigned to: " + loanedCopy.getUserId());
-			return;
-		}
-		loanedCopy.setUserId(copy.getUserId());
+		loanedCopy.setUserId(userId);
 		service.updateCopy(loanedCopy);
 	}
 }

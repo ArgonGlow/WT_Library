@@ -8,17 +8,19 @@ import javax.persistence.Entity;
 @Entity
 public class Copies {
 	
+	// double-primary-key object
 	@EmbeddedId
-	private CopiesId copiesId;
+	private CopiesPK copiesId;
 	
+	// separating userId variable name from column name
 	@Column(name="loaned_by_user")
 	private long userId;
 	
 	// getters and setters
-	public CopiesId getCopiesId() {
+	public CopiesPK getCopiesId() {
 		return copiesId;
 	}
-	public void setCopiesId(CopiesId copiesId) {
+	public void setCopiesId(CopiesPK copiesId) {
 		this.copiesId = copiesId;
 	}
 	public long getUserId() {
@@ -27,6 +29,4 @@ public class Copies {
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
-	
-	
 }
