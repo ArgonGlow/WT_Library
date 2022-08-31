@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Working Talent Library - Edit User</title>
+
+    <!-- CSS Links -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="../../static/style.css"
+      th:href="@{../../style.css}"
+    />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-extend-sm navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="/"
+          ><img
+            src="../static/images/wt-logo.svg"
+            title="Logo"
+            alt="Logo"
+            th:src="@{../../images/wt-logo.svg}"
+        /></a>
+        <ul class="navbar-nav">
+          <li class="nav-item"><a href="/users" class="nav-link">Users</a></li>
+        </ul>
+      </div>
+    </nav>
+    <section id="edit-user">
+      <div class="container">
+        <h1>Edit User</h1>
+        <form
+          action="#"
+          th:action="@{/users/edit-user/{id}(id=${users.user_id})}"
+          th:object="${users}"
+          method="post"
+        >
+          <label for="user_id">User ID</label>
+          <input
+            type="text"
+            th:field="*{user_id}"
+            id="user_id"
+            placeholder="User ID"
+          />
+          <label for="first_name">First Name: </label>
+          <input
+            type="text"
+            th:field="*{first_name}"
+            id="first_name"
+            placeholder="First Name"
+          />
+          <label for="last_name">Last Name: </label>
+          <input
+            type="text"
+            th:field="*{last_name}"
+            id="last_name"
+            placeholder="Last Name"
+          />
+          <label for="email">Email: </label>
+          <input
+            type="text"
+            th:field="*{email}"
+            id="email"
+            placeholder="Email"
+          />
+          <input type="submit" value="Update User" />
+        </form>
+      </div>
+    </section>
+  </body>
+</html>
