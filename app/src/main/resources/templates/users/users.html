@@ -19,9 +19,9 @@
       th:href="@{style.css}"
     />
   </head>
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-extend-sm navbar-light bg-light">
+    <nav class="navbar navbar-light">
       <div class="container">
         <a class="navbar-brand" href="/"
           ><img
@@ -35,11 +35,11 @@
         </ul>
       </div>
     </nav>
+
+    <!-- Content -->
     <div class="container">
       <h1>Users</h1>
-      <ul>
-        <li><a href="/users/add-user">Add user</a></li>
-      </ul>
+      <a href="/users/add-user">Add user</a>
       <div th:switch="${users}">
         <div th:case="*">
           <table class="table">
@@ -59,10 +59,14 @@
                 <td th:text="${users.last_name}"></td>
                 <td th:text="${users.email}"></td>
                 <td>
-                  <a th:href="@{/users/edit-user/{id}(id=${users.user_id})}"
+                  <a
+                    th:href="@{/users/edit-user/{id}(id=${users.user_id})}"
+                    class="action"
                     >Edit</a
                   >
-                  <a th:href="@{/users/delete-user/{id}(id=${users.user_id})}"
+                  <a
+                    th:href="@{/users/delete-user/{id}(id=${users.user_id})}"
+                    class="action"
                     >Delete</a
                   >
                 </td>
@@ -73,7 +77,14 @@
       </div>
     </div>
 
-    <!-- Javascript -->
+    <!-- Footer -->
+    <footer class="text-center mt-auto">
+      <div class="container" id="copyright">
+        <p>© 2022 - Working Talent B.V.</p>
+      </div>
+    </footer>
+
+    <!-- Javascript Links -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
       integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"

@@ -45,7 +45,6 @@ public class UserController {
 	@GetMapping("/users/edit-user/{id}")
 	public String updateUser(@PathVariable("id") long id, Model model) {
 		Users users = service.findUser(id);
-		
 		model.addAttribute("users", users);
 		return "users/edit-user";
 	}

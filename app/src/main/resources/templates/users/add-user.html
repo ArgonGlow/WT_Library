@@ -19,9 +19,9 @@
       th:href="@{../style.css}"
     />
   </head>
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-extend-sm navbar-light bg-light">
+    <nav class="navbar navbar-light">
       <div class="container">
         <a class="navbar-brand" href="/"
           ><img
@@ -35,6 +35,8 @@
         </ul>
       </div>
     </nav>
+
+    <!-- Content -->
     <div class="container">
       <h1>Add User</h1>
       <form
@@ -43,27 +45,48 @@
         th:object="${users}"
         method="post"
       >
-        <label for="first_name">First Name: </label>
-        <input
-          type="text"
-          th:field="*{first_name}"
-          id="firstName"
-          placeholder="First Name"
-        />
-        <label for="last_name">Last Name: </label>
-        <input
-          type="text"
-          th:field="*{last_name}"
-          id="lastName"
-          placeholder="Last Name"
-        />
-        <label for="email">Email: </label>
-        <input type="text" th:field="*{email}" id="email" placeholder="Email" />
-        <input type="submit" value="Add User" />
+        <div class="form-group">
+          <label for="first_name">First Name: </label>
+          <input
+            type="text"
+            th:field="*{first_name}"
+            id="firstName"
+            placeholder="First Name"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="last_name">Last Name: </label>
+          <input
+            type="text"
+            th:field="*{last_name}"
+            id="lastName"
+            placeholder="Last Name"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email: </label>
+          <input
+            type="text"
+            th:field="*{email}"
+            id="email"
+            placeholder="Email"
+            class="form-control"
+          />
+        </div>
+        <input type="submit" class="btn btn-primary" value="Add User" />
       </form>
     </div>
 
-    <!-- Javascript -->
+    <!-- Footer -->
+    <footer class="text-center mt-auto">
+      <div class="container" id="copyright">
+        <p>© 2022 - Working Talent B.V.</p>
+      </div>
+    </footer>
+
+    <!-- Javascript Links -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
       integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
