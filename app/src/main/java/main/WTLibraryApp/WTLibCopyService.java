@@ -16,11 +16,16 @@ public class WTLibCopyService {
 		return repo.findAll();
 	}
 	
-	public Optional<Copies> findCopy(long id) {
-		return repo.findById(id);
+	public Optional<Copies> findCopy(CopiesPK copiesPk) {
+		return repo.findByCopiesId(copiesPk);
 	}
 	
-	public void deleteCopy(long id) {
-		repo.deleteById(id);
+	public void deleteCopy(CopiesPK copiesPk) {
+		repo.deleteByCopiesId(copiesPk);
 	}
+	
+	public void updateCopy(Copies copy) {
+		repo.save(copy);
+	}
+	
 }
