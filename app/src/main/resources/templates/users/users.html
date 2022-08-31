@@ -16,7 +16,7 @@
     <link
       rel="stylesheet"
       href="../../static/style.css"
-      th:href="@{style.css}"
+      th:href="@{../style.css}"
     />
   </head>
   <body class="d-flex flex-column min-vh-100">
@@ -28,7 +28,7 @@
             src="../static/images/wt-logo.svg"
             title="Logo"
             alt="Logo"
-            th:src="@{images/wt-logo.svg}"
+            th:src="@{../images/wt-logo.svg}"
         /></a>
         <ul class="navbar-nav">
           <li class="nav-item"><a href="/users" class="nav-link">Users</a></li>
@@ -40,6 +40,8 @@
     <div class="container">
       <h1>Users</h1>
       <a href="/users/add-user">Add user</a>
+
+      <!-- Users table -->
       <div th:switch="${users}">
         <div th:case="*">
           <table class="table">
