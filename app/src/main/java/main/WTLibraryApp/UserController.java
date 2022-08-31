@@ -22,7 +22,7 @@ public class UserController {
 	
 	@GetMapping("/user")
     public String getUser(){
-        return "index";
+        return "user";
     }
 	
 	/*
