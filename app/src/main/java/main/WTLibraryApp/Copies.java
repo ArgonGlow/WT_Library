@@ -12,7 +12,7 @@ public class Copies {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String copyId;
 	private int bookId;
-	private int userId;
+	private int loaned_by_user;
 	
 	public String getCopyId() {
 		return copyId;
@@ -27,10 +27,10 @@ public class Copies {
 		this.bookId = bookId;
 	}
 	public int getUserId() {
-		return userId;
+		return loaned_by_user;
 	}
 	public void setUserId(int userId) {
-		this.userId = userId;
+		this.loaned_by_user = userId;
 	}
 	
 	

@@ -32,4 +32,24 @@ public class WTLibCopyController {
 	public void remove(@PathVariable long id) {
 		service.deleteCopy(id);
 	}
+	
+	@RequestMapping(value = "copies/assign/{id}", method = RequestMethod.PUT)
+	public void assignCopy(@PathVariable long id,  @RequestBody Copies copy) {
+		Optional<Copies> reservedCopy = findById(id);
+		
+		// abort if selected id doesn't return a person
+		if (reservedCopy.isEmpty()) {
+			System.out.println("no copy for id: " + id);
+			return;
+		}
+		
+		// modify temporary object, ready for updating
+		Copies loanedCopy = reservedCopy.get();
+		if (loanedCopy.getUserId() == 0) {
+			System.out.println("copy already assigned to: " + loanedCopy.getUserId());
+			return;
+		}
+		loanedCopy.setUserId(copy.getUserId());
+		service.updateCopy(loanedCopy);
+	}
 }

@@ -23,4 +23,8 @@ public class WTLibCopyService {
 	public void deleteCopy(long id) {
 		repo.deleteById(id);
 	}
+	
+	public void updateCopy(Copies copy) {
+		repo.save(copy);
+	}
 }
