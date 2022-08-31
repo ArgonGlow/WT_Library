@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
 @Embeddable
 public class CopiesId implements Serializable {
@@ -27,19 +26,17 @@ public class CopiesId implements Serializable {
 		this.bookId = bookId;
 		this.copyId = copyId;
 	}
-
+	
 	public long getBookId() {
 		return bookId;
 	}
-
+	
 	public void setBookId(long bookId) {
 		this.bookId = bookId;
 	}
-
 	public long getCopyId() {
 		return copyId;
 	}
-
 	public void setCopyId(long copyId) {
 		this.copyId = copyId;
 	}
