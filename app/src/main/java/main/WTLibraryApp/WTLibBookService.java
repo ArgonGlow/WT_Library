@@ -41,12 +41,10 @@ public class WTLibBookService {
 		repo.deleteById(id);
 	}
 	/*
-	 * find book by title
-	 * inputs title
+	 * find book by title, isbn or author
+	 * inputs title, isbn or author
 	 */
-	public List<Books> findBookByBookTitle(String title){
-		return repo.findBookByTitle(title);
+	public List<Books> searchBook(String title, String isbn, String author){
+		return repo.findByTitleIgnoreCaseContainingOrIsbnIgnoreCaseContainingOrAuthorIgnoreCaseContaining(title, isbn, author);
 	}
-	
-
 }

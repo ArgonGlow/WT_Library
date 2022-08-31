@@ -29,9 +29,19 @@ function fillBooksTable(data) {
 Search bar that searches for keyWord in database
 */
 function search(){
-    keyWord = document.getElementById("searchBar").value;
+    let keyWordInput = document.getElementById("searchBar").value;
 
-    fetch("http://localhost:8080/books/search/"+keyWord)
+    let searchBook = {
+        keyWord:keyWordInput,
+    }
+
+    fetch("http://localhost:8080/books/search", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(searchBook)
+    })
         .then(response => response.json())
         .then(a => {
             console.log('response', a);
@@ -41,3 +51,5 @@ function search(){
             console.log('error', error);
         });
 }
+
+

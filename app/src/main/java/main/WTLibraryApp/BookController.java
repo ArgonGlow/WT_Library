@@ -77,13 +77,13 @@ public class BookController {
 		service.createBook(oldBook);
 	} 
 	/*
-	 * find book by title
-	 * inputs title
+	 * find book by key word
+	 * inputs key word
 	 */
-	
-	@RequestMapping(value = "books/search/{title}")
-	public List<Books> findBookByBookTitle(@PathVariable String title){
-		return service.findBookByBookTitle(title);
+	@RequestMapping(value = "books/search", method = RequestMethod.POST)
+	public List<Books> searchBook(@RequestBody Search bookSearch){
+		String keyWord = bookSearch.getKeyWord();
+		return service.searchBook(keyWord, keyWord, keyWord);
 	}
 	
 

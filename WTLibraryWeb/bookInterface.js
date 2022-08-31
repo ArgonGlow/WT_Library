@@ -65,7 +65,7 @@ function deleteBook(){
     .then(response => response.json()) 
     .then(response => console.log(response))
     .then(window.location.reload);
-    setTimeout(goToMain, 1);
+    setTimeout(goToMain, 50);
 }
 /*
 edit book properties according to book index id

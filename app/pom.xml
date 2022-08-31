@@ -50,8 +50,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>-->
-	</dependencies>
-
+	<dependency>
+	  <groupId>commons-io</groupId>
+	  <artifactId>commons-io</artifactId>
+	  <version>20030203.000550</version>
+	</dependency>
+		</dependencies>
 	<build>
 		<plugins>
 			<plugin>
