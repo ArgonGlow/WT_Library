@@ -1,14 +1,5 @@
 /*
-removes visible book table
-*/
-function removeTable()
-{
-    document.getElementById("books").remove();
-}
-
-/*
 go to book interface of item with id index
-inputs id index
 */
 function goToBookInterface(index){
     sessionStorage.setItem("index", index)
@@ -16,7 +7,6 @@ function goToBookInterface(index){
 }
 /*
 creates table of all books
-inputs data from database
 */
 function fillBooksTable(data) {
     let booksTableHtml =
