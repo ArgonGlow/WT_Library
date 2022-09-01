@@ -4,7 +4,7 @@ creates new book item in database
 function createBook() {
 
     // Formulier uitlezen
-    let book_idInput = document.getElementById('id').value;
+    let book_idInput = '';
     let titleInput = document.getElementById('title').value;
     let isbnInput = document.getElementById('isbn').value;
     let authorInput = document.getElementById('author').value;
@@ -38,42 +38,7 @@ function createBook() {
 
 }
 
-function createCopy() {
 
-    checkTitleExist();
-    // Formulier uitlezen
-    let book_idInput = document.getElementById('id').value;
-    let copy_idInput = document.getElementById('version').value;
-    let loaned_by_userInput = 1;
-
-//    let versionInput = document.getElementById('version').value;
-
-    // Maak ik een person object in javascript
-    let newCopy = {
-        book_id:book_idInput,
-        copy_id:copy_idInput,
-        loaned_by_user:loaned_by_userInput,
-  //      version:versionInput
-    }
-
-    // Do call
-    fetch("http://localhost:8080/copies/create", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newCopy)
-    })
-    .then(response => {
-        console.log('Is goedgegaan');
-        console.log(JSON.stringify(newCopy));
-    //    window.location.href='WTlibrary.html';
-    })
-    .catch(error => {
-        console.log('Er is iets fouts gegaan');
-    });
-
-}
 
 
 
