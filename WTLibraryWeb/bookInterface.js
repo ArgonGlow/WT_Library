@@ -47,6 +47,13 @@ function deleteCopy(){
     .then(response => console.log(response))
 }
 /*
+returns to WT library, this function is called
+with a tiny delay to process deletion operation
+*/
+function goToMain(){
+    window.location.href='WTlibrary.html';
+}
+/*
 deletes book from database according to id index
 returns to library page
 */
@@ -57,7 +64,8 @@ function deleteBook(){
     })
     .then(response => response.json()) 
     .then(response => console.log(response))
-
+    .then(window.location.reload);
+    setTimeout(goToMain, 50);
 }
 /*
 edit book properties according to book index id
@@ -92,6 +100,7 @@ function editBook(){
     .catch(error => {
         console.log('Er is iets fouts gegaan');
     });
+    
 
 
 }
