@@ -34,15 +34,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .clearAuthentication(true) .permitAll();
    }
 	
-   @Autowired
-   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-	   auth
-	   	.jdbcAuthentication()
-	   	.dataSource(dataSource)
-        .usersByUsernameQuery("select email,password, active "
+	
+	
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    	auth
+    		.jdbcAuthentication()
+    		.dataSource(dataSource)
+    		.usersByUsernameQuery("select email,password, active "
         		+ "from users "
         		+ "where email = ?")
-	   	.authoritiesByUsernameQuery("select admin_id,user_id "
+    		.authoritiesByUsernameQuery("select admin_id,user_id "
 		        + "from admins "
 		        + "where admin_id = ?");
    }
