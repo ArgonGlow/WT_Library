@@ -12,16 +12,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class Users implements UserDetails{
-	
+public class Users {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long user_id;
-	
+
 	private String first_name;
-	
+
 	private String last_name;
-	
+
 	private String email;
 	
 	private String password; 
@@ -60,8 +59,6 @@ public class Users implements UserDetails{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
 
 	@Override 
    public Collection<? extends GrantedAuthority> getAuthorities() { 
