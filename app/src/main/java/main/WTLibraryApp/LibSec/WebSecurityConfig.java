@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.LibSec;
 
 import javax.sql.DataSource;
 
@@ -14,7 +14,6 @@ import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 @Configuration
-//@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -24,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
         	.authorizeRequests()
-            .antMatchers("/", "/home").permitAll()
+            .antMatchers("/home").permitAll()
             .anyRequest().authenticated()
             .and()
         .formLogin()
@@ -40,18 +39,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	   auth
 	   	.jdbcAuthentication()
 	   	.dataSource(dataSource)
-        .usersByUsernameQuery("select email,password, account_non_locked "
+        .usersByUsernameQuery("select email,password, active "
         		+ "from users "
         		+ "where email = ?")
 	   	.authoritiesByUsernameQuery("select admin_id,user_id "
 		        + "from admins "
 		        + "where admin_id = ?");
-      	
-         //.withUser("user").password("$2a$10$at2qzGSaEgBQuKXjIWiIVeGevA4TPbeRUJUAuEUtYbJrEoRr6miMO").roles("USER");
-      /*
-	  auth.jdbcAuthentication()
-	  	.dataSource(DataSource)
-	  	.users*/
    }
    
    @Bean

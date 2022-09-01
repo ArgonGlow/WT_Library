@@ -1,13 +1,13 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.LibSec;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class WelcomeController {
+public class LoginController {
 
-    @GetMapping("/home")
+    @GetMapping("/login")
     public String welcome(){
-        return "home";
+        return "login";
     }
 }

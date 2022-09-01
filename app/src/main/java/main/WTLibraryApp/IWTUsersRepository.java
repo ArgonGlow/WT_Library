@@ -9,5 +9,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IWTUsersRepository extends JpaRepository<Users, Long> {
-	Optional<Users> findUserByEmail(String email);
 }

@@ -25,11 +25,26 @@ public class Users {
 	
 	private String password; 
 	
-	@Column(name = "account_non_locked")
-	private boolean accountNonLocked;
+	private boolean active = true;
 
 	public long getUser_id() {
 		return user_id;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	public void setUser_id(long user_id) {
@@ -59,45 +74,5 @@ public class Users {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	@Override 
-   public Collection<? extends GrantedAuthority> getAuthorities() { 
-      return List.of(() -> "read"); 
-   }
-   @Override
-   public String getPassword() {    
-      return password; 
-   } 
-   public void setPassword(String password) { 
-      this.password = password; 
-   } 
-   @Override 
-   public String getUsername() { 
-      return email; 
-   } 
-   public void setUsername(String email) { 
-      this.email = email; 
-   } 
-   @Override 
-   public boolean isAccountNonExpired() { 
-      return true; 
-   } 
-   @Override
-   public boolean isAccountNonLocked() { 
-      return accountNonLocked; 
-   } 
-   @Override public boolean isCredentialsNonExpired() { 
-      return true; 
-   } 
-   @Override public boolean isEnabled() { 
-   return true; 
-   } 
-   
-   public void setAccountNonLocked(Boolean accountNonLocked) { 
-      this.accountNonLocked = accountNonLocked; 
-   } 
-   public boolean getAccountNonLocked() { 
-      return accountNonLocked; 
-   }
 
 }
