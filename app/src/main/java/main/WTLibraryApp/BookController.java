@@ -84,4 +84,12 @@ public class BookController {
 		String keyWord = bookSearch.getKeyWord();
 		return service.searchBook(keyWord, keyWord, keyWord);
 	}
+	
+	
+	@RequestMapping(method = RequestMethod.POST, value = "reservation/create/{userId}")
+	public void reserveBook(@PathVariable long userId, @RequestBody Books selectedBook) {
+		Reservation newRes = new Reservation(selectedBook.getBook_id(), userId);
+		
+		service.createReservation(newRes);
+	}
 }

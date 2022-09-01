@@ -13,6 +13,7 @@ public class WTLibBookService {
 	
 	@Autowired
 	private IWTLibBookRepositrory repo;
+	private IReservationRepository resRepo;
 	/*
 	 * find all books
 	 */
@@ -46,6 +47,9 @@ public class WTLibBookService {
 	 */
 	public List<Books> searchBook(String title, String isbn, String author){
 		return repo.findByTitleIgnoreCaseContainingOrIsbnIgnoreCaseContainingOrAuthorIgnoreCaseContaining(title, isbn, author);
-
+	}
+	
+	public void createReservation(Reservation newReservation) {
+		resRepo.save(newReservation);
 	}
 }
