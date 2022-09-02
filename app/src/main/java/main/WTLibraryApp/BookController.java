@@ -1,8 +1,8 @@
 package main.WTLibraryApp;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Controller;  
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
 	
 	@Autowired
-	private BookService service; 
-	
-//	Returns all users from the users table.
-	
+	private BookService service;
+	   
+//	Returns all users from the users table.      
+	  
 	@GetMapping("/books")
 	public String findAll(Model model) {
 		model.addAttribute("books", service.findAll());
@@ -29,7 +29,7 @@ public class BookController {
 	
 	@GetMapping("/books/create")
 	public String create(Books book) {
-		return "books/createBook";  
+		return "books/createBook";   
 	}
 	
 	@PostMapping("/books/create")
