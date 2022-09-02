@@ -57,12 +57,12 @@ public class UserController {
 	public String updateUserPost(@PathVariable("id") long id, Users users, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			users.setUser_id(id);
-			return "users/edit-user";
-		}
+			return "users/edit-user"; 
+		} 
 		
-		service.saveUser(users);   
+		service.saveUser(users);     
 		return "redirect:/users";
-	}
+	} 
 	
 //	Deletes an user from the table.
 	
