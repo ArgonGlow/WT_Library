@@ -1,6 +1,5 @@
 package main.WTLibraryApp;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,5 +53,9 @@ public class WTLibBookService {
 	}
 	public List<Reservation> allReservations() {
 		return resRepo.findAll();
+	}
+	public void deleteReservation(long reservationId) {
+		repo.deleteById(reservationId);
+		
 	}
 }

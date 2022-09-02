@@ -87,6 +87,12 @@ public class BookController {
 		return service.searchBook(keyWord, keyWord, keyWord);
 	}
 	
+	// list all entries from reservations table
+	// returns list of Reservation objects
+	@RequestMapping(value = "reservation/list")
+	public List<Reservation> listAllReservedBooks() {
+		return service.allReservations();
+	}
 	
 	@RequestMapping(value = "reservation/create/{userId}", method = RequestMethod.POST)
 	public void reserveBook(@PathVariable long userId, @RequestBody Books selectedBook) {
@@ -95,10 +101,8 @@ public class BookController {
 		service.createReservation(newRes);
 	}
 	
-	// list all entries from reservations table
-	// returns list of Reservation objects
-	@RequestMapping(value = "reservation/list")
-	public List<Reservation> listAllReservedBooks() {
-		return service.allReservations();
+	@RequestMapping(value = "reservation/cancel/{reservationId}", method = RequestMethod.DELETE)
+	public void cancelReservedBook(@PathVariable long reservationId) {
+		service.deleteReservation(reservationId);
 	}
 }
