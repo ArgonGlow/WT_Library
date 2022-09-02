@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Working Talent Library - Edit User</title>
+    <title>Working Talent Library - Edit Book</title>
 
     <!-- CSS Links -->
     <link
@@ -38,49 +38,48 @@
         </ul>
       </div>
     </nav>
-    <section id="edit-user">
+    <section id="edit">
       <div class="container">
-        <h1>Edit User</h1>
+        <h1>Edit Book</h1>
         <form
           action="#"
-          th:action="@{/users/edit-user/{id}(id=${users.user_id})}"
-          th:object="${users}"
+          th:action="@{/books/edit/{id}(id=${books.book_id})}"
+          th:object="${books}"
           method="post"
         >
-          <label for="user_id">User ID</label>
+          <label for="book_id">Book ID</label>
           <input
             type="text"
-            th:field="*{user_id}"
-            id="user_id"
-            placeholder="User ID"
+            th:field="*{book_id}"
+            id="book_id"
+            placeholder="Book ID"
           />
-          <label for="first_name">First Name: </label>
+          <label for="title">Title: </label>
           <input
             type="text"
-            th:field="*{first_name}"
-            id="first_name"
-            placeholder="First Name"
+            th:field="*{title}"
+            id="title"
+            placeholder="Title"
           />
-          <label for="last_name">Last Name: </label>
+          <label for="isbn">Isbn: </label>
           <input
             type="text"
-            th:field="*{last_name}"
-            id="last_name"
-            placeholder="Last Name"
+            th:field="*{isbn}"
+            id="lisbn"
+            placeholder="Isbn"
           />
-          <label for="email">Email: </label>
+          <label for="author">Author: </label>
           <input
             type="text"
-            th:field="*{email}"
-            id="email"
-            placeholder="Email"
+            th:field="*{author}"
+            id="author"
+            placeholder="Author"
           />
-
-          <input type="submit" value="Update User" />
-          </form>
-            </div>
-            <a th:href="@{/books/delete/{id}(id=${books.book_id})}"
-            >Delete</a>
+          <input type="submit" value="Update Book" />
+        </form>
+      </div>
+      <a th:href="@{/books/delete/{id}(id=${books.book_id})}"
+      >Delete</a>
     </section>
   </body>
 </html>

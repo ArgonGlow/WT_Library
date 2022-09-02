@@ -1,20 +1,14 @@
 package main.WTLibraryApp;
 
-import java.util.List;
-
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Controller
@@ -22,68 +16,56 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
 	
 	@Autowired
-	private WTLibBookService service;
-	/*
-	 * creates JSon to display all books.
-	 * returns get for all books
-	 */
-	@RequestMapping(value = "books")
-	public List<Books> findAll(){
-		return service.allBooks();
+	private BookService service; 
+	
+//	Returns all users from the users table.
+	
+	@GetMapping("/books")
+	public String findAll(Model model) {
+		model.addAttribute("books", service.findAll());
+		return "books/WTlibrary";
+	}
+//	Adds a new user to the users table
+	
+	@GetMapping("/books/create")
+	public String create(Books book) {
+		return "books/createBook";  
 	}
 	
-	/*
-	 * creates JSon to display one books item from the database.
-	 * inputs book_id
-	 * returns get for the item
-	 */
-	@RequestMapping(value = "books/{id}")
-	public Optional<Books> findById(@PathVariable long id) {
-		return service.findBook(id);
-	}
-
-	/*
-	 * saves book item to database
-	 * inputs book properties
-	 */
-	@RequestMapping(value = "books/create", method = RequestMethod.POST)
-	public void create(@RequestBody Books book) {
-		service.createBook(book);
-	}
-	/*
-	 * delete book item form database
-	 * inputs book_id
-	 */
-	@RequestMapping(value = "books/delete/{id}", method = RequestMethod.DELETE)
-	public void remove(@PathVariable long id) {
-		service.deleteBook(id);
-	}
-	/*
-	 * edits book properties, while leaving unchanged properties unchanged
-	 * inputs book_id and new book properties
-	 */
-	@RequestMapping(value = "books/edit/{id}", method = RequestMethod.PUT)
-	public void edit(@PathVariable long id, @RequestBody Books newBook) {
-		Books oldBook = service.findBook(id).get();
-		if(newBook.getTitle().length()>0) {
-			oldBook.setTitle(newBook.getTitle());
+	@PostMapping("/books/create")
+	public String create(Books book, BindingResult result, Model model) {;
+		if (result.hasErrors()) {
+			return "books/createBook"; 
 		}
-		if(newBook.getIsbn().length()>0) {
-			oldBook.setIsbn(newBook.getIsbn());
-		}
-		if(newBook.getAuthor().length()>0) {
-			oldBook.setAuthor(newBook.getAuthor());
-		}
-		service.createBook(oldBook);
-	} 
-	/*
-	 * find book by key word
-	 * inputs key word
-	 */
-
-	@RequestMapping(method = RequestMethod.POST, value = "books/search")
-	public List<Books> search(@RequestBody Search bookSearch) {
-		String keyWord = bookSearch.getKeyWord();
-		return service.searchBook(keyWord, keyWord, keyWord);
+		service.save(book);  
+		return "redirect:/books";
 	}
+//	Updates an user from the users table
+	
+	@GetMapping("/books/edit/{id}")
+	public String edit(@PathVariable("id") long id, Model model) {
+		Books book = service.find(id);
+		
+		model.addAttribute("books", book);
+		return "books/bookInterface";
+	}
+	
+	@PostMapping("/books/edit/{id}")
+	public String edit(@PathVariable("id") long id, Books book, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			book.setBook_id(id);
+			return "books/bookInterface";
+		}
+		service.save(book);
+		return "redirect:/books";
+	}
+	
+//	Deletes an user from the table.
+	
+	@GetMapping("/books/delete/{id}")
+	public String delete(@PathVariable("id") long id, Model model) {
+		Books book = service.find(id);
+		service.delete(book);     
+		return "redirect:/books";
+	}	
 }

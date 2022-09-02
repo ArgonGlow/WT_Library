@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @CrossOrigin(maxAge=3600)
@@ -70,6 +71,6 @@ public class UserController {
 		Users users = service.findUser(id);
 		service.deleteUser(users);
 		return "redirect:/users";
-	}
+	}  
 	
 }
