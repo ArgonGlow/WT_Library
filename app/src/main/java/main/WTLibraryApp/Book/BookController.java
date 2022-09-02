@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.Book;
 
 import java.util.List;
 
@@ -22,13 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
 	
 	@Autowired
-	private WTLibBookService service;
+	private BookService service;
 	/*
 	 * creates JSon to display all books.
 	 * returns get for all books
 	 */
 	@RequestMapping(value = "books")
-	public List<Books> findAll(){
+	public List<Book> findAll(){
 		return service.allBooks();
 	}
 	
@@ -38,7 +38,7 @@ public class BookController {
 	 * returns get for the item
 	 */
 	@RequestMapping(value = "books/{id}")
-	public Optional<Books> findById(@PathVariable long id) {
+	public Optional<Book> findById(@PathVariable long id) {
 		return service.findBook(id);
 	}
 
@@ -47,7 +47,7 @@ public class BookController {
 	 * inputs book properties
 	 */
 	@RequestMapping(value = "books/create", method = RequestMethod.POST)
-	public void create(@RequestBody Books book) {
+	public void create(@RequestBody Book book) {
 		service.createBook(book);
 	}
 	/*
@@ -63,8 +63,8 @@ public class BookController {
 	 * inputs book_id and new book properties
 	 */
 	@RequestMapping(value = "books/edit/{id}", method = RequestMethod.PUT)
-	public void edit(@PathVariable long id, @RequestBody Books newBook) {
-		Books oldBook = service.findBook(id).get();
+	public void edit(@PathVariable long id, @RequestBody Book newBook) {
+		Book oldBook = service.findBook(id).get();
 		if(newBook.getTitle().length()>0) {
 			oldBook.setTitle(newBook.getTitle());
 		}
@@ -82,7 +82,7 @@ public class BookController {
 	 */
 
 	@RequestMapping(method = RequestMethod.POST, value = "books/search")
-	public List<Books> search(@RequestBody Search bookSearch) {
+	public List<Book> search(@RequestBody Search bookSearch) {
 		String keyWord = bookSearch.getKeyWord();
 		return service.searchBook(keyWord, keyWord, keyWord);
 	}

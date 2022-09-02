@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.Book;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,28 +9,28 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class WTLibBookService {
+public class BookService {
 	
 	@Autowired
-	private IWTLibBookRepositrory repo;
+	private BookRepositrory repo;
 	/*
 	 * find all books
 	 */
-	public List<Books> allBooks(){
+	public List<Book> allBooks(){
 		return repo.findAll();
 	}
 	/*
 	 * find book by id
 	 * inputs id
 	 */
-	public Optional<Books> findBook(long id) {
+	public Optional<Book> findBook(long id) {
 		return repo.findById(id);
 	}
 	/*
 	 * save book changes or save new book to database
 	 * inputs book properties
 	 */
-	public void createBook(Books book) {
+	public void createBook(Book book) {
 		repo.save(book);
 	}
 	/*
@@ -44,7 +44,7 @@ public class WTLibBookService {
 	 * find book by title, isbn or author
 	 * inputs title, isbn or author
 	 */
-	public List<Books> searchBook(String title, String isbn, String author){
+	public List<Book> searchBook(String title, String isbn, String author){
 		return repo.findByTitleIgnoreCaseContainingOrIsbnIgnoreCaseContainingOrAuthorIgnoreCaseContaining(title, isbn, author);
 
 	}

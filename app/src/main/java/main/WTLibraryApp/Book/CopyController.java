@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.Book;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,28 +13,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(maxAge=3600)
-public class WTLibCopyController {
+public class CopyController {
 		
 	@Autowired
-	private WTLibCopyService service;
+	private CopyService service;
 	
 	
 	@RequestMapping(value = "copies")
-	public List<Copies> findAll(){
+	public List<Copy> findAll(){
 		return service.allCopies();
 	}
 	
 	@RequestMapping(value = "copies/{bookId}/{copyId}")
-	public Optional<Copies> findById(@PathVariable long bookId, @PathVariable long copyId) {
+	public Optional<Copy> findById(@PathVariable long bookId, @PathVariable long copyId) {
 		
-		CopiesPK id = new CopiesPK(bookId, copyId);
+		CopyPK id = new CopyPK(bookId, copyId);
 		
 		return service.findCopy(id);
 	}
 	
 	@RequestMapping(value = "copies/delete/{bookId}/{copyId}", method = RequestMethod.DELETE)
 	public void remove(@PathVariable long bookId, @PathVariable long copyId) {
-		CopiesPK id = new CopiesPK(bookId, copyId);
+		CopyPK id = new CopyPK(bookId, copyId);
 		
 		service.deleteCopy(id);
 	}
@@ -43,7 +43,7 @@ public class WTLibCopyController {
 	public void assignCopy(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId) {
 		
 		// create copy object by combined id
-		Optional<Copies> reservedCopy = findById(bookId, copyId);
+		Optional<Copy> reservedCopy = findById(bookId, copyId);
 		
 		// abort if selected id doesn't return a copy
 		if (reservedCopy.isEmpty()) {
@@ -52,7 +52,7 @@ public class WTLibCopyController {
 		}
 		
 		// create copy-object from list and set new userId
-		Copies loanedCopy = reservedCopy.get();
+		Copy loanedCopy = reservedCopy.get();
 		loanedCopy.setUserId(userId);
 		service.updateCopy(loanedCopy);
 	}

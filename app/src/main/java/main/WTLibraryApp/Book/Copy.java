@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.Book;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -6,21 +6,21 @@ import javax.persistence.Entity;
 
 
 @Entity
-public class Copies {
+public class Copy {
 	
 	// double-primary-key object
 	@EmbeddedId
-	private CopiesPK copiesId;
+	private CopyPK copiesId;
 	
 	// separating userId variable name from column name
 	@Column(name="loaned_by_user")
 	private long userId;
 	
 	// getters and setters
-	public CopiesPK getCopiesId() {
+	public CopyPK getCopiesId() {
 		return copiesId;
 	}
-	public void setCopiesId(CopiesPK copiesId) {
+	public void setCopiesId(CopyPK copiesId) {
 		this.copiesId = copiesId;
 	}
 	public long getUserId() {

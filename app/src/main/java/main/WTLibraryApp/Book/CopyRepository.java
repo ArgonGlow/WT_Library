@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.Book;
 
 import java.util.Optional;
 
@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface IWTLibCopyRepository extends JpaRepository<Copies, CopiesPK>{
+public interface CopyRepository extends JpaRepository<Copy, CopyPK>{
 	
 	// findById method for combined-id object
-	Optional<Copies> findByCopiesId(CopiesPK copiesPk);
+	Optional<Copy> findByCopiesId(CopyPK copiesPk);
 	// deleteById method for combined-id object
-	Optional<Copies> deleteByCopiesId(CopiesPK copiesPk);
+	Optional<Copy> deleteByCopiesId(CopyPK copiesPk);
 }

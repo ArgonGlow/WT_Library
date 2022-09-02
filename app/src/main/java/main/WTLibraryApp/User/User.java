@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.User;
 
 import java.util.Collection;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class Users {
+public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long user_id;
