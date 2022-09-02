@@ -55,7 +55,7 @@ public class WTLibBookService {
 		return resRepo.findAll();
 	}
 	public void deleteReservation(long reservationId) {
-		repo.deleteById(reservationId);
+		resRepo.deleteById(reservationId);
 		
 	}
 }
