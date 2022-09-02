@@ -54,7 +54,7 @@
         src="../static/images/wt-logo.svg"
         title="Logo"
         alt="Logo"
-        th:src="@{images/wt-logo.svg}"
+        th:src="@{../../images/wt-logo.svg}"
     /></a>
   </div>
 </nav>
@@ -69,56 +69,47 @@
 </div>
 </nav>
   <!--____________________________-->
-    <section id="edit-user">
-      <div class="container">
-        <br>
-        <br>
-        <h1>Edit User</h1>
-        <form
-          action="#"
-          th:action="@{/users/edit-user/{id}(id=${users.user_id})}"
-          th:object="${users}"
-          method="post"
-        >
-          <label for="user_id">User ID</label>
-          <input
-            type="text"
-            th:field="*{user_id}"
-            id="user_id"
-            placeholder="User ID"
-          />
-          <label for="first_name">First Name: </label>
-          <input
-            type="text"
-            th:field="*{first_name}"
-            id="first_name"
-            placeholder="First Name"
-          />
-          <label for="last_name">Last Name: </label>
-          <input
-            type="text"
-            th:field="*{last_name}"
-            id="last_name"
-            placeholder="Last Name"
-          />
-          <label for="email">Email: </label>
-          <input
-            type="text"
-            th:field="*{email}"
-            id="email"
-            placeholder="Email"
-          />
-          <input type="submit" value="Update User" />
-          <a th:href="@{/users/delete-user/{id}(id=${users.user_id})}"
-          >Delete</a>
-        </form>
-      </div>
-    </section>
-        <!-- Javascript -->
-        <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
-        integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
-        crossorigin="anonymous"
-      ></script>
-  </body>
+  <section id="edit-user">
+    <div class="container">
+      <h1>Edit User</h1>
+      <form
+        action="#"
+        th:action="@{/users/edit-user/{id}(id=${users.user_id})}"
+        th:object="${users}"
+        method="post"
+      >
+        <label for="user_id">User ID</label>
+        <input
+          type="text"
+          th:field="*{user_id}"
+          id="user_id"
+          placeholder="User ID"
+        />
+        <label for="first_name">First Name: </label>
+        <input
+          type="text"
+          th:field="*{first_name}"
+          id="first_name"
+          placeholder="First Name"
+        />
+        <label for="last_name">Last Name: </label>
+        <input
+          type="text"
+          th:field="*{last_name}"
+          id="last_name"
+          placeholder="Last Name"
+        />
+        <label for="email">Email: </label>
+        <input
+          type="text"
+          th:field="*{email}"
+          id="email"
+          placeholder="Email"
+        />
+        <input type="submit" value="Update User" />
+      </form>
+    </div>
+  </section>
+</body>
 </html>
+

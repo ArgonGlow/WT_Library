@@ -60,7 +60,7 @@ public class UserController {
 			return "users/edit-user";
 		}
 		
-		service.saveUser(users);
+		service.saveUser(users);   
 		return "redirect:/users";
 	}
 	
