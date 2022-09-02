@@ -1,5 +1,7 @@
 package main.WTLibraryApp;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +21,16 @@ public class UserController {
 //	Returns all users from the users table.
 	
 	@GetMapping("/users")
-	public String showUsers(Model model) {
-		model.addAttribute("users", service.findAllUsers());
+	public String showUsers(Model model, Users users, String keyword) {
+		if (keyword != null) {
+			List<Users> list = service.findByKeyword(keyword);
+			model.addAttribute("users", list);
+			System.out.println(list);
+		} else {
+			List<Users> list = service.findAllUsers();
+			model.addAttribute("users", list);
+		}
+		
 		return "/users/users";
 	}
 	

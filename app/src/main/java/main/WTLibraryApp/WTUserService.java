@@ -10,7 +10,11 @@ public class WTUserService {
 	
 	@Autowired
 	private IWTUsersRepository repo;
-
+	
+	public List<Users> findByKeyword(String keyword) {
+		return repo.findByKeyword(keyword);
+	}
+	
 	public List<Users> findAllUsers() {
 		return repo.findAll();
 	}

@@ -13,8 +13,21 @@ nav, h1, .form-group {
 
 .btn-primary {
   margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.btn-secondary {
+  margin-right: 0.3rem;
 }
 
 .action {
   margin-right: 0.5rem;
+}
+
+#search {
+  display: flex;
+}
+
+#users-table {
+  margin-top: 1rem;
 }
