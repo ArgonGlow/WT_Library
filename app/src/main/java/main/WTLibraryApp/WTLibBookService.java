@@ -52,4 +52,7 @@ public class WTLibBookService {
 	public void createReservation(Reservation newReservation) {
 		resRepo.save(newReservation);
 	}
+	public List<Reservation> allReservations() {
+		return resRepo.findAll();
+	}
 }

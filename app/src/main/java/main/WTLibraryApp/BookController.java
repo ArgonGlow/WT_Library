@@ -86,10 +86,17 @@ public class BookController {
 	}
 	
 	
-	@RequestMapping(method = RequestMethod.POST, value = "reservation/create/{userId}")
+	@RequestMapping(value = "reservation/create/{userId}", method = RequestMethod.POST)
 	public void reserveBook(@PathVariable long userId, @RequestBody Books selectedBook) {
 		Reservation newRes = new Reservation(selectedBook.getBook_id(), userId);
 		
 		service.createReservation(newRes);
+	}
+	
+	// list all entries from reservations table
+	// returns list of Reservation objects
+	@RequestMapping(value = "reservation/list")
+	public List<Reservation> listAllReservedBooks() {
+		return service.allReservations();
 	}
 }
