@@ -71,6 +71,6 @@ public class UserController {
 		Users users = service.findUser(id);
 		service.deleteUser(users);
 		return "redirect:/users";
-	}  
+	}    
 	
 }

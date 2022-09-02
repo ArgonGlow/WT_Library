@@ -76,10 +76,11 @@
             placeholder="Author"
           />
           <input type="submit" value="Update Book" />
+          <a th:href="@{/books/delete/{id}(id=${books.book_id})}"
+          >Delete</a>
         </form>
       </div>
-      <a th:href="@{/books/delete/{id}(id=${books.book_id})}"
-      >Delete</a>
+
     </section>
   </body>
 </html>

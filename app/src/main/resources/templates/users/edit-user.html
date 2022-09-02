@@ -75,12 +75,11 @@
             id="email"
             placeholder="Email"
           />
-
           <input type="submit" value="Update User" />
-          </form>
-            </div>
-            <a th:href="@{/books/delete/{id}(id=${books.book_id})}"
-            >Delete</a>
+          <a th:href="@{/users/delete-user/{id}(id=${users.user_id})}"
+          >Delete</a>
+        </form>
+      </div>
     </section>
   </body>
 </html>
