@@ -25,7 +25,7 @@ public class WTLibCopyController {
 	}
 	
 	@RequestMapping(value = "copies/{bookId}/{copyId}")
-	public Optional<Copies> findById(@PathVariable long bookId, @PathVariable long copyId) {
+	private Optional<Copies> findById(@PathVariable long bookId, @PathVariable long copyId) {
 		
 		CopiesPK id = new CopiesPK(bookId, copyId);
 		
@@ -40,20 +40,20 @@ public class WTLibCopyController {
 	}
 	
 	@RequestMapping(value = "copies/assign/{bookId}/{copyId}/{userId}", method = RequestMethod.PUT)
-	public void assignCopy(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId) {
+	public void assignCopy(@RequestBody Reservation reservation, @PathVariable long copyId) {
 		
 		// create copy object by combined id
-		Optional<Copies> reservedCopy = findById(bookId, copyId);
+		Optional<Copies> reservedCopy = findById(reservation.getBookId(), copyId);
 		
 		// abort if selected id doesn't return a copy
 		if (reservedCopy.isEmpty()) {
-			System.out.println("no copy for id: " + bookId + "." + copyId);
+			System.out.println("no copy for id: " + reservation.getBookId() + "." + copyId);
 			return;
 		}
 		
 		// create copy-object from list and set new userId
 		Copies loanedCopy = reservedCopy.get();
-		loanedCopy.setUserId(userId);
+		loanedCopy.setUserId(reservation.getUserId());
 		service.updateCopy(loanedCopy);
 	}
 }
