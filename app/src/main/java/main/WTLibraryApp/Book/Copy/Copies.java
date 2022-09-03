@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.Book.Copy;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;

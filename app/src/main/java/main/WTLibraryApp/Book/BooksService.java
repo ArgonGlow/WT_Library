@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.Book;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BookService {
+public class BooksService {
 	
 	@Autowired
-	private IBookRepository repo;
+	private BooksRepository repo;
 
 	public List<Books> findAll() {
 		return repo.findAll();
