@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+ 
 @Controller
 @CrossOrigin(maxAge=3600)
-public class UsersController {
-	
-	@Autowired
+public class UsersController {    
+	                                         
+	@Autowired                                
 	private UsersService service;
 	
 //	Returns all users from the users table.
@@ -28,8 +28,8 @@ public class UsersController {
 	
 //	Adds a new user to the users table
 	
-	@GetMapping("/users/add-user")
-	public String addUser(Users users) {
+	@GetMapping("/users/add-user")  
+	public String addUser(Users users) {       
 		return "/users/add-user";
 	}
 	
@@ -48,10 +48,10 @@ public class UsersController {
 	@GetMapping("/users/edit-user/{id}")
 	public String updateUser(@PathVariable("id") long id, Model model) {
 		Users user = service.findUser(id);
-		
-		model.addAttribute("users", user);
-		return "users/edit-user";
-	}
+		  
+		model.addAttribute("users", user);        
+		return "users/edit-user";                         
+	}    
 	
 	@PostMapping("/users/edit-user/{id}")
 	public String updateUserPost(@PathVariable("id") long id, Users users, BindingResult result, Model model) {
@@ -72,5 +72,5 @@ public class UsersController {
 		service.deleteUser(users);
 		return "redirect:/users";
 	}    
-	
+	    
 }
