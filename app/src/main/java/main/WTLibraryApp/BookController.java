@@ -37,7 +37,7 @@ public class BookController {
 		if (result.hasErrors()) {
 			return "books/createBook"; 
 		}
-		service.save(book);  
+		service.saveBook(book);  
 		return "redirect:/books";
 	}
 //	Updates an user from the users table
@@ -47,8 +47,8 @@ public class BookController {
 		Books book = service.find(id);
 		
 		model.addAttribute("books", book);
-		return "books/bookInterface";
-	}
+		return "books/bookInterface"; 
+	} 
 	
 	@PostMapping("/books/edit/{id}")
 	public String edit(@PathVariable("id") long id, Books book, BindingResult result, Model model) {
@@ -56,7 +56,7 @@ public class BookController {
 			book.setBook_id(id);
 			return "books/bookInterface";
 		}
-		service.save(book);
+		service.saveBook(book);
 		return "redirect:/books";
 	}
 	

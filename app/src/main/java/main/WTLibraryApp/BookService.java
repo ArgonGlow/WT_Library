@@ -15,7 +15,7 @@ public class BookService {
 		return repo.findAll();
 	}
 	
-	public void save(Books book) {
+	public void saveBook(Books book) {
 		repo.save(book);
 	}
 	
