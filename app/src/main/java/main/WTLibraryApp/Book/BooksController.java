@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.Book;
 
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @CrossOrigin(maxAge=3600)
-public class BookController {
+public class BooksController {
 	
 	@Autowired
-	private BookService service;
+	private BooksService service;
 	   
 //	Returns all users from the users table.      
 	  
@@ -30,7 +30,7 @@ public class BookController {
 	@GetMapping("/books/create")
 	public String create(Books book) {
 		return "books/createBook";   
-	}
+	}  
 	
 	@PostMapping("/books/create")
 	public String create(Books book, BindingResult result, Model model) {;

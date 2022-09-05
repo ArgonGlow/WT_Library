@@ -80,6 +80,15 @@
           th:object="${books}"
           method="post"
         >
+        <div class="visually-hidden">
+        <label for="id">ID: </label>
+        <input
+          type="text"
+          th:field="*{book_id}"
+          id="book_id"
+          placeholder="Id"
+        />
+      </div>
           <label for="title">Title: </label>
           <input
             type="text"

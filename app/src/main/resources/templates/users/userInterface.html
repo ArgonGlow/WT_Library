@@ -80,6 +80,7 @@
         th:object="${users}"
         method="post"
       >
+      <div class="visually-hidden">
         <label for="user_id">User ID</label>
         <input
           type="text"
@@ -87,6 +88,7 @@
           id="user_id"
           placeholder="User ID"
         />
+        </div>
         <label for="first_name">First Name: </label>
         <input
           type="text"
@@ -108,9 +110,19 @@
           id="email"
           placeholder="Email"
         />
+        <div class="visually-hidden">
+        <label for="password">Password: </label>
+        <input
+          type="text"
+          th:field="*{password}"
+          id="password"
+          placeholder="Password"
+        />
+        </div>
         <input type="submit" value="Update User" />
-        <a th:href="@{/users/delete-user/{id}(id=${users.user_id})}"
-        >Delete</a></form>
+      </form>
+      <a th:href="@{/users/delete-user/{id}(id=${users.user_id})}"
+      >Delete</a>
     </div>
 
   </section>

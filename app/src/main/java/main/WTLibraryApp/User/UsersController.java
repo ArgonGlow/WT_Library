@@ -35,13 +35,13 @@ public class UsersController {
 	
 	@PostMapping("/users/add-user")
 	public String addUserPost(Users users, BindingResult result, Model model) {
+		users.setPassword(BCrypt.hashpw("password", BCrypt.gensalt()));
 		if (result.hasErrors()) {
 			return "/users/add-user";
 		}
 		service.saveUser(users);
-		return "redirect:/users";
+		return "redirect:/users"; 
 	}
-	
 //	Updates an user from the users table
 	
 	@GetMapping("/users/edit-user/{id}")
@@ -49,7 +49,7 @@ public class UsersController {
 		Users users = service.findUser(id);
 		
 		model.addAttribute("users", users);
-		return "users/edit-user";
+		return "users/userInterface";
 	}
 	
 	@PostMapping("/users/edit-user/{id}")
@@ -69,7 +69,7 @@ public class UsersController {
 	public String deleteUser(@PathVariable("id") long id, Model model) {
 		Users users = service.findUser(id);
 		service.deleteUser(users);
-		return "redirect:/users";
+		return "redirect:/users"; 
 	}    
 	
 }
