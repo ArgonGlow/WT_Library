@@ -1,5 +1,7 @@
 package main.WTLibraryApp.User;
-           
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
@@ -9,8 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-  
+
 @Controller
 @CrossOrigin(maxAge=3600)
 public class UserController {
@@ -21,8 +22,15 @@ public class UserController {
 //	Returns all users from the users table.
 	
 	@GetMapping("/users")
-	public String showUsers(Model model) {
-		model.addAttribute("users", service.findAllUsers());
+	public String showUsers(Model model, User user, String keyword) {
+		if (keyword != null) {
+			List<User> list = service.findByKeyword(keyword);
+			model.addAttribute("users", list);
+			System.out.println(list);
+		} else {
+			List<User> list = service.findAllUsers();
+			model.addAttribute("users", list);
+		}
 		return "/users/users";
 	}
 	

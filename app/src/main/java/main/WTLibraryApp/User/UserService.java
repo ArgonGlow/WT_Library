@@ -10,6 +10,10 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository repo;
+	
+	public List<User> findByKeyword(String keyword) {
+		return repo.findByKeyword(keyword);
+	}
 
 	public List<User> findAllUsers() {
 		return repo.findAll();
