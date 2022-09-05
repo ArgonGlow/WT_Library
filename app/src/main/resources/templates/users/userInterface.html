@@ -56,6 +56,9 @@
         alt="Logo"
         th:src="@{../../images/wt-logo.svg}"
     /></a>
+    <form th:action = "@{/logout}" method = "post">
+      <input type = "submit" value = "Sign Out"/>
+    </form>
   </div>
 </nav>
 <nav>
@@ -120,11 +123,10 @@
         />
         </div>
         <input type="submit" value="Update User" />
+        <a th:href="@{/users/delete-user/{id}(id=${users.user_id})}"
+        >Delete</a>
       </form>
-      <a th:href="@{/users/delete-user/{id}(id=${users.user_id})}"
-      >Delete</a>
     </div>
-
   </section>
 </body>
 </html>
