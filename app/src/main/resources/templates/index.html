@@ -35,6 +35,7 @@
     <!-- Content -->
     <div class="container">
       <h1>Working Talent Library</h1>
+      <h1>Hello [[${#httpServletRequest.remoteUser}]]!</h1>
     </div>
 
     <!-- Footer -->
@@ -50,5 +51,8 @@
       integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
       crossorigin="anonymous"
     ></script>
+    <form th:action="@{/logout}" method="post">
+      <input type="submit" value="Sign Out" />
+    </form>
   </body>
 </html>
