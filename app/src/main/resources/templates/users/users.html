@@ -40,7 +40,7 @@
       <ul>
         <li><a href="/users/add-user">Add user</a></li>
       </ul>
-      <div th:switch="${user}">
+      <div th:switch="${users}">
         <div th:case="*">
           <table class="table">
             <thead>
@@ -53,16 +53,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr th:each="user : ${user}">
-                <td th:text="${user.user_id}"></td>
-                <td th:text="${user.first_name}"></td>
-                <td th:text="${user.last_name}"></td>
-                <td th:text="${user.email}"></td>
+              <tr th:each="users : ${users}">
+                <td th:text="${users.user_id}"></td>
+                <td th:text="${users.first_name}"></td>
+                <td th:text="${users.last_name}"></td>
+                <td th:text="${users.email}"></td>
                 <td>
-                  <a th:href="@{/users/edit-user/{id}(id=${user.user_id})}"
+                  <a th:href="@{/users/edit-user/{id}(id=${users.user_id})}"
                     >Edit</a
                   >
-                  <a th:href="@{/users/delete-user/{id}(id=${user.user_id})}"
+                  <a th:href="@{/users/delete-user/{id}(id=${users.user_id})}"
                     >Delete</a
                   >
                 </td>
