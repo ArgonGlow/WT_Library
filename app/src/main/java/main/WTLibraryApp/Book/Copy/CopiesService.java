@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.Book.Copy;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WTLibCopyService {
+public class CopiesService {
 	
 	@Autowired
-	private IWTLibCopyRepository repo;
+	private CopiesRepository repo;
 	
 	public List<Copies> allCopies(){
 		return repo.findAll();

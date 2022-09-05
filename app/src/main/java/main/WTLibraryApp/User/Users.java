@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.User;
 
 import java.util.Collection;
 import java.util.List;
