@@ -37,7 +37,7 @@ public class BookController {
 		if (result.hasErrors()) {
 			return "books/createBook"; 
 		}
-		service.save(book);  
+		service.saveBook(book);  
 		return "redirect:/books";
 	}
 //	Updates an user from the users table
@@ -56,7 +56,7 @@ public class BookController {
 			book.setBook_id(id);
 			return "books/bookInterface";
 		}
-		service.save(book);
+		service.saveBook(book);
 		return "redirect:/books";
 	}
 	

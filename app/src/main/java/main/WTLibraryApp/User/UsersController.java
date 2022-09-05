@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @CrossOrigin(maxAge=3600)
-public class UserController {
+public class UsersController {
 	
 	@Autowired
-	private WTUserService service;
+	private UsersService service;
 	
 //	Returns all users from the users table.
 	
@@ -35,7 +35,6 @@ public class UserController {
 	
 	@PostMapping("/users/add-user")
 	public String addUserPost(Users users, BindingResult result, Model model) {
-		users.setPassword(BCrypt.hashpw("password", BCrypt.gensalt()));
 		if (result.hasErrors()) {
 			return "/users/add-user";
 		}
