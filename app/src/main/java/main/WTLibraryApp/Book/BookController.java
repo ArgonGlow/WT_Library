@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(maxAge=3600)
 public class BookController {
 	
-	@Autowired
+	@Autowired 
 	private BookService service;
 	   
 //	Returns all users from the users table.      
@@ -41,7 +41,7 @@ public class BookController {
 		return "redirect:/books";
 	}
 //	Updates an user from the users table
-	
+	                 
 	@GetMapping("/books/edit/{id}")
 	public String edit(@PathVariable("id") long id, Model model) {
 		Book book = service.find(id);
