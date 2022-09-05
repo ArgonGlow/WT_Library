@@ -40,8 +40,8 @@
         <h1>Edit User</h1>
         <form
           action="#"
-          th:action="@{/users/edit-user/{id}(id=${users.user_id})}"
-          th:object="${users}"
+          th:action="@{/users/edit-user/{id}(id=${user.user_id})}"
+          th:object="${user}"
           method="post"
         >
           <label for="user_id">User ID</label>
