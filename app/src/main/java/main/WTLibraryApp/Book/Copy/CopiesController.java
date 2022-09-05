@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.Book.Copy;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(maxAge=3600)
-public class WTLibCopyController {
+public class CopiesController {
 		
 	@Autowired
-	private WTLibCopyService service;
+	private CopiesService service;
 	
 	
 	@RequestMapping(value = "copies")
