@@ -13,6 +13,11 @@
       integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="../../static/style.css"
+      th:href="@{../style.css}"
+    />
   </head>
   <body>
   <!--_____________navigation bar_______________-->
@@ -51,8 +56,6 @@
         alt="Logo"
         th:src="@{../../images/wt-logo.svg}"
     /></a>
-    <form th:action = "@{/logout}" method = "post">
-      <input type = "submit" value = "Sign Out"/>
   </div>
 </nav>
 <nav>
@@ -98,9 +101,7 @@
             id="author"
             placeholder="Author"
           />
-          <!-- <input type="submit" value="Update Book" /> -->
-          <a th:href="@{/books/edit/{id}(id=${books.book_id})}"
-          >Update</a>
+          <input type="submit" value="Update Book" />
           <a th:href="@{/books/delete/{id}(id=${books.book_id})}"
           >Delete</a>
         </form>

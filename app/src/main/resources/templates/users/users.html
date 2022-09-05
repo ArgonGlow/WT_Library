@@ -56,8 +56,6 @@
         alt="Logo"
         th:src="@{images/wt-logo.svg}"
     /></a>
-    <form th:action = "@{/logout}" method = "post">
-      <input type = "submit" value = "Sign Out"/>
   </div>
 </nav>
 <nav>
@@ -90,6 +88,7 @@
             </thead>
             <tbody>
               <tr th:each="users : ${users}">
+                <td th:text="${users.user_id}"></td>
                 <td th:text="${users.first_name}"></td>
                 <td th:text="${users.last_name}"></td>
                 <td th:text="${users.email}"></td>

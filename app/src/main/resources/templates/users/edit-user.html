@@ -56,8 +56,6 @@
         alt="Logo"
         th:src="@{../../images/wt-logo.svg}"
     /></a>
-    <form th:action = "@{/logout}" method = "post">
-      <input type = "submit" value = "Sign Out"/>
   </div>
 </nav>
 <nav>
@@ -82,7 +80,13 @@
         th:object="${users}"
         method="post"
       >
-        
+        <label for="user_id">User ID</label>
+        <input
+          type="text"
+          th:field="*{user_id}"
+          id="user_id"
+          placeholder="User ID"
+        />
         <label for="first_name">First Name: </label>
         <input
           type="text"
@@ -104,11 +108,9 @@
           id="email"
           placeholder="Email"
         />
-        <a th:href="@{/users/edit-user/{id}(id=${users.user_id})}"
-        >Update</a>
+        <input type="submit" value="Update User" />
         <a th:href="@{/users/delete-user/{id}(id=${users.user_id})}"
-        >Delete</a>
-      </form>
+        >Delete</a></form>
     </div>
 
   </section>
