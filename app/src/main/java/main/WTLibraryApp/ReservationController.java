@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import main.WTLibraryApp.Book.Book;
+
 @RestController
 @CrossOrigin(maxAge=3600)
-public class BookController {
+public class ReservationController {
 	
 	@Autowired
 	private WTLibBookService service;
@@ -28,7 +30,7 @@ public class BookController {
 	 * returns get for all books
 	 */
 	@RequestMapping(value = "books")
-	public List<Books> findAll(){
+	public List<Book> findAll(){
 		return service.allBooks();
 	}
 	
@@ -38,18 +40,10 @@ public class BookController {
 	 * returns get for the item
 	 */
 	@RequestMapping(value = "books/{id}")
-	public Optional<Books> findById(@PathVariable long id) {
+	public Optional<Book> findById(@PathVariable long id) {
 		return service.findBook(id);
 	}
 
-	/*
-	 * saves book item to database
-	 * inputs book properties
-	 */
-	@RequestMapping(value = "books/create", method = RequestMethod.POST)
-	public void create(@RequestBody Books book) {
-		service.createBook(book);
-	}
 	/*
 	 * delete book item form database
 	 * inputs book_id
@@ -59,43 +53,25 @@ public class BookController {
 		service.deleteBook(id);
 	}
 	/*
-	 * edits book properties, while leaving unchanged properties unchanged
-	 * inputs book_id and new book properties
-	 */
-	@RequestMapping(value = "books/edit/{id}", method = RequestMethod.PUT)
-	public void edit(@PathVariable long id, @RequestBody Books newBook) {
-		Books oldBook = service.findBook(id).get();
-		if(newBook.getTitle().length()>0) {
-			oldBook.setTitle(newBook.getTitle());
-		}
-		if(newBook.getIsbn().length()>0) {
-			oldBook.setIsbn(newBook.getIsbn());
-		}
-		if(newBook.getAuthor().length()>0) {
-			oldBook.setAuthor(newBook.getAuthor());
-		}
-		service.createBook(oldBook);
-	} 
-	/*
 	 * find book by key word
 	 * inputs key word
 	 */
 
-	@RequestMapping(method = RequestMethod.POST, value = "books/search")
-	public List<Books> search(@RequestBody Search bookSearch) {
-		String keyWord = bookSearch.getKeyWord();
-		return service.searchBook(keyWord, keyWord, keyWord);
-	}
+//	@RequestMapping(method = RequestMethod.POST, value = "books/search")
+//	public List<Book> search(@RequestBody Search bookSearch) {
+//		String keyWord = bookSearch.getKeyWord();
+//		return service.searchBook(keyWord, keyWord, keyWord);
+//	}
 	
 	// list all entries from reservations table
 	// returns list of Reservation objects
 	@RequestMapping(value = "reservation/list")
-	public List<Reservation> listAllReservedBooks() {
+	public List<Reservation> findAllReservations() {
 		return service.allReservations();
 	}
 	
 	@RequestMapping(value = "reservation/create/{userId}", method = RequestMethod.POST)
-	public void reserveBook(@PathVariable long userId, @RequestBody Books selectedBook) {
+	public void reserveBook(@PathVariable long userId, @RequestBody Book selectedBook) {
 		Reservation newRes = new Reservation(selectedBook.getBook_id(), userId);
 		
 		service.createReservation(newRes);
