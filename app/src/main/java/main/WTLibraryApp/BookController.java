@@ -47,8 +47,8 @@ public class BookController {
 		Books book = service.find(id);
 		
 		model.addAttribute("books", book);
-		return "books/bookInterface";
-	}
+		return "books/bookInterface"; 
+	} 
 	
 	@PostMapping("/books/edit/{id}")
 	public String edit(@PathVariable("id") long id, Books book, BindingResult result, Model model) {
