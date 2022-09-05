@@ -165,7 +165,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `passphrase`, `active`, `create_time`) VALUES
 (1, 'Harry', 'Bottoms', 'getting@harry.com', '$2a$12$tFWZJlGqxZ/BmDZvBWVTeeX5bNJoqPDXMNIfVq1F7fjDDpp2tqTEa', 1, '2022-08-31 11:42:13'),
 (2, 'Mike', 'Hawk', 'Mike@Hawk.com', '$2a$12$KwUFQe67K.aoPU6hVNEcBuFVNgmDIxjFXGYbUlJW8U.CDxPpZ8lTi', 1, '2022-08-31 11:42:13'),
-(3, 'c', 'c', 'c', 'c', 1, '2022-08-31 11:42:13');
+(3, 'Ivana', 'Tinkle', 'Tinkle@live.com', '$2a$12$NZU9H2f8L6zWmljrJCzMfOPMyH5AsXIxANY0X1A45nnGnVEilLwk.', 1, '2022-08-31 11:42:13');
 
 --
 -- Indexes for dumped tables
