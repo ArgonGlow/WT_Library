@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @CrossOrigin(maxAge = 3600)
@@ -23,13 +22,13 @@ public class UserController {
 	// Returns all users from the users table.
 
 	@GetMapping("/users")
-	public String showUsers(Model model, Users users, String keyword) {
+	public String showUsers(Model model, User users, String keyword) {
 		if (keyword != null) {
-			List<Users> list = service.findByKeyword(keyword);
+			List<User> list = service.findByKeyword(keyword);
 			model.addAttribute("users", list);
 			System.out.println(list);
 		} else {
-			List<Users> list = service.findAllUsers();
+			List<User> list = service.findAllUsers();
 			model.addAttribute("users", list);
 		}
 
