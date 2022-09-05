@@ -1,0 +1,37 @@
+package main.WTLibraryApp;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ReservationService {
+	
+	@Autowired
+	private ReservationRepository repo;
+	
+	public List<Reservation> allReservations() {
+		return repo.findAll();
+	}
+	
+	public Reservation reservationById(long id) {
+		Reservation reservation = repo.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid reservation Id: " + id));
+		return reservation;
+	}
+	
+	public void saveReservation(Reservation newReservation) {
+		repo.save(newReservation);
+	}
+	
+	public void deleteReservation(Reservation reservation) {
+		repo.delete(reservation);
+	}
+
+
+	
+	
+	
+}
