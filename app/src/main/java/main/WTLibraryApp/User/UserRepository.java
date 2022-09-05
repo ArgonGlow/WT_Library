@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,9 +11,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IWTUsersRepository extends JpaRepository<Users, Long> {
-	
+public interface UserRepository extends JpaRepository<User, Long> {
+
 	@Query(value = "select * from users where first_name like %:keyword% or last_name like %:keyword%", nativeQuery = true)
-	public List<Users> findByKeyword(@Param("keyword") String keyword);
-	
+	public List<User> findByKeyword(@Param("keyword") String keyword);
+
 }

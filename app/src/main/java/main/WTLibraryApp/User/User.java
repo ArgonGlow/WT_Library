@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.User;
 
 import java.util.Collection;
 import java.util.List;
@@ -8,11 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class Users {
+@Table(name="users")
+public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long user_id;
@@ -23,7 +26,7 @@ public class Users {
 
 	private String email;
 	
-	private String password; 
+	private String passphrase; 
 	
 	private int active = 1;
 
@@ -32,11 +35,11 @@ public class Users {
 	}
 
 	public String getPassword() {
-		return password;
+		return passphrase;
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.passphrase = password;
 	}
 
 	public int getActive() {
