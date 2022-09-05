@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.User;
 
 public class Administrator extends Users {
 

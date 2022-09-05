@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.Book;
 
 public class Search {
 	private String keyWord;
@@ -11,3 +11,4 @@ public class Search {
 		this.keyWord = keyWord;
 	}	
 }
+  
