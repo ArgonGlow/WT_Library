@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.User;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WTUserService {
+public class UsersService {
 	
 	@Autowired
-	private IWTUsersRepository repo;
+	private UsersRepository repo;
 
 	public List<Users> findAllUsers() {
 		return repo.findAll();

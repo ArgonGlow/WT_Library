@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.Book;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
