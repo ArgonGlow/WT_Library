@@ -36,6 +36,10 @@ CREATE TABLE `admins` (
   `role` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO `admins` (`admin_id`, `user_id`, `email`, `role`) VALUES
+(1, 1, "getting@harry.com", 1),
+(2, 2, "Mike@Hawk.com", 2);
+
 -- --------------------------------------------------------
 
 --
@@ -159,8 +163,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `password`, `active`, `create_time`) VALUES
-(1, 'a', 'a', 'a', 'a', 1, '2022-08-31 11:42:13'),
-(2, 'b', 'b', 'b', 'b', 1, '2022-08-31 11:42:13'),
+(1, 'Harry', 'Bottoms', 'getting@harry.com', '$2a$12$tFWZJlGqxZ/BmDZvBWVTeeX5bNJoqPDXMNIfVq1F7fjDDpp2tqTEa', 1, '2022-08-31 11:42:13'),
+(2, 'Mike', 'Hawk', 'Mike@Hawk.com', '$2a$12$KwUFQe67K.aoPU6hVNEcBuFVNgmDIxjFXGYbUlJW8U.CDxPpZ8lTi', 1, '2022-08-31 11:42:13'),
 (3, 'c', 'c', 'c', 'c', 1, '2022-08-31 11:42:13');
 
 --
@@ -230,12 +234,6 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `admins`
---
-ALTER TABLE `admins`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `books`
