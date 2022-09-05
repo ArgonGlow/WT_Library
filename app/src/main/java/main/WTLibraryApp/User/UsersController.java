@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @CrossOrigin(maxAge=3600)
-public class UserController {
+public class UsersController {
 	
 	@Autowired
-	private WTUserService service;
+	private UsersService service;
 	
 //	Returns all users from the users table.
 	
@@ -39,9 +40,8 @@ public class UserController {
 			return "/users/add-user";
 		}
 		service.saveUser(users);
-		return "redirect:/users";
+		return "redirect:/users"; 
 	}
-	
 //	Updates an user from the users table
 	
 	@GetMapping("/users/edit-user/{id}")
@@ -49,19 +49,19 @@ public class UserController {
 		Users users = service.findUser(id);
 		
 		model.addAttribute("users", users);
-		return "users/edit-user";
+		return "users/userInterface";
 	}
 	
 	@PostMapping("/users/edit-user/{id}")
 	public String updateUserPost(@PathVariable("id") long id, Users users, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			users.setUser_id(id);
-			return "users/edit-user";
-		}
+			return "users/edit-user"; 
+		} 
 		
-		service.saveUser(users);
+		service.saveUser(users);     
 		return "redirect:/users";
-	}
+	} 
 	
 //	Deletes an user from the table.
 	
@@ -69,7 +69,7 @@ public class UserController {
 	public String deleteUser(@PathVariable("id") long id, Model model) {
 		Users users = service.findUser(id);
 		service.deleteUser(users);
-		return "redirect:/users";
-	}
+		return "redirect:/users"; 
+	}    
 	
 }
