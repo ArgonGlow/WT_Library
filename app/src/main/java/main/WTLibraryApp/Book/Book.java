@@ -1,5 +1,5 @@
-package main.WTLibraryApp.Book;
-
+package main.WTLibraryApp.Book;  
+ 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -43,12 +43,12 @@ public class Book {
 	}
 
 	public void setBook_id(long book_id) {
-		this.book_id = book_id;
-	}
+		this.book_id = book_id;  
+	}  
 
 	public byte[] getCover_image() {
-		return cover_image;
-	}
+		return cover_image; 
+	} 
 
 	public void setCover_image(byte[] cover_image) {
 		this.cover_image = cover_image;
