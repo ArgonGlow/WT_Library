@@ -38,7 +38,7 @@ public class BooksController {
 			return "books/createBook"; 
 		}
 		service.save(book);  
-		return "redirect:/books";
+		return "redirect:/booksInterface";
 	}
 //	Updates an user from the users table
 	
@@ -57,7 +57,7 @@ public class BooksController {
 			return "books/bookInterface";
 		}
 		service.save(book);
-		return "redirect:/books";
+		return "redirect:/WTlibrary";
 	}
 	
 //	Deletes an user from the table.
@@ -66,6 +66,6 @@ public class BooksController {
 	public String delete(@PathVariable("id") long id, Model model) {
 		Books book = service.find(id);
 		service.delete(book);     
-		return "redirect:/books";
+		return "redirect:/WTlibrary";
 	}	
 }

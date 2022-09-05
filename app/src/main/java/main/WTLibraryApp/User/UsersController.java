@@ -35,7 +35,6 @@ public class UsersController {
 	
 	@PostMapping("/users/add-user")
 	public String addUserPost(Users users, BindingResult result, Model model) {
-		users.setPassword(BCrypt.hashpw("password", BCrypt.gensalt()));
 		if (result.hasErrors()) {
 			return "/users/add-user";
 		}
