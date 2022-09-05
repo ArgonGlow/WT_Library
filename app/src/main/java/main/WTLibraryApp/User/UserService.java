@@ -6,26 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UsersService {
+public class UserService {
 	
 	@Autowired
-	private UsersRepository repo;
+	private UserRepository repo;
 
-	public List<Users> findAllUsers() {
+	public List<User> findAllUsers() {
 		return repo.findAll();
 	}
 	
-	public void saveUser(Users users) {
+	public void saveUser(User users) {
 		repo.save(users);
 	}
 	
-	public Users findUser(long id) {
-		Users users = repo.findById(id)
+	public User findUser(long id) {
+		User users = repo.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id: " + id));
 		return users;
 	}
 	
-	public void deleteUser(Users users) {
+	public void deleteUser(User users) {
 		repo.delete(users);
 	}
 	

@@ -6,14 +6,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BooksRepository extends JpaRepository<Books, Long>{
+public interface BookRepository extends JpaRepository<Book, Long>{
 /*
  * performs the query and searches for title keyword when
  * function is called
  * inputs title
  */
 
-    List<Books> findByTitleIgnoreCaseContainingOrIsbnIgnoreCaseContainingOrAuthorIgnoreCaseContaining(String title, String isbn, String author);
+    List<Book> findByTitleIgnoreCaseContainingOrIsbnIgnoreCaseContainingOrAuthorIgnoreCaseContaining(String title, String isbn, String author);
 
    
 }

@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @CrossOrigin(maxAge=3600)
-public class BooksController {
+public class BookController {
 	
 	@Autowired
-	private BooksService service;
+	private BookService service;
 	   
 //	Returns all users from the users table.      
 	  
@@ -28,12 +28,12 @@ public class BooksController {
 //	Adds a new user to the users table
 	
 	@GetMapping("/books/create")
-	public String create(Books book) {
+	public String create(Book book) {
 		return "books/createBook";   
 	}  
 	
 	@PostMapping("/books/create")
-	public String create(Books book, BindingResult result, Model model) {;
+	public String create(Book book, BindingResult result, Model model) {;
 		if (result.hasErrors()) {
 			return "books/createBook"; 
 		}
@@ -44,14 +44,14 @@ public class BooksController {
 	
 	@GetMapping("/books/edit/{id}")
 	public String edit(@PathVariable("id") long id, Model model) {
-		Books book = service.find(id);
+		Book book = service.find(id);
 		
 		model.addAttribute("books", book);
 		return "books/bookInterface"; 
 	} 
 	
 	@PostMapping("/books/edit/{id}")
-	public String edit(@PathVariable("id") long id, Books book, BindingResult result, Model model) {
+	public String edit(@PathVariable("id") long id, Book book, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			book.setBook_id(id);
 			return "books/bookInterface";
@@ -64,7 +64,7 @@ public class BooksController {
 	
 	@GetMapping("/books/delete/{id}")
 	public String delete(@PathVariable("id") long id, Model model) {
-		Books book = service.find(id);
+		Book book = service.find(id);
 		service.delete(book);     
 		return "redirect:/books";
 	}	
