@@ -153,7 +153,7 @@ CREATE TABLE `users` (
   `first_name` varchar(32) NOT NULL,
   `last_name` varchar(32) NOT NULL,
   `email` varchar(80) NOT NULL,
-  `password` varchar(80) NOT NULL DEFAULT 'password',
+  `passphrase` varchar(80) NOT NULL DEFAULT 'passphrase',
   `active` tinyint(4) NOT NULL DEFAULT 1,
   `create_time` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -162,7 +162,7 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `password`, `active`, `create_time`) VALUES
+INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `passphrase`, `active`, `create_time`) VALUES
 (1, 'Harry', 'Bottoms', 'getting@harry.com', '$2a$12$tFWZJlGqxZ/BmDZvBWVTeeX5bNJoqPDXMNIfVq1F7fjDDpp2tqTEa', 1, '2022-08-31 11:42:13'),
 (2, 'Mike', 'Hawk', 'Mike@Hawk.com', '$2a$12$KwUFQe67K.aoPU6hVNEcBuFVNgmDIxjFXGYbUlJW8U.CDxPpZ8lTi', 1, '2022-08-31 11:42:13'),
 (3, 'c', 'c', 'c', 'c', 1, '2022-08-31 11:42:13');
