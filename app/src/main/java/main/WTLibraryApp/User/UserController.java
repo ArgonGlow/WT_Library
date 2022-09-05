@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @CrossOrigin(maxAge=3600)
-public class UsersController {
+public class UserController {
 	
 	@Autowired
-	private UsersService service;
+	private UserService service;
 	
 //	Returns all users from the users table.
 	
@@ -29,12 +29,12 @@ public class UsersController {
 //	Adds a new user to the users table
 	
 	@GetMapping("/users/add-user")
-	public String addUser(Users users) {
+	public String addUser(User users) {
 		return "/users/add-user";
 	}
 	
 	@PostMapping("/users/add-user")
-	public String addUserPost(Users users, BindingResult result, Model model) {
+	public String addUserPost(User users, BindingResult result, Model model) {
 		users.setPassword(BCrypt.hashpw("password", BCrypt.gensalt()));
 		if (result.hasErrors()) {
 			return "/users/add-user";
@@ -46,14 +46,14 @@ public class UsersController {
 	
 	@GetMapping("/users/edit-user/{id}")
 	public String updateUser(@PathVariable("id") long id, Model model) {
-		Users users = service.findUser(id);
+		User users = service.findUser(id);
 		
 		model.addAttribute("users", users);
 		return "users/userInterface";
 	}
 	
 	@PostMapping("/users/edit-user/{id}")
-	public String updateUserPost(@PathVariable("id") long id, Users users, BindingResult result, Model model) {
+	public String updateUserPost(@PathVariable("id") long id, User users, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			users.setUser_id(id);
 			return "users/edit-user"; 
@@ -67,7 +67,7 @@ public class UsersController {
 	
 	@GetMapping("/users/delete-user/{id}")
 	public String deleteUser(@PathVariable("id") long id, Model model) {
-		Users users = service.findUser(id);
+		User users = service.findUser(id);
 		service.deleteUser(users);
 		return "redirect:/users"; 
 	}    

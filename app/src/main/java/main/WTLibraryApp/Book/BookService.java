@@ -6,26 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BooksService {
+public class BookService {
 	
 	@Autowired
-	private BooksRepository repo;
+	private BookRepository repo;
 
-	public List<Books> findAll() {
+	public List<Book> findAll() {
 		return repo.findAll();
 	}
 	
-	public void saveBook(Books book) {
+	public void saveBook(Book book) {
 		repo.save(book);
 	}
 	
-	public Books find(long id) {
-		Books book = repo.findById(id)
+	public Book find(long id) {
+		Book book = repo.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id: " + id));
 		return book;
 	}
 	
-	public void delete(Books book) {
+	public void delete(Book book) {
 		repo.delete(book);
 	}
 	
