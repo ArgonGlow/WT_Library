@@ -25,7 +25,7 @@ public class Users {
 	
 	private String password; 
 	
-	private boolean active = true;
+	private int active = 1;
 
 	public long getUser_id() {
 		return user_id;
@@ -39,11 +39,11 @@ public class Users {
 		this.password = password;
 	}
 
-	public boolean isActive() {
+	public int getActive() {
 		return active;
 	}
 
-	public void setActive(boolean active) {
+	public void setActive(int active) {
 		this.active = active;
 	}
 
@@ -73,6 +73,10 @@ public class Users {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public String getFullName() {
+		return this.first_name + " " + this.last_name;
 	}
 	
 }

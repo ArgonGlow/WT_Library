@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
 public interface IWTUsersRepository extends JpaRepository<Users, Long> {
 	
 	@Query(value = "select * from users where first_name like %:keyword% or last_name like %:keyword%", nativeQuery = true)
-	List<Users> findByKeyword(@Param("keyword") String keyword);
+	public List<Users> findByKeyword(@Param("keyword") String keyword);
 	
 }

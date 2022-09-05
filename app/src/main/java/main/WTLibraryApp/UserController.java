@@ -68,7 +68,7 @@ public class UserController {
 			return "users/edit-user";
 		}
 		
-		service.saveUser(users);
+		service.saveUser(users, id);
 		return "redirect:/users";
 	}
 	
@@ -77,7 +77,18 @@ public class UserController {
 	@GetMapping("/users/delete-user/{id}")
 	public String deleteUser(@PathVariable("id") long id, Model model) {
 		Users users = service.findUser(id);
-		service.deleteUser(users);
+		model.addAttribute("users", users);
+		return "users/delete-user";
+	}
+	
+	@PostMapping("/users/delete-user/{id}")
+	public String deleteUserPost(@PathVariable("id") long id, Users users, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			users.setUser_id(id);
+			return "users/delete-user";
+		}
+		
+		service.deleteUser(users, id);
 		return "redirect:/users";
 	}
 	

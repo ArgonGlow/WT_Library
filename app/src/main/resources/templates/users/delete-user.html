@@ -25,32 +25,17 @@
     </div>
   </nav>
 
-  <!-- Content -->
-  <section id="edit-user">
+  <section id="delete-user">
     <div class="container">
-      <h1>Edit User</h1>
-      <form action="#" th:action="@{/users/edit-user/{id}(id=${users.user_id})}" th:object="${users}" method="post">
-        <div class="form-group col-3">
-          <label for="first_name">First Name: </label>
-          <input type="text" th:field="*{first_name}" id="first_name" placeholder="First Name" class="form-control" />
-        </div>
-        <div class="form-group col-3">
-          <label for="last_name">Last Name: </label>
-          <input type="text" th:field="*{last_name}" id="last_name" placeholder="Last Name" class="form-control" />
-        </div>
-        <div class="form-group col-3">
-          <label for="email">Email: </label>
-          <input type="text" th:field="*{email}" id="email" placeholder="Email" class="form-control" />
-        </div>
-        <div class="form-group col-3">
-          <label for="password">Password: </label>
-          <input type="password" th:field="*{password}" id="password" placeholder="Password" class="form-control" />
-        </div>
-        <div class="form-group col-3">
-          <label class="form-check-label" for="active">Active user: </label>
-          <input type="text" th:field="*{active}" id="active" class="form-control" />
-        </div>
-        <input type="submit" class="btn btn-primary" value="Update User" />
+      <h1>Delete User</h1>
+      <form action="#" th:action="@{/users/delete-user/{id}(id=${users.user_id})}" th:object="${users}" method="post">
+        <p>
+          Are you sure you want to delete <span th:text="${users.getFullName()}"></span>?
+        </p>
+        <a th:href="@{/users/delete-user/{id}(id=${users.user_id})}" method="post">
+          <button type="submit" class="btn btn-primary">Yes</button>
+        </a>
+        <a class="btn btn-secondary" href="/users">No</a>
       </form>
     </div>
   </section>
