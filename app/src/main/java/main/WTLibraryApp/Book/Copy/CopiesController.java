@@ -27,7 +27,7 @@ public class CopiesController {
 	}
 	
 	@RequestMapping(value = "copies/{bookId}/{copyId}")
-	private Optional<Copies> findById(@PathVariable long bookId, @PathVariable long copyId) {
+	public Optional<Copies> findById(@PathVariable long bookId, @PathVariable long copyId) {
 		
 		CopiesPK id = new CopiesPK(bookId, copyId);
 		
