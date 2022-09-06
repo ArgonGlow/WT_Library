@@ -1,4 +1,4 @@
-package main.WTLibraryApp;
+package main.WTLibraryApp.Reservation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +21,8 @@ public class ReservationController {
 	// returns list of Reservation objects
 	@GetMapping(value = "/reservations")
 	public String findAllReservations(Model model) {
-		model.addAttribute("reservation", service.allReservations());
-		return "books/WTlibrary";
+		model.addAttribute("reservations", service.allReservations());
+		return "/reservations/reservations";
 	}
 	
 	@GetMapping(value = "/reservations/user/{id}")
