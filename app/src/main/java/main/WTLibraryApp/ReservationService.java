@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,6 +29,10 @@ public class ReservationService {
 	
 	public void deleteReservation(Reservation reservation) {
 		repo.delete(reservation);
+	}
+
+	public List<Reservation> reservationsByUserId(Reservation userReservation) {
+		return repo.findAll(Example.of(userReservation));
 	}
 
 

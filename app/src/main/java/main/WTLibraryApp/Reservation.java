@@ -16,6 +16,8 @@ public class Reservation {
 	private long bookId;
 	private long userId;
 	
+	public Reservation() {}
+	
 	public Reservation(long bookId, long userId) {
 		this.bookId = bookId;
 		this.userId = userId;
