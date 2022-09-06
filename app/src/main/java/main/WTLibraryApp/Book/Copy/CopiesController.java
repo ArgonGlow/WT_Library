@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import main.WTLibraryApp.Reservation;
-
 @RestController
 @CrossOrigin(maxAge=3600)
 public class CopiesController {
@@ -39,23 +37,5 @@ public class CopiesController {
 		CopiesPK id = new CopiesPK(bookId, copyId);
 		
 		service.deleteCopy(id);
-	}
-	
-	@RequestMapping(value = "copies/assign/{bookId}/{copyId}/{userId}", method = RequestMethod.PUT)
-	public void assignCopy(@RequestBody Reservation reservation, @PathVariable long copyId) {
-		
-		// create copy object by combined id
-		Optional<Copies> reservedCopy = findById(reservation.getBookId(), copyId);
-		
-		// abort if selected id doesn't return a copy
-		if (reservedCopy.isEmpty()) {
-			System.out.println("no copy for id: " + reservation.getBookId() + "." + copyId);
-			return;
-		}
-		
-		// create copy-object from list and set new userId
-		Copies loanedCopy = reservedCopy.get();
-		loanedCopy.setUserId(reservation.getUserId());
-		service.updateCopy(loanedCopy);
 	}
 }
