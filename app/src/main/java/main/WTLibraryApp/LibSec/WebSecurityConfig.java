@@ -32,8 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
         .logout() .invalidateHttpSession(true) 
             .clearAuthentication(true) .permitAll();
-   }
-	
+   } 
+	   
 	
 	
     @Autowired
