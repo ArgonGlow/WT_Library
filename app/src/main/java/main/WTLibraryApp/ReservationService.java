@@ -1,7 +1,6 @@
 package main.WTLibraryApp;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -34,9 +33,4 @@ public class ReservationService {
 	public List<Reservation> reservationsByUserId(Reservation userReservation) {
 		return repo.findAll(Example.of(userReservation));
 	}
-
-
-	
-	
-	
 }
