@@ -3,6 +3,8 @@ package main.WTLibraryApp.Book.Copy;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,10 @@ public class CopyService {
 	} 
 	
 	public void deleteCopy(CopyPK copyPk) {
-		repo.deleteByCopyPkId(copyPk);
+		Copy copy = new Copy();
+		copy.setCopyPkId(copyPk);
+		repo.delete(copy);
+//		repo.deleteByCopyPkId(copyPk);
 	}
 	
 	public void updateCopy(Copy copy) {

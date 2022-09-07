@@ -29,8 +29,7 @@ public class UserController {
 		if (keyword != null) {
 			List<User> list = service.findByKeyword(keyword);
 			model.addAttribute("users", list);
-			System.out.println(list);
-		} else {
+		} else {   
 			List<User> list = service.findAllUsers();
 			model.addAttribute("users", list);
 		}

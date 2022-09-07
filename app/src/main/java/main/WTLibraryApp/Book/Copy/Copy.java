@@ -16,7 +16,6 @@ public class Copy {
 	// separating userId variable name from column name
 	@Column(name="loaned_by_user")
 	private long userId;
-	
 
 	public CopyPK getCopyPkId() {
 		return copyPkId;

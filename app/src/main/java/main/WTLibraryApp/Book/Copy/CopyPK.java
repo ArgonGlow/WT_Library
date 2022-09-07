@@ -27,7 +27,7 @@ public class CopyPK implements Serializable {
 		this.copyId = copyId;
 	}
 	
-	// getters and setters
+	// getters and setters 
 	public long getBookId() {
 		return bookId;
 	}
@@ -35,7 +35,7 @@ public class CopyPK implements Serializable {
 		this.bookId = bookId;
 	}
 	public long getCopyId() {
-		return copyId;
+		return copyId;  
 	}
 	public void setCopyId(long copyId) {
 		this.copyId = copyId;

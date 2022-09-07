@@ -14,7 +14,7 @@ public interface CopyRepository extends JpaRepository<Copy, CopyPK>{
 	// findById method for combined-id object
 	List<Copy> findByCopyPkId(CopyPK copyPk);
 	// deleteById method for combined-id object
-	List<Copy> deleteByCopyPkId(CopyPK copyPk);
+//	Copy deleteByCopyPkId(CopyPK copyPk);
 	// findById method for user-id object
 	List<Copy> findCopyByUserId(int id);
 }

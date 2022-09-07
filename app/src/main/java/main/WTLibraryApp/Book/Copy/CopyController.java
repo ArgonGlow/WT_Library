@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,21 +34,22 @@ public class CopyController {
 		CopyPK id = new CopyPK(bookId, copyId);
 		model.addAttribute("copies", service.findCopy(id));
 		return "copies/copyInterface";                           
-	}      
+	}       
 	
-	@GetMapping(value = "copies/delete/{bookId}/{copyId}")
-	public String remove(@PathVariable long bookId, @PathVariable long copyId, Model model) {
+	@GetMapping("copies/delete/{bookId}/{copyId}")
+	public String delete(@PathVariable long bookId, @PathVariable long copyId) {
+			
 		CopyPK id = new CopyPK(bookId, copyId);
-		service.deleteCopy(id);
-		
-		return "redirect:/copies";
+		service.deleteCopy(id); 
+		return "redirect:/copies"; 
 	}
 	
-	/*	@RequestMapping(value = "copies/assign/{bookId}/{copyId}/{userId}", method = RequestMethod.PUT)
+	@PostMapping(value = "copies/assign/{bookId}/{copyId}/{userId}")
 	public void assignCopy(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId) {
 		
-		// create copy object by combined id
-		Optional<Copy> reservedCopy = findById(bookId, copyId);
+		// create copy object by combined id 
+		CopyPK id = new CopyPK(bookId, copyId);
+		List<Copy> reservedCopy = service.findCopy(id);
 		
 		// abort if selected id doesn't return a copy
 		if (reservedCopy.isEmpty()) {
@@ -56,9 +58,9 @@ public class CopyController {
 		}
 	
 		// create copy-object from list and set new userId
-		Copy loanedCopy = reservedCopy.get();
+		Copy loanedCopy = reservedCopy.get(0);
 		loanedCopy.setUserId(userId);
 		service.updateCopy(loanedCopy);
-	}	*/
+	}	
 }
 	

@@ -66,7 +66,7 @@ public class BookController {
 		model.addAttribute("copies", copyList);
 		return "books/bookInterface"; 
 	} 
-	
+	 
 	@PostMapping("/books/edit/{id}")
 	public String edit(@PathVariable("id") long id, Book book, BindingResult result, Model model) {
 		if (result.hasErrors()) {

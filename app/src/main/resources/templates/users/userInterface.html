@@ -130,31 +130,7 @@
         >Delete</a>
       </form>
 
-      <div th:switch="${users}">
-        <div th:case="*">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="users : ${users}">
-                <td th:text="${users.first_name}"></td>
-                <td th:text="${users.last_name}"></td>
-                <td th:text="${users.email}"></td>
-                <td>
-                  <a th:href="@{/users/edit-user/{id}(id=${users.user_id})}">Edit</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    </div>
+      
   </section>
 </body>
 </html>
