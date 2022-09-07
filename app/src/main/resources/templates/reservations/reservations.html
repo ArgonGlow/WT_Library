@@ -63,6 +63,27 @@
   </nav>
   <!--____________________________-->
 
+  <!-- Cancellation Modal -->
+  <div th:each="reservation :${reservations}" class="modal fade" th:id="@{exampleModal{id}(id = ${reservation.reservationId})}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirm Cancellation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p th:text="@{Are you sure you want to cancel your reservation for title {book}?(book = ${reservation.bookId})}"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+          <a th:href="@{/reservations/cancel/{id}(id=${reservation.reservationId})}" class="btn btn-primary">Confirm</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Default page view -->
   <div class="container">
     <br>
     <br>
@@ -86,9 +107,11 @@
                 <td th:text="${reservation.bookId}"></td>
                 <td th:text="${reservation.userId}"></td>
                 <td>
-                  <!-- <a th:href="@{/reservations/create}"
-                    >Add Reservatiion</a
-                  > -->
+                  <!-- <a th:href="@{/reservations/cancel/{id}(id=${reservation.reservationId})}">Cancel</a> -->
+                  <button type="button" class="btn btn-primary" th:id="${reservation.reservationId}" data-bs-toggle="modal" th:data-bs-target="@{#exampleModal{id}(id = ${reservation.reservationId})}">
+                    Cancel
+                  </button>
+                  
                 </td>
                 <!-- <td>
                     <img th:src="${books.cover_image}" >
@@ -97,7 +120,7 @@
               </tr> 
             </tbody>
           </table>
-          <a href="/reservations/create">Add Reservation</a>
+          <a href="/reservations/create" class="btn btn-primary">Add Reservation</a>
         </div>
     </div>
   </div>
