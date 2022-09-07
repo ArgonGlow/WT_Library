@@ -100,9 +100,7 @@
                     <td th:text="${books.isbn}"></td>
                     <td th:text="${books.author}"></td>
                     <td>
-                      <a th:href="@{/books/edit/{id}(id=${books.book_id})}"
-                        >Edit</a
-                      >
+                      <a th:href="@{/books/edit/{id}(id=${books.book_id})}">Edit</a>
                     </td>
                     <td>
                        <img th:src="${books.cover_image}" >
