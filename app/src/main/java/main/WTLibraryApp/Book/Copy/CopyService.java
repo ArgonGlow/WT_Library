@@ -16,11 +16,11 @@ public class CopyService {
 		return repo.findAll();
 	}
 	
-	public Optional<Copy> findCopyByUserId(int id) {
+	public List<Copy> findCopyByUserId(int id) {
 		return repo.findCopyByUserId(id);
 	}
 	
-	public Optional<Copy> findCopy(CopyPK copyPk) {
+	public List<Copy> findCopy(CopyPK copyPk) {
 		return repo.findByCopyPkId(copyPk);
 	} 
 	

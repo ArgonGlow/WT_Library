@@ -130,27 +130,30 @@
         >Delete</a>
       </form>
 
-      <!--Show user books-->
-      <div th:switch="${copies}">
+      <div th:switch="${users}">
         <div th:case="*">
           <table class="table">
             <thead>
               <tr>
-                <th>Copy id</th>
-                <th>Book id</th>
-                <th>User id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
               </tr>
             </thead>
             <tbody>
-              <tr th:each="copies : ${copies}">
-                <td th:text="${copies.userId}"></td>
+              <tr th:each="users : ${users}">
+                <td th:text="${users.first_name}"></td>
+                <td th:text="${users.last_name}"></td>
+                <td th:text="${users.email}"></td>
+                <td>
+                  <a th:href="@{/users/edit-user/{id}(id=${users.user_id})}">Edit</a>
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
-      
     </div>
   </section>
 </body>

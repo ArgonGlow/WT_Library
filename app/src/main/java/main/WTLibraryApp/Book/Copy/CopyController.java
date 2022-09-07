@@ -14,35 +14,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@Controller 
 @CrossOrigin(maxAge=3600)
 public class CopyController {
 		
 	@Autowired
 	private CopyService service;
-	
-	@GetMapping(value = "copies")
-	public String findAllByUser(Model model){
+ 	
+  	@GetMapping(value = "copies")
+	public String findAll(Model model){
 		model.addAttribute("copies", service.allCopies());
 		return "copies/copies"; 
 	}  
-	    
-	@RequestMapping(value = "copies/{bookId}/{copyId}")
-	public Optional<Copy> findById(@PathVariable long bookId, @PathVariable long copyId) {
+	     
+	@GetMapping(value = "copies/{bookId}/{copyId}")
+	public String findById(@PathVariable long bookId, @PathVariable long copyId, Model model) {
 		
 		CopyPK id = new CopyPK(bookId, copyId);
-		
-		return service.findCopy(id);
-	}
+		model.addAttribute("copies", service.findCopy(id));
+		return "copies/copyInterface";                           
+	}      
 	
-	@RequestMapping(value = "copies/delete/{bookId}/{copyId}", method = RequestMethod.DELETE)
-	public void remove(@PathVariable long bookId, @PathVariable long copyId) {
+	@GetMapping(value = "copies/delete/{bookId}/{copyId}")
+	public String remove(@PathVariable long bookId, @PathVariable long copyId, Model model) {
 		CopyPK id = new CopyPK(bookId, copyId);
-		
 		service.deleteCopy(id);
+		
+		return "redirect:/copies";
 	}
 	
-	@RequestMapping(value = "copies/assign/{bookId}/{copyId}/{userId}", method = RequestMethod.PUT)
+	/*	@RequestMapping(value = "copies/assign/{bookId}/{copyId}/{userId}", method = RequestMethod.PUT)
 	public void assignCopy(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId) {
 		
 		// create copy object by combined id
@@ -53,10 +54,11 @@ public class CopyController {
 			System.out.println("no copy for id: " + bookId + "." + copyId);
 			return;
 		}
-		
+	
 		// create copy-object from list and set new userId
 		Copy loanedCopy = reservedCopy.get();
 		loanedCopy.setUserId(userId);
 		service.updateCopy(loanedCopy);
-	}
+	}	*/
 }
+	

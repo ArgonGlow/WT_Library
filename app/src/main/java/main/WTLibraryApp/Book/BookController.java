@@ -1,5 +1,8 @@
 package main.WTLibraryApp.Book;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Controller;  
 import org.springframework.ui.Model;
@@ -9,12 +12,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import main.WTLibraryApp.Book.Copy.Copy;
+import main.WTLibraryApp.Book.Copy.CopyPK;
+import main.WTLibraryApp.Book.Copy.CopyService;
+
 @Controller
 @CrossOrigin(maxAge=3600)
 public class BookController {
 	
 	@Autowired 
 	private BookService service;
+	@Autowired
+	private CopyService copyService;
 	   
 //	Returns all users from the users table.      
 	  
@@ -38,13 +47,23 @@ public class BookController {
 		service.saveBook(book);  
 		return "redirect:/books";
 	}
-//	Updates an user from the users table
-	                 
-	@GetMapping("/books/edit/{id}")
-	public String edit(@PathVariable("id") long id, Model model) {
-		Book book = service.find(id);
-		
+	
+// Updates an user from the users table
+// Also shows all copies of the book	                 
+	@GetMapping("/books/edit/{bookId}")
+	public String edit(@PathVariable("bookId") long bookId, Model model) {
+		Book book = service.find(bookId);
 		model.addAttribute("books", book);
+		
+		CopyPK id = new CopyPK();
+		id.setBookId(bookId);
+		List<Copy> copyList = new ArrayList<Copy>();
+		for(int i=0;i<3;i++) {
+			id.setCopyId(i);
+			copyList.addAll(copyService.findCopy(id));
+		}
+		
+		model.addAttribute("copies", copyList);
 		return "books/bookInterface"; 
 	} 
 	
