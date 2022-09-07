@@ -1,7 +1,6 @@
 package main.WTLibraryApp.User;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import main.WTLibraryApp.LibMail.EmailService;
 
 @Controller
 @CrossOrigin(maxAge=3600)
@@ -18,6 +18,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService service;
+
+	@Autowired
+	private EmailService emailService;
 	
 //	Returns all users from the users table.
 	
@@ -44,6 +47,7 @@ public class UserController {
 	@PostMapping("/users/add-user")
 	public String addUserPost(User users, BindingResult result, Model model) {
 		users.setPassword(BCrypt.hashpw("password", BCrypt.gensalt()));
+		emailService.sendSimpleMessage(users.getEmail(), "\"Welcome\"", "Welcome \"" + users.getFirst_name() +"\" \""+users.getLast_name()+"\",\n\"Thank you\" for \"using\" our \"services\". Your \"username\" is this \"email\" \"and\" your passphrase is guest. \"Please\" change it at \"your\" earliest \"convenience\". We look forward to our \"arrangement.\"\n \"C\" you, \n \"The team\".");
 		if (result.hasErrors()) {
 			return "/users/add-user";
 		}
