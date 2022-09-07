@@ -24,9 +24,9 @@ public class BookController {
 	public String findAll(Model model) {
 		model.addAttribute("books", service.findAll());
 		return "books/WTlibrary";
-	}
+	} 
 //	Adds a new user to the users table
-	
+	 
 	@GetMapping("/books/create")
 	public String create(Book book) {
 		return "books/createBook";   

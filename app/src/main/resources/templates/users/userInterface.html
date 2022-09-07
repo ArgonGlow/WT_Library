@@ -72,11 +72,14 @@
 </div>
 </nav>
   <!--____________________________-->
+
   <section id="edit-user">
     <div class="container">
       <br>
       <br>
       <h1>Edit User</h1>
+
+        <!--Update user function-->
       <form
         action="#"
         th:action="@{/users/edit-user/{id}(id=${users.user_id})}"
@@ -126,6 +129,28 @@
         <a th:href="@{/users/delete-user/{id}(id=${users.user_id})}"
         >Delete</a>
       </form>
+
+      <!--Show user books-->
+      <div th:switch="${copies}">
+        <div th:case="*">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Copy id</th>
+                <th>Book id</th>
+                <th>User id</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="copies : ${copies}">
+                <td th:text="${copies.userId}"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+      
     </div>
   </section>
 </body>

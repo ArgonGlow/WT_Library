@@ -40,6 +40,10 @@
       background-color: rgb(15, 110, 40);
       color: white;
     }
+
+    /* search.button {
+      background-color: rgb(15, 75, 13);
+    } */
   </style>
 
   <nav class="navbar navbar-extend-sm navbar-light bg-light">
@@ -71,8 +75,8 @@
     <!-- Search User Function -->
     <div id="search">
       <form th:action="@{/users}" action="get">
-        <input type="text" name="keyword" th:value="${keyword}" placeholder="Search user by name" />
-        <button type="submit" class="btn btn-primary">Search</button>
+        <input type="text" name="keyword" th:value="${keyword}" placeholder="Search..." />
+        <button type="submit" class="btn btn-primary" >Search</button>
         <a href="/users" class="btn btn-secondary">Reset</a>
       </form>
     </div>

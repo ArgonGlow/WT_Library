@@ -1,6 +1,6 @@
-package main.WTLibraryApp.User;
-
-import java.util.List;
+package main.WTLibraryApp.User;  
+       
+import java.util.List;     
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -26,7 +26,7 @@ public class UserController {
 		if (keyword != null) {
 			List<User> list = service.findByKeyword(keyword);
 			model.addAttribute("users", list);
-		} else {
+		} else {   
 			List<User> list = service.findAllUsers();
 			model.addAttribute("users", list);
 		}
