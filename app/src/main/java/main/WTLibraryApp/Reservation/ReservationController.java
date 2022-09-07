@@ -65,6 +65,5 @@ public class ReservationController {
 //		String keyWord = bookSearch.getKeyWord();
 //		return service.searchBook(keyWord, keyWord, keyWord);
 //	}
-	
 
 }
