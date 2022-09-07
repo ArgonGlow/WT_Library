@@ -86,8 +86,8 @@
                 <td th:text="${reservation.bookId}"></td>
                 <td th:text="${reservation.userId}"></td>
                 <td>
-                  <!-- <a th:href="@{/books/edit/{id}(id=${books.book_id})}"
-                    >Edit</a
+                  <!-- <a th:href="@{/reservations/create}"
+                    >Add Reservatiion</a
                   > -->
                 </td>
                 <!-- <td>
@@ -97,6 +97,7 @@
               </tr> 
             </tbody>
           </table>
+          <a href="/reservations/create">Add Reservation</a>
         </div>
     </div>
   </div>
