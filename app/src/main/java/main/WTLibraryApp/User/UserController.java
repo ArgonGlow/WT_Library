@@ -51,7 +51,7 @@ public class UserController {
 	
 	@PostMapping("/users/add-user")
 	public String addUserPost(User users, BindingResult result, Model model) {
-		users.setPassword(BCrypt.hashpw("password", BCrypt.gensalt()));
+		users.setPassword(BCrypt.hashpw("guest", BCrypt.gensalt()));
 		emailService.sendSimpleMessage(users.getEmail(), "\"Welcome\"", "Welcome \"" + users.getFirst_name() +"\" \""+users.getLast_name()+"\",\n\"Thank you\" for \"using\" our \"services\". Your \"username\" is this \"email\" \"and\" your passphrase is guest. \"Please\" change it at \"your\" earliest \"convenience\". We look forward to our \"arrangement.\"\n \"C\" you, \n \"The team\".");
 		if (result.hasErrors()) {
 			return "/users/add-user";
