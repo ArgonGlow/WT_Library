@@ -46,8 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     		.usersByUsernameQuery("select email,passphrase, active "
         		+ "from users "
         		+ "where email = ?")
-    		.authoritiesByUsernameQuery("select email,user_id "
-		        + "from admins "
+    		.authoritiesByUsernameQuery("select email,role "
+		        + "from users "
 		        + "where email = ?");
    }
    
