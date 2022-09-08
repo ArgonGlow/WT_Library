@@ -129,6 +129,9 @@
                   <td th:text="${copies.copyPkId.bookId}"></td>
                   <td th:text="${copies.copyPkId.copyId}"></td>
                   <td th:text="${copies.userId}"></td>
+                  <td>
+                    <a th:href="@{/copies/delete/{id1}/{id2}(id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId})}">delete</a>
+                  </td>
                 </tr>
               </tbody>
             </table>

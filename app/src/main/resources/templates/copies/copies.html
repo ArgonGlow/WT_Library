@@ -89,7 +89,7 @@
                   <td th:text="${copies.copyPkId.copyId}"></td>
                   <td th:text="${copies.userId}"></td>
                   <td>
-                    <a th:href="@{/copies/delete/{id1}(id1=${copies.copyPkId.bookId})/{id2}(id2=${copies.copyPkId.copyId})}">delete</a>
+                    <a th:href="@{/copies/delete/{id1}/{id2}(id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId})}">delete</a>
                   </td>
                 </tr>
               </tbody>
@@ -100,14 +100,28 @@
 
       </section>
 
+        <h1>Add Copy</h1>
+
+          <input id="id1" type="number" placeholder="book id">
+          <input id="id2"type="number" placeholder="copy id">
+          <button onclick="save">Add copy</button>
+
+
+
+      </form>
+    </div>
  
 
     <!-- Javascript -->
-    <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
-    integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
-    crossorigin="anonymous"
-    ></script>
+    <script>
+      function save(){
+        var id1 = document.getElementById("id1");
+        var id2 = document.getElementById("id2");
+        
+        fetch("/copies/create/{id1}/{id2}")
+        .then((response) => response.json())
+      }
+    </script>
 
     </section>
   </body>

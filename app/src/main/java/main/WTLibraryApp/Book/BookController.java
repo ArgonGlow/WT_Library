@@ -1,6 +1,7 @@
 package main.WTLibraryApp.Book;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired; 
@@ -55,15 +56,9 @@ public class BookController {
 		Book book = service.find(bookId);
 		model.addAttribute("books", book);
 		
-		CopyPK id = new CopyPK();
-		id.setBookId(bookId);
-		List<Copy> copyList = new ArrayList<Copy>();
-		for(int i=0;i<3;i++) {
-			id.setCopyId(i);
-			copyList.addAll(copyService.findCopy(id));
-		}
-		
+		List<Copy> copyList = copyService.findCopyByBookId(bookId);
 		model.addAttribute("copies", copyList);
+		
 		return "books/bookInterface"; 
 	} 
 	 

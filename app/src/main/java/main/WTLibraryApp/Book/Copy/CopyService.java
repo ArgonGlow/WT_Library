@@ -22,6 +22,10 @@ public class CopyService {
 		return repo.findCopyByUserId(id);
 	}
 	
+	public List<Copy> findCopyByBookId(long id) {
+		return repo.findCopyByBookId(id);
+	}
+	
 	public List<Copy> findCopy(CopyPK copyPk) {
 		return repo.findByCopyPkId(copyPk);
 	} 
@@ -29,11 +33,17 @@ public class CopyService {
 	public void deleteCopy(CopyPK copyPk) {
 		Copy copy = new Copy();
 		copy.setCopyPkId(copyPk);
-		repo.delete(copy);
-//		repo.deleteByCopyPkId(copyPk);
+		repo.delete(copy);      
 	}
 	
 	public void updateCopy(Copy copy) {
+		repo.save(copy);
+	}
+	
+	public void saveCopy(CopyPK copyPk) {
+		Copy copy = new Copy();
+		copy.setCopyPkId(copyPk);
+		copy.setUserId(1);
 		repo.save(copy);
 	}
 	
