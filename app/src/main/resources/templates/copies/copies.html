@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Working Talent Library - Edit Book</title>
+
+    <!-- CSS Links -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+  <!--_____________navigation bar_______________-->
+  <style>
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: rgb(15, 75, 13);
+    }
+
+    li {
+      float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 10px 10px;
+        text-decoration: none;
+    }
+
+    li a:hover {
+        background-color: rgb(15, 110, 40);
+        color:white;
+    }
+</style>
+
+<nav class="navbar navbar-extend-sm navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" ><img
+        src="../static/images/wt-logo.svg"
+        title="Logo"
+        alt="Logo"
+        th:src="@{../../images/wt-logo.svg}"
+    /></a>
+    <form th:action = "@{/logout}" method = "post">
+      <input type = "submit" value = "Sign Out"/>
+    </form>
+  </div>
+</nav>
+<nav>
+<div class="container">
+  <ul>
+    <li><a href="/books">WT library</a></li>
+    <li><a href="/users">Users</a></li>
+    <li><a href="/users/add-user">Add user</a></li>
+    <li><a href="/books/create">Add book</a></li>
+  </ul>   
+</div>
+</nav>
+  <!--____________________________-->
+    <section id="edit">
+      <div class="container">
+        <br>
+        <br>
+        <h1>Copy interface</h1>
+        
+        <div th:switch="${copies}">
+          <div th:case="*">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Book id</th>
+                  <th>Copy id</th>
+                  <th>User id</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="copies : ${copies}">
+                  <td th:text="${copies.copyPkId.bookId}"></td>
+                  <td th:text="${copies.copyPkId.copyId}"></td>
+                  <td th:text="${copies.userId}"></td>
+                  <td>
+                    <a th:href="@{/copies/delete/{id1}/{id2}(id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId})}">delete</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    
+    <div class="container">
+      <form
+      action="#"
+      th:action="@{create}"
+      th:object="${copies}"
+      method="post"
+    >
+        <!-- <div>
+          <label for="userId">User ID</label>
+          <input
+            type="text"
+            th:field="*{userId}"
+            id="userId"
+            placeholder="User id"
+          />
+        </div>
+        <div>
+          <label for="bookId">Book ID</label>
+          <input
+            type="text"
+            th:field="*{copyPkId}"
+            id="bookId"
+            placeholder="Book id"
+          /> 
+        </div>
+      </form>
+    </div> -->
+
+    <!-- Javascript -->
+    <script>
+
+    </script>
+
+    </section>
+  </body>
+</html>

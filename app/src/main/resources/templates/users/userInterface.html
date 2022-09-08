@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../../static/style.css" th:href="@{../../style.css}" />
 </head>
 <body>
+
   <!--______________navigation bar______________-->
   <nav class="navbar navbar-extend-sm navbar-light bg-light">
     <div class="container">
@@ -43,6 +44,8 @@
   <div class="container">
     <br>
     <h1>Edit User</h1>
+
+    <!--Update user function-->
     <form action="#" th:action="@{/users/edit-user/{id}(id=${users.user_id})}" th:object="${users}" method="post">
       <div class="visually-hidden">
         <label for="user_id">User ID</label>
