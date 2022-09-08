@@ -41,7 +41,7 @@ public class UserController {
 	@GetMapping("/users/add-user")
 	public String addUser(User users) {
 		return "/users/add-user";
-	}
+	} 
 	
 	@PostMapping("/users/add-user")
 	public String addUserPost(User users, BindingResult result, Model model) {
