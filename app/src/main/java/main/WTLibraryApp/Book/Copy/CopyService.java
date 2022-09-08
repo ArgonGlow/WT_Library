@@ -40,10 +40,7 @@ public class CopyService {
 		repo.save(copy);
 	}
 	
-	public void saveCopy(CopyPK copyPk) {
-		Copy copy = new Copy();
-		copy.setCopyPkId(copyPk);
-		copy.setUserId(1);
+	public void saveCopy(Copy copy) {
 		repo.save(copy);
 	}
 	

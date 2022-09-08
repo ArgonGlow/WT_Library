@@ -24,3 +24,4 @@ public interface CopyRepository extends JpaRepository<Copy, CopyPK>{
 	@Query(value = "select * from copies where book_id like %:id%", nativeQuery = true)
 	List<Copy> findCopyByBookId(@Param("id") long id);
 }
+ 

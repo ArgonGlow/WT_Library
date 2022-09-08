@@ -28,8 +28,8 @@ public class CopyController {
   	@GetMapping(value = "copies")
 	public String findAll(Model model){
 		model.addAttribute("copies", service.allCopies());
-		return "copies/copies"; 
-	}  
+		return "copies/copies";  
+	}   
 	     
 	@GetMapping(value = "copies/{bookId}/{copyId}")
 	public String findById(@PathVariable long bookId, @PathVariable long copyId, Model model) {
@@ -47,11 +47,10 @@ public class CopyController {
 		return "redirect:/books/edit/{bookId}"; 
 	} 
 	
-	@GetMapping("/copies/create/{bookId}/{copyId}")
-	public String create(@PathVariable long bookId, @PathVariable long copyId, Model model) {
-		CopyPK id = new CopyPK(bookId, copyId); 
-   
-		service.saveCopy(id);            
+	@PostMapping("/copies/create")
+	public String create(Copy copy, Model model) {
+ 
+		service.saveCopy(copy);            
 		return "redirect:/copies";             
 	}    
 	

@@ -98,29 +98,28 @@
         </div>
       </div>
 
-      </section>
-
-        <h1>Add Copy</h1>
-
-          <input id="id1" type="number" placeholder="book id">
-          <input id="id2"type="number" placeholder="copy id">
-          <button onclick="save">Add copy</button>
-
-
-
-      </form>
+      <form
+      action="#"
+      th:action="@{/copies/create}"
+      th:object="${copies}"
+      method="post"
+    >
+    <div>
+      <label for="bookId">Book ID</label>
+      <input
+        type="text"
+        th:field="*{copyPk.bookId}"
+        id="bookId"
+        placeholder="Book id"
+      />
     </div>
+      </form>
+
  
 
     <!-- Javascript -->
     <script>
-      function save(){
-        var id1 = document.getElementById("id1");
-        var id2 = document.getElementById("id2");
-        
-        fetch("/copies/create/{id1}/{id2}")
-        .then((response) => response.json())
-      }
+
     </script>
 
     </section>
