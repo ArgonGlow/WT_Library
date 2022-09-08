@@ -100,22 +100,29 @@
 
       <form
       action="#"
-      th:action="@{/copies/create}"
+      th:action="@{create}"
       th:object="${copies}"
       method="post"
     >
-    <div>
-      <label for="bookId">Book ID</label>
-      <input
-        type="text"
-        th:field="*{copyPk.bookId}"
-        id="bookId"
-        placeholder="Book id"
-      />
-    </div>
+        <div>
+          <label for="userId">User ID</label>
+          <input
+            type="text"
+            th:field="*userId}"
+            id="userId"
+            placeholder="User id"
+          />
+        </div>
+        <!-- <div>
+          <label for="bookId">Book ID</label>
+          <input
+            type="text"
+            th:field="*{copyPkId}"
+            id="bookId"
+            placeholder="Book id"
+          /> -->
+        </div>
       </form>
-
- 
 
     <!-- Javascript -->
     <script>

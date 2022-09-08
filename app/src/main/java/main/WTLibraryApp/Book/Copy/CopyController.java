@@ -48,12 +48,15 @@ public class CopyController {
 	} 
 	
 	@PostMapping("/copies/create")
-	public String create(Copy copy, Model model) {
- 
-		service.saveCopy(copy);            
-		return "redirect:/copies";             
+	public String create(Copy copy, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return "copies"; 
+		} 
+   
+		service.saveCopy(copy);                   
+		return "redirect:/copies";                 
 	}    
-	
+	 
 //	@PostMapping(value = "copies/assign/{bookId}/{copyId}/{userId}")
 //	public void assignCopy(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId) {
 //		
