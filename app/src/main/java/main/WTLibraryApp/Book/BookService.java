@@ -21,7 +21,7 @@ public class BookService {
 	
 	public Book find(long id) {
 		Book book = repo.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id: " + id));
+				.orElseThrow(() -> new IllegalArgumentException("Invalid book Id: " + id));
 		return book;
 	}
 	
