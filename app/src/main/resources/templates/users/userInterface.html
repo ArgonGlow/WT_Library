@@ -13,30 +13,6 @@
     crossorigin="anonymous" />
   <!-- General CSS -->
   <link rel="stylesheet" href="../../static/style.css" th:href="@{../../style.css}" />
-  <!-- Nav Link-list Style -->
-  <style>
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background-color: rgb(15, 75, 13);
-    }
-    li {
-      float: left;
-    }
-    li a {
-      display: block;
-      color: white;
-      text-align: center;
-      padding: 10px 10px;
-      text-decoration: none;
-    }
-    li a:hover {
-      background-color: rgb(15, 110, 40);
-      color:white;
-    }
-  </style>
 </head>
 <body>
   <!--______________navigation bar______________-->
@@ -64,35 +40,39 @@
   <!--______________end navigation bar______________-->
 
   <!-- ______________Main page view______________ -->
-  <section id="edit-user">
-    <div class="container">
-      <br>
-      <h1>Edit User</h1>
-      <form action="#" th:action="@{/users/edit-user/{id}(id=${users.user_id})}" th:object="${users}" method="post">
-        <div class="visually-hidden">
-          <label for="user_id">User ID</label>
-          <input type="text" th:field="*{user_id}" id="user_id" placeholder="User ID" />
-        </div>
+  <div class="container">
+    <br>
+    <h1>Edit User</h1>
+    <form action="#" th:action="@{/users/edit-user/{id}(id=${users.user_id})}" th:object="${users}" method="post">
+      <div class="visually-hidden">
+        <label for="user_id">User ID</label>
+        <input type="text" th:field="*{user_id}" id="user_id" placeholder="User ID" />
+      </div>
 
-        <label for="first_name">First Name: </label>
-        <input type="text" th:field="*{first_name}" id="first_name" placeholder="First Name" />
+      <label for="first_name">First Name: </label>
+      <input type="text" th:field="*{first_name}" id="first_name" placeholder="First Name" />
 
-        <label for="last_name">Last Name: </label>
-        <input type="text" th:field="*{last_name}" id="last_name" placeholder="Last Name" />
+      <label for="last_name">Last Name: </label>
+      <input type="text" th:field="*{last_name}" id="last_name" placeholder="Last Name" />
 
-        <label for="email">Email: </label>
-        <input type="text" th:field="*{email}" id="email" placeholder="Email" />
+      <label for="email">Email: </label>
+      <input type="text" th:field="*{email}" id="email" placeholder="Email" />
 
-        <div class="visually-hidden">
-          <label for="password">Password: </label>
-          <input type="text" th:field="*{password}" id="password" placeholder="Password" />
-        </div>
+      <div class="visually-hidden">
+        <label for="password">Password: </label>
+        <input type="text" th:field="*{password}" id="password" placeholder="Password" />
+      </div>
 
-        <input type="submit" value="Update User" />
-        <a th:href="@{/users/delete-user/{id}(id=${users.user_id})}">Delete</a>
-      </form>
-    </div>
-  </section>
+      <input type="submit" value="Update User" />
+      <a th:href="@{/users/delete-user/{id}(id=${users.user_id})}">Delete</a>
+    </form>
+  </div>
   <!-- ______________End of main page view______________ -->
+
+  <!-- Javascript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
+    integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
+    crossorigin="anonymous">
+  </script>
 </body>
 </html>
