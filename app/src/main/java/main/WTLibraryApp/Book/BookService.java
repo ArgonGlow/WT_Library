@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import main.WTLibraryApp.User.User;
+
 @Service
 public class BookService {
 	
@@ -28,5 +30,4 @@ public class BookService {
 	public void delete(Book book) {
 		repo.delete(book);
 	}
-	
 }

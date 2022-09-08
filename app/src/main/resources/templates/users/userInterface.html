@@ -134,20 +134,21 @@
         <div th:case="*">
           <table class="table">
             <thead>
+              <br>
+              <h2>Loaned:</h2>
               <tr>
                 <th>Book id</th>
                 <th>Copy id</th>
-                <th>User id</th>
               </tr>
             </thead>
             <tbody>
-              <tr th:each="copies : ${copies}">
+              <!-- <tr th:each="copies : ${copies}">
                 <td th:text="${copies.copyPkId.bookId}"></td>
                 <td th:text="${copies.copyPkId.copyId}"></td>
-                <td th:text="${copies.userId}"></td>
-                <td>
-                  <a th:href="@{/copies/deleteInUserInterface/{id1}/{id2}/{id3}(id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId}, id3=${copies.userId})}">delete</a>
-                </td>
+              </tr> -->
+
+              <tr th:each="books : ${books}">
+                <td th:text="${books.title}"></td>
               </tr>
             </tbody>
           </table>

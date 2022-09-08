@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import main.WTLibraryApp.Book.Book;
+
 @Service
 public class UserService {
 	
@@ -39,4 +41,8 @@ public class UserService {
 		repo.delete(users);
 	}
 	
+	public List<Book> findBookByUserId(long userId)
+	{
+		return repo.findBookByUserId(userId);
+	}
 }
