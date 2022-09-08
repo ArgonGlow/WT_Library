@@ -46,7 +46,7 @@ public class BookController {
 			return "books/createBook"; 
 		}
 		service.saveBook(book);  
-		return "redirect:/books"; 
+		return "redirect:/books";
 	}
 	
 // Updates an user from the users table
