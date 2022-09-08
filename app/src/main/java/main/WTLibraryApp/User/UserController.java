@@ -29,8 +29,7 @@ public class UserController {
 		if (keyword != null) {
 			List<User> list = service.findByKeyword(keyword);
 			model.addAttribute("users", list);
-			System.out.println(list);
-		} else {
+		} else {   
 			List<User> list = service.findAllUsers();
 			model.addAttribute("users", list);
 		}
@@ -42,7 +41,7 @@ public class UserController {
 	@GetMapping("/users/add-user")
 	public String addUser(User users) {
 		return "/users/add-user";
-	}
+	} 
 	
 	@PostMapping("/users/add-user")
 	public String addUserPost(User users, BindingResult result, Model model) {
@@ -69,7 +68,7 @@ public class UserController {
 		if (result.hasErrors()) {
 			users.setUser_id(id);
 			return "users/edit-user"; 
-		}
+		} 
 		
 		service.saveUser(users);     
 		return "redirect:/users";

@@ -8,26 +8,26 @@ import javax.persistence.JoinColumn;
 
 // Object combining bookId and CopyId for use as a double primary key
 @Embeddable
-public class CopiesPK implements Serializable {
+public class CopyPK implements Serializable {
 
 	private static final long serialVersionUID = 5123189582884106294L;
 	
 	@Column(nullable = false)
 	private long bookId;
-	
+	 
 	@JoinColumn(name="bookId")
 	private long copyId;
 	
 	// default constructor without arguments, required for findAll() method
-	public CopiesPK() {}
+	public CopyPK() {}
 	
 	
-	public CopiesPK(long bookId, long copyId) {
+	public CopyPK(long bookId, long copyId) {
 		this.bookId = bookId;
 		this.copyId = copyId;
 	}
 	
-	// getters and setters
+	// getters and setters 
 	public long getBookId() {
 		return bookId;
 	}
@@ -35,7 +35,7 @@ public class CopiesPK implements Serializable {
 		this.bookId = bookId;
 	}
 	public long getCopyId() {
-		return copyId;
+		return copyId;  
 	}
 	public void setCopyId(long copyId) {
 		this.copyId = copyId;
