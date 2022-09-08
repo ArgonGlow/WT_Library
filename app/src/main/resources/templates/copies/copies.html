@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Working Talent Library - Edit User</title>
+    <title>Working Talent Library - Edit Book</title>
 
     <!-- CSS Links -->
     <link
@@ -12,11 +12,6 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
       integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
       crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="../../static/style.css"
-      th:href="@{../../style.css}"
     />
   </head>
   <body>
@@ -72,66 +67,70 @@
 </div>
 </nav>
   <!--____________________________-->
-
-  <section id="edit-user">
+    <section id="edit">
+      <div class="container">
+        <br>
+        <br>
+        <h1>Copy interface</h1>
+        
+        <div th:switch="${copies}">
+          <div th:case="*">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Book id</th>
+                  <th>Copy id</th>
+                  <th>User id</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="copies : ${copies}">
+                  <td th:text="${copies.copyPkId.bookId}"></td>
+                  <td th:text="${copies.copyPkId.copyId}"></td>
+                  <td th:text="${copies.userId}"></td>
+                  <td>
+                    <a th:href="@{/copies/delete/{id1}/{id2}(id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId})}">delete</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    
     <div class="container">
-      <br>
-      <br>
-      <h1>Edit User</h1>
-
-        <!--Update user function-->
       <form
-        action="#"
-        th:action="@{/users/edit-user/{id}(id=${users.user_id})}"
-        th:object="${users}"
-        method="post"
-      >
-      <div class="visually-hidden">
-        <label for="user_id">User ID</label>
-        <input
-          type="text"
-          th:field="*{user_id}"
-          id="user_id"
-          placeholder="User ID"
-        />
+      action="#"
+      th:action="@{create}"
+      th:object="${copies}"
+      method="post"
+    >
+        <!-- <div>
+          <label for="userId">User ID</label>
+          <input
+            type="text"
+            th:field="*{userId}"
+            id="userId"
+            placeholder="User id"
+          />
         </div>
-        <label for="first_name">First Name: </label>
-        <input
-          type="text"
-          th:field="*{first_name}"
-          id="first_name"
-          placeholder="First Name"
-        />
-        <label for="last_name">Last Name: </label>
-        <input
-          type="text"
-          th:field="*{last_name}"
-          id="last_name"
-          placeholder="Last Name"
-        />
-        <label for="email">Email: </label>
-        <input
-          type="text"
-          th:field="*{email}"
-          id="email"
-          placeholder="Email"
-        />
-        <div class="visually-hidden">
-        <label for="password">Password: </label>
-        <input
-          type="text"
-          th:field="*{password}"
-          id="password"
-          placeholder="Password"
-        />
+        <div>
+          <label for="bookId">Book ID</label>
+          <input
+            type="text"
+            th:field="*{copyPkId}"
+            id="bookId"
+            placeholder="Book id"
+          /> 
         </div>
-        <input type="submit" value="Update User" />
-        <a th:href="@{/users/delete-user/{id}(id=${users.user_id})}"
-        >Delete</a>
       </form>
+    </div> -->
 
-    </div>
-  </section>
-</body>
+    <!-- Javascript -->
+    <script>
+
+    </script>
+
+    </section>
+  </body>
 </html>
-

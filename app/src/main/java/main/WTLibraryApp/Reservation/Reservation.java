@@ -22,9 +22,9 @@ public class Reservation {
 	
 //	@ManyToOne(targetEntity = Book.class , cascade = CascadeType.ALL)
 //	@JoinColumn(name = "bookId")
-//	private Book book;
+//	private Book book;    
 	
-	public Reservation() {}
+	public Reservation() {} 
 	
 	public Reservation(long bookId, long userId) {
 		this.bookId = bookId;

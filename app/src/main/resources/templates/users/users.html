@@ -40,6 +40,10 @@
       background-color: rgb(15, 110, 40);
       color: white;
     }
+
+    /* search.button {
+      background-color: rgb(15, 75, 13);
+    } */
   </style>
 
   <nav class="navbar navbar-extend-sm navbar-light bg-light">
@@ -47,7 +51,7 @@
       <a class="navbar-brand"><img src="../static/images/wt-logo.svg" title="Logo" alt="Logo"
           th:src="@{images/wt-logo.svg}" /></a>
           <form th:action = "@{/logout}" method = "post">
-            <input type = "submit" value = "Sign Out"/>
+            <input class="btn btn-primary" type = "submit" value = "Sign Out"/>
           </form>
     </div>
   </nav>
@@ -71,8 +75,8 @@
     <!-- Search User Function -->
     <div id="search">
       <form th:action="@{/users}" action="get">
-        <input type="text" name="keyword" th:value="${keyword}" placeholder="Search user by name" />
-        <button type="submit" class="btn btn-primary">Search</button>
+        <input type="text" name="keyword" th:value="${keyword}" placeholder="Search..." />
+        <button type="submit" class="btn btn-primary" >Search</button>
         <a href="/users" class="btn btn-secondary">Reset</a>
       </form>
     </div>
@@ -82,7 +86,6 @@
         <table class="table">
           <thead>
             <tr>
-              <th>ID</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
@@ -90,7 +93,6 @@
           </thead>
           <tbody>
             <tr th:each="users : ${users}">
-              <td th:text="${users.user_id}"></td>
               <td th:text="${users.first_name}"></td>
               <td th:text="${users.last_name}"></td>
               <td th:text="${users.email}"></td>
@@ -110,4 +112,4 @@
     crossorigin="anonymous"></script>
 </body>
 
-</html>
+</html> 
