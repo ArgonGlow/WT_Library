@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.WTLibraryApp.Book.Book;
+import main.WTLibraryApp.Reservation.Reservation;
 
 @Controller 
 @CrossOrigin(maxAge=3600)
@@ -25,12 +26,14 @@ public class CopyController {
 	@Autowired
 	private CopyService service;
  	
+	//displays all copies in the database
   	@GetMapping(value = "copies")
 	public String findAll(Model model){
 		model.addAttribute("copies", service.allCopies());
 		return "copies/copies";  
 	}   
-	     
+	
+  	//displays all copies by bookId and copyId combination
 	@GetMapping(value = "copies/{bookId}/{copyId}")
 	public String findById(@PathVariable long bookId, @PathVariable long copyId, Model model) {
 		 
@@ -39,6 +42,7 @@ public class CopyController {
 		return "copies/copyInterface";                           
 	}       
 	
+	//deletes copy by bookId and copyId combination
 	@GetMapping("copies/delete/{bookId}/{copyId}")
 	public String delete(@PathVariable long bookId, @PathVariable long copyId) {
 			 
@@ -47,15 +51,20 @@ public class CopyController {
 		return "redirect:/books/edit/{bookId}"; 
 	} 
 	
-	@PostMapping("/copies/create")
-	public String create(Copy copy, BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			return "copies"; 
-		} 
-   
-		service.saveCopy(copy);                   
-		return "redirect:/copies";                 
-	}    
+//	@GetMapping("copies/create")
+//	public String create(Copy copy) {
+//		return "copies";
+//	}
+	
+//	@PostMapping("/copies/create")
+//	public String create(Copy copy, BindingResult result, Model model) {
+//		if (result.hasErrors()) {
+//			return "copies";  
+//		}   
+//   
+//		service.saveCopy(copy);                   
+//		return "redirect:/copies";                 
+//	}    
 	 
 //	@PostMapping(value = "copies/assign/{bookId}/{copyId}/{userId}")
 //	public void assignCopy(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId) {

@@ -29,4 +29,5 @@ public class Copy {
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
+
 }
