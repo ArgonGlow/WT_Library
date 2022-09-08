@@ -42,14 +42,23 @@ public class CopyController {
 		return "copies/copyInterface";                           
 	}       
 	
-	//deletes copy by bookId and copyId combination
-	@GetMapping("copies/delete/{bookId}/{copyId}")
-	public String delete(@PathVariable long bookId, @PathVariable long copyId) {
+	//deletes copy by bookId and copyId combination in the book interface
+	@GetMapping("copies/deleteInBookInterface/{bookId}/{copyId}")
+	public String deleteInBook(@PathVariable long bookId, @PathVariable long copyId) {
 			 
 		CopyPK id = new CopyPK(bookId, copyId); 
 		service.deleteCopy(id);     
 		return "redirect:/books/edit/{bookId}"; 
-	} 
+	}  
+	
+	//deletes copy by bookId and copyId combination in the user interface
+	@GetMapping("copies/deleteInUserInterface/{bookId}/{copyId}/{userId}")
+	public String deleteInUser(@PathVariable long bookId, @PathVariable long copyId) {
+			 
+		CopyPK id = new CopyPK(bookId, copyId); 
+		service.deleteCopy(id);             
+		return "redirect:/users/edit-user/{userId}"; 
+	}  
 	
 //	@GetMapping("copies/create")
 //	public String create(Copy copy) {

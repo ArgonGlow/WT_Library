@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import main.WTLibraryApp.Book.Copy.Copy;
+import main.WTLibraryApp.Book.Copy.CopyService;
 import main.WTLibraryApp.LibMail.EmailService;
 
 @Controller
@@ -18,6 +21,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService service;
+	
+	@Autowired
+	private CopyService copyService;
 
 	@Autowired
 	private EmailService emailService;
@@ -58,6 +64,9 @@ public class UserController {
 	@GetMapping("/users/edit-user/{id}")
 	public String updateUser(@PathVariable("id") long id, Model model) {
 		User users = service.findUser(id);
+		
+		List<Copy> copyList = copyService.findCopyByUserId(id);
+		model.addAttribute("copies", copyList);
 		
 		model.addAttribute("users", users);
 		return "users/userInterface";

@@ -18,7 +18,7 @@ public class CopyService {
 		return repo.findAll();
 	}
 	
-	public List<Copy> findCopyByUserId(int id) {
+	public List<Copy> findCopyByUserId(long id) {
 		return repo.findCopyByUserId(id);
 	}
 	
