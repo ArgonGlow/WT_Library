@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name="reservations")
 public class Reservation {
@@ -13,8 +14,15 @@ public class Reservation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long reservationId;
+//	@ManyToOne(targetEntity = Book.class, cascade = CascadeType.ALL)
+//	@JoinColumn(name = "book_id")
+//	private Book book;
 	private long bookId;
 	private long userId;
+	
+//	@ManyToOne(targetEntity = Book.class , cascade = CascadeType.ALL)
+//	@JoinColumn(name = "bookId")
+//	private Book book;
 	
 	public Reservation() {}
 	

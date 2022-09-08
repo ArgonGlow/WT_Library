@@ -68,7 +68,7 @@ public class UserController {
 		if (result.hasErrors()) {
 			users.setUser_id(id);
 			return "users/edit-user"; 
-		} 
+		}
 		
 		service.saveUser(users);     
 		return "redirect:/users";

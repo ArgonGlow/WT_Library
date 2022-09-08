@@ -37,7 +37,7 @@ public class BookController {
 	 
 	@GetMapping("/books/create")
 	public String create(Book book) {
-		return "books/createBook";   
+		return "books/createBook";
 	}  
 	
 	@PostMapping("/books/create")
@@ -46,7 +46,7 @@ public class BookController {
 			return "books/createBook"; 
 		}
 		service.saveBook(book);  
-		return "redirect:/books";
+		return "redirect:/books"; 
 	}
 	
 // Updates an user from the users table
