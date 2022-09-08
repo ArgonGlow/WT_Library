@@ -10,11 +10,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import main.WTLibraryApp.Book.Book;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 	
 	@Query(value = "select * from users where first_name like %:keyword% or last_name like %:keyword% or email like %:keyword%", nativeQuery = true)
 	public List<User> findByKeyword(@Param("keyword") String keyword);
 	
+	public Optional<User> findByEmail(String email);
+
 }
   

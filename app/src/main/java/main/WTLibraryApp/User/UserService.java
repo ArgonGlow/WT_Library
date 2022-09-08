@@ -29,6 +29,12 @@ public class UserService {
 		return users;
 	}
 	
+	public User findByEmail(String email) {
+		User users = repo.findByEmail(email)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid user Email: " + email));
+		return users;
+	}
+	
 	public void deleteUser(User users) {
 		repo.delete(users);
 	}
