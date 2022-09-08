@@ -19,6 +19,7 @@ public class EmailService {
 	@Autowired
 	private JavaMailSender emailSender;
 
+	//Sends a simple message, String to = email address to send mail to, String subject = email subject, String text = the text body of the email 
 	public void sendSimpleMessage(String to, String subject, String text) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setFrom("wtlibrarytje@gmail.com");
@@ -28,13 +29,14 @@ public class EmailService {
 		
 		emailSender.send(message);
 	}
-
+	
+	//Same as sendSimpleMessage, but with possible attachments
 	public void sendMessageWithAttachment(String to, String subject, String text) throws MessagingException {
 		MimeMessage message = emailSender.createMimeMessage();
 
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-		helper.setFrom("noreply@demo.nl");
+		helper.setFrom("wtlibrarytje@gmail.com");
 		helper.setTo(to);
 		helper.setSubject(subject);
 		helper.setText(text, true);
