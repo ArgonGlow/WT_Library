@@ -16,14 +16,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	//Datastore with usernames and passwords
 	@Autowired
 	private DataSource dataSource;
 
+	//Configure privelages per page( and roles in the future)
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
         	.authorizeRequests()
-            .antMatchers("/home").permitAll()
+            .antMatchers("/home","/reservations","/reservations/*").permitAll()
             .anyRequest().authenticated()
             .and()
         .formLogin()
@@ -35,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    } 
 	   
 	
-	
+	//Configures where usernames, passwords, active, and roles eventually can be found
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
     	auth
@@ -49,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		        + "where email = ?");
    }
    
+   //Returns the hashfunction used for the passwords
    @Bean
    public PasswordEncoder passwordEncoder() { 
       return new BCryptPasswordEncoder(); 
