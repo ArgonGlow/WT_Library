@@ -22,6 +22,13 @@ public class UserService {
 	public void saveUser(User users) {
 		repo.save(users);
 	}
+
+	public void saveUser(User users, long id) {
+		User tempUser = repo.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id: " + id));
+		users.setPassword(tempUser.getPassword());
+		repo.save(users);
+	}
 	
 	public User findUser(long id) {
 		User users = repo.findById(id)
@@ -35,8 +42,13 @@ public class UserService {
 		return users;
 	}
 	
-	public void deleteUser(User users) {
-		repo.delete(users);
+	public void deleteUser(User users, long id) {
+		users.setUser_id(id);
+		users.setFirst_name("Removed");
+		users.setLast_name("Removed");
+		users.setActive(false);
+		users.setPassword(users.getPassword());
+		repo.save(users);
 	}
 	
 }

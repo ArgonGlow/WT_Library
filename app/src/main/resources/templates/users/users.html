@@ -53,6 +53,7 @@
       </form>
     </div>
 
+    <!-- Users Table -->
     <div th:switch="${users}">
       <div th:case="*">
         <table class="table">
@@ -61,6 +62,7 @@
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -68,6 +70,13 @@
               <td th:text="${users.first_name}"></td>
               <td th:text="${users.last_name}"></td>
               <td th:text="${users.email}"></td>
+              <td>
+                <div th:switch="${users.active}">
+                  <div th:case="true">Active</div>
+                  <div th:case="false">Inactive</div>
+                  <div th:case="*">Unknown</div>
+                </div>
+              </td>
               <td>
                 <a th:href="@{/users/edit-user/{id}(id=${users.user_id})}">Edit</a>
               </td>
