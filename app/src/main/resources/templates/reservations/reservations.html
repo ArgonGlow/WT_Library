@@ -18,6 +18,7 @@
   <!--______________navigation bar______________-->
   <div th:insert="@{../fragments/navbar.html}"></div>
   <!--______________end navigation bar______________-->
+  
 
   <!-- ______________Cancellation Modal______________ -->
   <div th:each="reservation :${reservations}" class="modal fade" th:id="@{exampleModal{id}(id = ${reservation.reservationId})}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

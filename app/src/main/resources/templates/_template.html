@@ -24,31 +24,25 @@
     <br>
     <h1>Title</h1>
 
-    <!-- <input placeholder="Search Title...", type="text", id="searchBar">
-    <button onclick="search()">Search</button> -->
-    <div th:switch="${listObject}">
-      <div th:case="*">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Col 1</th>
-              <th>Col 2</th>
-              <th>Col 3</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="item : ${listObject}">
-              <td th:text="listObject.attribute1"></td>
-              <td th:text="listObject.attribute2"></td>
-              <td th:text="listObject.attribute3"></td>
-              <td>
-                <a th:href="@{mapping_url}">Edit</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Col 1</th>
+          <th>Col 2</th>
+          <th>Col 3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="item : ${listObject}">
+          <td th:text="listObject.attribute1"></td>
+          <td th:text="listObject.attribute2"></td>
+          <td th:text="listObject.attribute3"></td>
+          <td>
+            <a th:href="@{mapping_url}">Edit</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <!-- ______________End of main page view______________ -->
 
