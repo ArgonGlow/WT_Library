@@ -12,13 +12,6 @@ import main.WTLibraryApp.User.User;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long>{
-/*
- * performs the query and searches for title keyword when
- * function is called
- * inputs title
- */
-
-    List<Book> findByTitleIgnoreCaseContainingOrIsbnIgnoreCaseContainingOrAuthorIgnoreCaseContaining(String title, String isbn, String author);
 
 	@Query(value = "SELECT * FROM books WHERE book_id IN \r\n"
 			+ "(SELECT book_id FROM copies WHERE loaned_by_user LIKE %:userId%)", nativeQuery = true)
@@ -30,3 +23,7 @@ public interface BookRepository extends JpaRepository<Book, Long>{
 }
 
  
+    @Query(value = "select * from books where title like %:keyword% or author like %:keyword% or isbn like %:keyword%", nativeQuery = true)
+    public List<Book> findByKeyword(@Param("keyword") String keyword);
+   
+}
