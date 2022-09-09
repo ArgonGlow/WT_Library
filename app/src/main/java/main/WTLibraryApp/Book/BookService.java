@@ -11,6 +11,10 @@ public class BookService {
 	@Autowired
 	private BookRepository repo;
 
+    public List<Book> findByKeyword(String keyword) {
+        return repo.findByKeyword(keyword);
+    }
+
 	public List<Book> findAll() {
 		return repo.findAll();
 	}
