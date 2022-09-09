@@ -23,18 +23,6 @@ import main.WTLibraryApp.Reservation.ReservationService;
 @Controller
 @CrossOrigin(maxAge=3600)
 public class UserController {
-	
-	//defines the user of the current page visiting, necessary for 
-	//transferring reservation data to the user interface
-	private static long currentUserId;
-	
-	public static long getCurrentUserId() {
-		return currentUserId;
-	}
-
-	public void setCurrentUserId(long currentUserId) {
-		this.currentUserId = currentUserId;
-	}
 
 	@Autowired
 	private UserService service;
@@ -98,7 +86,7 @@ public class UserController {
 		model.addAttribute("books", bookList);
 		model.addAttribute("reservedBooks", reservedBookList);
 		
-		setCurrentUserId(id);
+		CurrentUser.setCurrentUserId(id);
 
 		return "users/userInterface";
 	}

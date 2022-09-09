@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import main.WTLibraryApp.Book.Book;
 import main.WTLibraryApp.Reservation.Reservation;
 import main.WTLibraryApp.Reservation.ReservationService;
+import main.WTLibraryApp.User.CurrentUser;
 import main.WTLibraryApp.User.User;
 import main.WTLibraryApp.User.UserController;
 import main.WTLibraryApp.User.UserService;
@@ -79,7 +80,7 @@ public class CopyController {
 	@GetMapping("copies/loan/{bookId}/{copyId}/{userId}")  
 	public String loanBook(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId, Model model){
 		
-		long currentUserId = UserController.getCurrentUserId();
+		long currentUserId = CurrentUser.getCurrentUserId();
 		
 		if(userId==0) {
 			CopyPK id = new CopyPK(bookId, copyId);
