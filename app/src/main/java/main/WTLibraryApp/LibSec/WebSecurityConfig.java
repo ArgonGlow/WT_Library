@@ -20,20 +20,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DataSource dataSource;
 
-	//Configure privelages per page( and roles in the future)
+	//Configure privileges per page( and roles in the future)
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable()
+		http
+			.authorizeRequests()
+			.antMatchers("/images/*").permitAll()
+		.and()
+         	.authorizeRequests()
+         	.antMatchers("/","/books").hasAnyAuthority("1","2")
+         .and()
         	.authorizeRequests()
-            .antMatchers("/home","/reservations","/reservations/*").permitAll()
+            .antMatchers("/**").hasAnyAuthority("1")
             .anyRequest().authenticated()
             .and()
         .formLogin()
             .loginPage("/login")
             .permitAll()
             .and()
-        .logout() .invalidateHttpSession(true) 
-            .clearAuthentication(true) .permitAll();
+        .logout().invalidateHttpSession(true) 
+            .clearAuthentication(true).permitAll();
    } 
 	   
 	
