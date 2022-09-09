@@ -58,6 +58,7 @@ public class CopyController {
 		return "redirect:/books/edit/{bookId}"; 
 	}  
 	
+	//administrator withdraws copies of books to users
 	@GetMapping("copies/withdraw/{bookId}/{copyId}/{userId}")  
 	public String withdrawBook(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId, Model model){
 		
@@ -70,9 +71,10 @@ public class CopyController {
 
 		return "redirect:/users/edit-user/{userId}";
 	}
-	
+
+	//administrator loans copies of books to users
 	@GetMapping("copies/loan/{bookId}/{copyId}/{userId}")  
-	public String loanBook(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId, @CurrentSecurityContext(expression = "authentication") Authentication authentication, Model model){
+	public String loanBook(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId, Model model){
 		
 		long currentUserId = UserController.getCurrentUserId();
 		

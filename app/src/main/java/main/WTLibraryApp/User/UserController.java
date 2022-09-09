@@ -24,6 +24,8 @@ import main.WTLibraryApp.Reservation.ReservationService;
 @CrossOrigin(maxAge=3600)
 public class UserController {
 	
+	//defines the user of the current page visiting, necessary for 
+	//transferring reservation data to the user interface
 	private static long currentUserId;
 	
 	public static long getCurrentUserId() {
@@ -31,6 +33,7 @@ public class UserController {
 	}
 
 	public void setCurrentUserId(long currentUserId) {
+		this.currentUserId = currentUserId;
 	}
 
 	@Autowired
@@ -100,6 +103,7 @@ public class UserController {
 		return "users/userInterface";
 	}
 	
+//edits user in the table
 	@PostMapping("/users/edit-user/{id}")
 	public String updateUserPost(@PathVariable("id") long id, User users, BindingResult result, Model model) {
 		if (result.hasErrors()) {
