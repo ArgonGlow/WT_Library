@@ -77,7 +77,7 @@ public class UserController {
 			return "/users/add-user";
 		}
 		service.saveUser(users);
-		return "redirect:/users"; 
+		return "redirect:/users";
 	}
 
 //	Updates an user from the users table

@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-			.antMatchers("/images/*").permitAll()
+			.antMatchers("/images/*","/style.css").permitAll()
 		.and()
          	.authorizeRequests()
          	.antMatchers("/","/books").hasAnyAuthority("1","2")
@@ -60,6 +60,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    //Returns the hashfunction used for the passwords
    @Bean
    public PasswordEncoder passwordEncoder() { 
-      return new BCryptPasswordEncoder(); 
+      return new BCryptPasswordEncoder();
    }
 }
