@@ -54,6 +54,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    //Returns the hashfunction used for the passwords
    @Bean
    public PasswordEncoder passwordEncoder() { 
-      return new BCryptPasswordEncoder(); 
+      return new BCryptPasswordEncoder();
    }
 }
