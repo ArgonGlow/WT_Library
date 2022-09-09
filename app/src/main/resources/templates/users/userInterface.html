@@ -41,11 +41,11 @@
   <!--______________end navigation bar______________-->
 
   <!-- ______________Main page view______________ -->
-  <div class="container">
+  <!-- <div class="container">
     <br>
     <h1>Edit User</h1>
 
-    <!--Update user function-->
+    Update user function
     <form action="#" th:action="@{/users/edit-user/{id}(id=${users.user_id})}" th:object="${users}" method="post">
       <div class="visually-hidden">
         <label for="user_id">User ID</label>
@@ -130,20 +130,12 @@
                       <div th:switch="${copies.userId}">
                         <td th:case="0">
                        <a th:href="@{/copies/loan/{id1}/{id2}/{id3} (id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId}, id3=${copies.userId})}">loan</a>
-                      <!-- <table>
-                        <tr th:each="users : ${users}">
-                          <td th:text="${users.first_name}"></td>
-                          </tr>
-                      </table> -->
                       </td> 
                       </div>
                     </tr>
                   </tbody>
                 </table>      
-      </div>
-      </div>
-    </div>
-  </div>
+  </div> -->
 
   </section>
       <label for="first_name">First Name: </label>

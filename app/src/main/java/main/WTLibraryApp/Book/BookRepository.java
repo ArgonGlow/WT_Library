@@ -20,10 +20,9 @@ public interface BookRepository extends JpaRepository<Book, Long>{
 	@Query(value = "SELECT * FROM books WHERE book_id IN\r\n"
 			+ "(SELECT book_id FROM reservations WHERE user_id LIKE %:userId%)", nativeQuery = true)
 	List<Book> findBookByReservationUserId(long userId);
-}
 
- 
+
     @Query(value = "select * from books where title like %:keyword% or author like %:keyword% or isbn like %:keyword%", nativeQuery = true)
-    public List<Book> findByKeyword(@Param("keyword") String keyword);
+    List<Book> findByKeyword(@Param("keyword") String keyword);
    
 }

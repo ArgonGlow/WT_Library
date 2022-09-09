@@ -15,14 +15,14 @@
   <link rel="stylesheet" href="../../static/style.css" th:href="@{../style.css}" />
 </head>
 <body>
-  <!--______________navigation bar______________-->
+  <!--_____________navigation bar_______________-->
   <nav class="navbar navbar-extend-sm navbar-light bg-light">
     <div class="container">
       <a class="navbar-brand">
         <img src="../static/images/wt-logo.svg" title="Logo" alt="Logo" th:src="@{images/wt-logo.svg}" />
       </a>
       <form th:action = "@{/logout}" method = "post">
-        <input type = "submit" value = "Sign Out" />
+        <input class="btn btn-primary" type = "submit" value = "Sign Out" />
       </form>
     </div>
   </nav>
@@ -34,7 +34,7 @@
         <li><a href="/reservations">Reservations</a></li>
         <li><a href="/users/add-user">Add user</a></li>
         <li><a href="/books/create">Add book</a></li>
-      </ul>   
+      </ul>
     </div>
   </nav>
   <!--______________end navigation bar______________-->
