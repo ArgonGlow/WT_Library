@@ -27,6 +27,7 @@ public class UserService {
 		User tempUser = repo.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id: " + id));
 		users.setPassword(tempUser.getPassword());
+		users.setActive(tempUser.isActive());
 		repo.save(users);
 	}
 	
