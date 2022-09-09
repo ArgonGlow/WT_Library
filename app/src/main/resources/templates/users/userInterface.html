@@ -15,31 +15,11 @@
   <link rel="stylesheet" href="../../static/style.css" th:href="@{../../style.css}" />
 </head>
 <body>
-
   <!--______________navigation bar______________-->
-  <nav class="navbar navbar-extend-sm navbar-light bg-light">
-    <div class="container">
-      <a class="navbar-brand" >
-        <img src="../static/images/wt-logo.svg" title="Logo" alt="Logo" th:src="@{../../images/wt-logo.svg}" />
-      </a>
-      <form th:action = "@{/logout}" method = "post">
-        <input type = "submit" value = "Sign Out" />
-      </form>
-    </div>
-  </nav>
-  <nav>
-    <div class="container">
-      <ul>
-        <li><a href="/books">WT library</a></li>
-        <li><a href="/users">Users</a></li>
-        <li><a href="/reservations">Reservations</a></li>
-        <li><a href="/users/add-user">Add user</a></li>
-        <li><a href="/books/create">Add book</a></li>
-      </ul>   
-    </div>
-  </nav>
+  <div th:insert="@{../fragments/navbar.html}"></div>
   <!--______________end navigation bar______________-->
 
+  
   <!-- ______________Main page view______________ -->
   <div class="container">
     <br>
@@ -60,11 +40,6 @@
 
       <label for="email">Email: </label>
       <input type="text" th:field="*{email}" id="email" placeholder="Email" />
-
-      <div class="visually-hidden">
-        <label for="password">Password: </label>
-        <input type="text" th:field="*{password}" id="password" placeholder="Password" />
-      </div>
 
       <input type="submit" value="Update User" />
       <a th:href="@{/users/delete-user/{id}(id=${users.user_id})}">Delete</a>

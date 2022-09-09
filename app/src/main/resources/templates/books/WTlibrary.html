@@ -16,66 +16,51 @@
 </head>
 <body>
   <!--______________navigation bar______________-->
-  <nav class="navbar navbar-extend-sm navbar-light bg-light">
-    <div class="container">
-      <a class="navbar-brand">
-        <img src="../static/images/wt-logo.svg" title="Logo" alt="Logo" th:src="@{images/wt-logo.svg}" />
-      </a>
-      <form th:action = "@{/logout}" method = "post">
-        <input type = "submit" value = "Sign Out" />
-      </form>
-    </div>
-  </nav>
-  <nav>
-    <div class="container">
-      <ul>
-        <li><a href="/books">WT library</a></li>
-        <li><a href="/users">Users</a></li>
-        <li><a href="/reservations">Reservations</a></li>
-        <li><a href="/users/add-user">Add user</a></li>
-        <li><a href="/books/create">Add book</a></li>
-      </ul>   
-    </div>
-  </nav>
+  <div th:insert="@{../fragments/navbar.html}"></div>
   <!--______________end navigation bar______________-->
+  
 
   <!--______________Main page view______________-->
   <div class="container">
     <br>
     <h1>WT library</h1>
 
-    <!-- <input placeholder="Search Title...", type="text", id="searchBar">
-    <button onclick="search()">Search</button> -->
-    <div th:switch="${books}">
-      <div th:case="*">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>title</th>
-              <th>isbn</th>
-              <th>author</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="books : ${books}">
-              <td th:text="${books.book_id}"></td>
-              <td th:text="${books.title}"></td>
-              <td th:text="${books.isbn}"></td>
-              <td th:text="${books.author}"></td>
-              <td>
-                <a th:href="@{/books/edit/{id}(id=${books.book_id})}">Edit</a>
-              </td>
-              <td>
-                  <img th:src="${books.cover_image}" >
-              </td>
-              <!-- <td th:text="${books.cover_image}">
-              </td> -->
-            </tr> 
-          </tbody>
-        </table>
-      </div>
+    <!-- Search Book Function -->
+    <div id="search">
+      <form th:action="@{/books}" action="get">
+        <input type="text" name="keyword" th:value="${keyword}" placeholder="Search..." />
+        <button type="submit" class="btn btn-primary" >Search</button>
+        <a href="/books" class="btn btn-secondary">Reset</a>
+      </form>
     </div>
+
+    <!-- Books Table -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>title</th>
+          <th>isbn</th>
+          <th>author</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="books : ${books}">
+          <td th:text="${books.book_id}"></td>
+          <td th:text="${books.title}"></td>
+          <td th:text="${books.isbn}"></td>
+          <td th:text="${books.author}"></td>
+          <td>
+            <a th:href="@{/books/edit/{id}(id=${books.book_id})}">Edit</a>
+          </td>
+          <td>
+            <img th:src="${books.cover_image}">
+          </td>
+          <!-- <td th:text="${books.cover_image}">
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
   </div>
   <!-- ______________End of main page view______________ -->
     

@@ -51,8 +51,9 @@ public class UserController {
 			return "/users/add-user";
 		}
 		service.saveUser(users);
-		return "redirect:/users"; 
+		return "redirect:/users";
 	}
+
 //	Updates an user from the users table
 	
 	@GetMapping("/users/edit-user/{id}")
@@ -70,7 +71,7 @@ public class UserController {
 			return "users/edit-user"; 
 		} 
 		
-		service.saveUser(users);     
+		service.saveUser(users, id);     
 		return "redirect:/users";
 	} 
 	
@@ -79,7 +80,7 @@ public class UserController {
 	@GetMapping("/users/delete-user/{id}")
 	public String deleteUser(@PathVariable("id") long id, Model model) {
 		User users = service.findUser(id);
-		service.deleteUser(users);
+		service.deleteUser(users, id);
 		return "redirect:/users"; 
 	}    
 	

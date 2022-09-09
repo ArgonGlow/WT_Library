@@ -16,29 +16,10 @@
 </head>
 <body>
   <!--_____________navigation bar_______________-->
-  <nav class="navbar navbar-extend-sm navbar-light bg-light">
-    <div class="container">
-      <a class="navbar-brand">
-        <img src="../static/images/wt-logo.svg" title="Logo" alt="Logo" th:src="@{images/wt-logo.svg}" />
-      </a>
-      <form th:action = "@{/logout}" method = "post">
-        <input class="btn btn-primary" type = "submit" value = "Sign Out" />
-      </form>
-    </div>
-  </nav>
-  <nav>
-    <div class="container">
-      <ul>
-        <li><a href="/books">WT library</a></li>
-        <li><a href="/users">Users</a></li>
-        <li><a href="/reservations">Reservations</a></li>
-        <li><a href="/users/add-user">Add user</a></li>
-        <li><a href="/books/create">Add book</a></li>
-      </ul>
-    </div>
-  </nav>
+  <div th:insert="@{../fragments/navbar.html}"></div>
   <!--______________end navigation bar______________-->
 
+  
   <!-- ______________Main page view______________ -->
   <div class="container">
     <br>
@@ -53,6 +34,7 @@
       </form>
     </div>
 
+    <!-- Users Table -->
     <div th:switch="${users}">
       <div th:case="*">
         <table class="table">
@@ -61,6 +43,7 @@
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -68,6 +51,13 @@
               <td th:text="${users.first_name}"></td>
               <td th:text="${users.last_name}"></td>
               <td th:text="${users.email}"></td>
+              <td>
+                <div th:switch="${users.active}">
+                  <div th:case="true">Active</div>
+                  <div th:case="false">Inactive</div>
+                  <div th:case="*">Unknown</div>
+                </div>
+              </td>
               <td>
                 <a th:href="@{/users/edit-user/{id}(id=${users.user_id})}">Edit</a>
               </td>
