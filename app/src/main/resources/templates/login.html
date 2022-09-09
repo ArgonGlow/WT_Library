@@ -2,9 +2,16 @@
 <html xmlns = "http://www.w3.org/1999/xhtml" xmlns:th = "http://www.thymeleaf.org"
   xmlns:sec = "http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"> 
 <head>
-  <title>Spring Security Example </title>
+  <title>Working talent library</title>
 </head>
 <body>
+<style>
+		#loginForm {
+			position:fixed;
+			top:45%;
+			left:45%;
+		}
+</style>
   <!-- Invalid login responses -->
   <div th:if = "${param.error}">
    <p>Invalid username and password.</p>
