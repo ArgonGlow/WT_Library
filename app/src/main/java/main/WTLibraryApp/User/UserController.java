@@ -31,7 +31,6 @@ public class UserController {
 	}
 
 	public void setCurrentUserId(long currentUserId) {
-		this.currentUserId = currentUserId;
 	}
 
 	@Autowired
