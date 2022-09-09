@@ -30,4 +30,14 @@ public class BookService {
 	public void delete(Book book) {
 		repo.delete(book);
 	}
+	
+	public List<Book> findBookByUserId(long userId)
+	{
+		return repo.findBookByUserId(userId);
+	}
+	
+	public List<Book> findBookByReservationUserId(long userId)
+	{
+		return repo.findBookByReservationUserId(userId);
+	}
 }

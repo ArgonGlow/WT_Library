@@ -44,4 +44,7 @@ public class CopyService {
 		repo.save(copy);
 	}
 	
+	public List<Copy> findCopyByReservationUserId(long userId){
+		return repo.findCopyByReservationUserId(userId);
+	}
 }

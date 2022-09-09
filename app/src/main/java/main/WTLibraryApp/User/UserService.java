@@ -40,9 +40,4 @@ public class UserService {
 	public void deleteUser(User users) {
 		repo.delete(users);
 	}
-	
-	public List<Book> findBookByUserId(long userId)
-	{
-		return repo.findBookByUserId(userId);
-	}
 }

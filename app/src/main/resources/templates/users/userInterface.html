@@ -130,32 +130,98 @@
         >Delete</a>
       </form>
 
-      <div th:switch="${copies}">
-        <div th:case="*">
           <table class="table">
             <thead>
               <br>
               <h2>Loaned:</h2>
               <tr>
                 <th>Book id</th>
-                <th>Copy id</th>
+                <th>Title</th>
+                <th>Author</th>
               </tr>
             </thead>
             <tbody>
-              <!-- <tr th:each="copies : ${copies}">
-                <td th:text="${copies.copyPkId.bookId}"></td>
-                <td th:text="${copies.copyPkId.copyId}"></td>
-              </tr> -->
-
               <tr th:each="books : ${books}">
+                <td th:text="${books.book_id}"></td>
                 <td th:text="${books.title}"></td>
+                <td th:text="${books.author}"></td>
               </tr>
+              
             </tbody>
           </table>
-        </div>
+
+            <table class="table">
+              <thead>
+                <br>
+                <tr>
+                  <th>Book id</th>
+                  <th>Copy id</th>
+                  <th>User id</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="copies : ${copies}">
+                  <td th:text="${copies.copyPkId.bookId}"></td>
+                  <td th:text="${copies.copyPkId.copyId}"></td>
+                  <td th:text="${copies.userId}"></td>
+                  <div th:switch="${copies.userId}">
+                   <td th:case="0"></td>
+                   <td th:case="*">
+                   <a th:href="@{/copies/withdraw/{id1}/{id2}/{id3} (id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId}, id3=${copies.userId})}">withdraw</a>
+                  </td>
+                  </div>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="table">
+              <thead>
+                <br>
+                <h2>Reserved:</h2>
+                <tr>
+                  <th>Book id</th>
+                  <th>Title</th>
+                  <th>Author</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="books : ${reservedBooks}">
+                  <td th:text="${books.book_id}"></td>
+                  <td th:text="${books.title}"></td>
+                  <td th:text="${books.author}"></td>
+                </tr>
+
+                <table class="table">
+                  <thead>
+                    <br>
+                    <tr>
+                      <th>Book id</th>
+                      <th>Copy id</th>
+                      <th>Loaned by user id</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="copies : ${reservedCopies}">
+                      <td th:text="${copies.copyPkId.bookId}"></td>
+                      <td th:text="${copies.copyPkId.copyId}"></td>
+                      <td th:text="${copies.userId}"></td>
+                      <div th:switch="${copies.userId}">
+                        <td th:case="0">
+                       <a th:href="@{/copies/loan/{id1}/{id2}/{id3} (id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId}, id3=${copies.userId})}">loan</a>
+                      <!-- <table>
+                        <tr th:each="users : ${users}">
+                          <td th:text="${users.first_name}"></td>
+                          </tr>
+                      </table> -->
+                      </td> 
+                      </div>
+                    </tr>
+                  </tbody>
+                </table>      
+      </div>
       </div>
     </div>
-    </div>
+  </div>
 
   </section>
 </body>

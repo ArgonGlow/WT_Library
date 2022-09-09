@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import main.WTLibraryApp.User.User;
+
 @Service
 public class ReservationService {
 	

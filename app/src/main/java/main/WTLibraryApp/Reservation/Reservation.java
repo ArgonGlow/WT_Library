@@ -24,7 +24,7 @@ public class Reservation {
 //	@JoinColumn(name = "bookId")
 //	private Book book;    
 	
-	public Reservation() {} 
+	public Reservation() {}
 	
 	public Reservation(long bookId, long userId) {
 		this.bookId = bookId;

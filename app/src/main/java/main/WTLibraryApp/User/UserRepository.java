@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import main.WTLibraryApp.Book.Book;
+import main.WTLibraryApp.Book.Copy.Copy;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -20,9 +21,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	public Optional<User> findByEmail(String email);
 	
-	@Query(value = "SELECT * FROM books WHERE book_id IN \r\n"
-			+ "   (SELECT copy_id FROM copies WHERE loaned_by_user LIKE 1)", nativeQuery = true)
-	List<Book> findBookByUserId(long userId);
-
 }
   

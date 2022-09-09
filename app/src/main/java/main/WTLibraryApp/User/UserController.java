@@ -12,19 +12,36 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import main.WTLibraryApp.Book.Book;
+import main.WTLibraryApp.Book.BookService;
 import main.WTLibraryApp.Book.Copy.Copy;
+import main.WTLibraryApp.Book.Copy.CopyController;
 import main.WTLibraryApp.Book.Copy.CopyService;
 import main.WTLibraryApp.LibMail.EmailService;
+import main.WTLibraryApp.Reservation.Reservation;
+import main.WTLibraryApp.Reservation.ReservationService;
 
 @Controller
 @CrossOrigin(maxAge=3600)
 public class UserController {
 	
+	private static long currentUserId;
+	
+	public static long getCurrentUserId() {
+		return currentUserId;
+	}
+
+	public void setCurrentUserId(long currentUserId) {
+		this.currentUserId = currentUserId;
+	}
+
 	@Autowired
 	private UserService service;
 	
 	@Autowired
 	private CopyService copyService;
+	
+	@Autowired
+	private BookService bookService;
 
 	@Autowired
 	private EmailService emailService;
@@ -68,11 +85,18 @@ public class UserController {
 		model.addAttribute("users", users);
 		
 		List<Copy> copyList = copyService.findCopyByUserId(id);
-		List<Book> bookList = service.findBookByUserId(id);
+		List<Copy> reservedCopyList = copyService.findCopyByReservationUserId(id);
 		
-		model.addAttribute("books", bookList); 
-		 
- 
+		List<Book> bookList = bookService.findBookByUserId(id);
+		List<Book> reservedBookList = bookService.findBookByReservationUserId(id);
+		    
+		model.addAttribute("copies", copyList);
+		model.addAttribute("reservedCopies", reservedCopyList);
+		model.addAttribute("books", bookList);
+		model.addAttribute("reservedBooks", reservedBookList);
+		
+		setCurrentUserId(id);
+
 		return "users/userInterface";
 	}
 	
@@ -88,12 +112,10 @@ public class UserController {
 	} 
 	      
 //	Deletes an user from the table.
-	
 	@GetMapping("/users/delete-user/{id}")
 	public String deleteUser(@PathVariable("id") long id, Model model) {
 		User users = service.findUser(id);
 		service.deleteUser(users);
 		return "redirect:/users"; 
-	}    
-	
+	}       
 }
