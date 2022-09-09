@@ -22,6 +22,13 @@ public class UserService {
 	public void saveUser(User users) {
 		repo.save(users);
 	}
+
+	public void saveUser(User users, long id) {
+		User tempUser = repo.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id: " + id));
+		users.setPassword(tempUser.getPassword());
+		repo.save(users);
+	}
 	
 	public User findUser(long id) {
 		User users = repo.findById(id)

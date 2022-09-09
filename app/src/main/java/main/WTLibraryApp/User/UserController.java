@@ -71,8 +71,7 @@ public class UserController {
 			return "users/edit-user"; 
 		} 
 		
-		users.setPassword(users.getPassword());
-		service.saveUser(users);     
+		service.saveUser(users, id);     
 		return "redirect:/users";
 	} 
 	
