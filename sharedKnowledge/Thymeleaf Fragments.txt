@@ -1,0 +1,11 @@
+Turns out it is pretty straight forward to insert other html files into a larger html page, which Thymeleaf calls inserting fragments into templates. Using an html-tag like div, nav, header, footer, etc. you can create an attribute to insert the contents of a fragment into that div.
+
+Taking the navbar as an example, it would look something like this:
+
+	<div th:insert="@{../fragments/navbar.html}"></div>
+
+The fragments folder is located inside src/main/resources/, so like with any folder outside 'templates' make sure you use the '../' prefix.
+
+There is some optional stuff in the reference, which I haven't needed so far, so I'd recommend just using the syntax above.
+
+Reference: https://www.baeldung.com/spring-thymeleaf-fragments
