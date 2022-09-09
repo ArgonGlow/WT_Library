@@ -6,13 +6,20 @@
       <title>Spring Security Example </title>
    </head>
    <body>
+   <style>
+		#loginForm {
+			position:fixed;
+			top:45%;
+			left:45%;
+		}
+</style>
       <div th:if = "${param.error}">
          Invalid username and password.
       </div>
       <div th:if = "${param.logout}">
          You have been logged out.
       </div>
-      
+      <div id="loginForm">
       <form th:action = "@{/login}" method = "post">
          <div>
             <label> User Name : <input type = "text" name = "username"/> </label>
@@ -24,6 +31,7 @@
             <input type = "submit" value = "Sign In"/>
          </div>
       </form>
+	  </div>
       
    </body>
 </html>
