@@ -35,8 +35,13 @@ public class UserService {
 		return users;
 	}
 	
-	public void deleteUser(User users) {
-		repo.delete(users);
+	public void deleteUser(User users, long id) {
+		users.setUser_id(id);
+		users.setFirst_name("Removed");
+		users.setLast_name("Removed");
+		users.setActive(false);
+		users.setPassword(users.getPassword());
+		repo.save(users);
 	}
 	
 }
