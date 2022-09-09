@@ -32,6 +32,9 @@ public class CopyController {
 		
 	@Autowired
 	private CopyService service;
+	
+	@Autowired
+	private ReservationService reservationService;
  	
 	//displays all copies in the database
   	@GetMapping(value = "copies")
@@ -84,6 +87,11 @@ public class CopyController {
 			copyToLoan.setUserId(currentUserId);  
 			service.saveCopy(copyToLoan); 
 		}
+		
+		//deletes related reservation
+		//in case of duplicate reservations, it deletes the first one
+		List<Reservation> reservation = reservationService.findByBookIdAndUserId(bookId, currentUserId);
+		reservationService.deleteReservation(reservation.get(0));
 		
 		String path = "redirect:/users/edit-user/" + currentUserId;
 		

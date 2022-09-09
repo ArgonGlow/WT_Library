@@ -35,4 +35,8 @@ public class ReservationService {
 	public List<Reservation> reservationsByUserId(Reservation userReservation) {
 		return repo.findAll(Example.of(userReservation));
 	}
+	
+	public List<Reservation> findByBookIdAndUserId(long bookId, long userId){
+		return repo.findByBookIdAndUserId(bookId, userId);
+	}
 }
