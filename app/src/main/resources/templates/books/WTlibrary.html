@@ -44,38 +44,41 @@
     <br>
     <h1>WT library</h1>
 
-    <!-- <input placeholder="Search Title...", type="text", id="searchBar">
-    <button onclick="search()">Search</button> -->
-    <div th:switch="${books}">
-      <div th:case="*">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>title</th>
-              <th>isbn</th>
-              <th>author</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="books : ${books}">
-              <td th:text="${books.book_id}"></td>
-              <td th:text="${books.title}"></td>
-              <td th:text="${books.isbn}"></td>
-              <td th:text="${books.author}"></td>
-              <td>
-                <a th:href="@{/books/edit/{id}(id=${books.book_id})}">Edit</a>
-              </td>
-              <td>
-                  <img th:src="${books.cover_image}" >
-              </td>
-              <!-- <td th:text="${books.cover_image}">
-              </td> -->
-            </tr> 
-          </tbody>
-        </table>
-      </div>
+    <!-- Search Book Function -->
+    <div id="search">
+      <form th:action="@{/books}" action="get">
+        <input type="text" name="keyword" th:value="${keyword}" placeholder="Search..." />
+        <button type="submit" class="btn btn-primary" >Search</button>
+        <a href="/books" class="btn btn-secondary">Reset</a>
+      </form>
     </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>title</th>
+          <th>isbn</th>
+          <th>author</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="books : ${books}">
+          <td th:text="${books.book_id}"></td>
+          <td th:text="${books.title}"></td>
+          <td th:text="${books.isbn}"></td>
+          <td th:text="${books.author}"></td>
+          <td>
+            <a th:href="@{/books/edit/{id}(id=${books.book_id})}">Edit</a>
+          </td>
+          <td>
+            <img th:src="${books.cover_image}">
+          </td>
+          <!-- <td th:text="${books.cover_image}">
+                          </td> -->
+        </tr>
+      </tbody>
+    </table>
   </div>
   <!-- ______________End of main page view______________ -->
     

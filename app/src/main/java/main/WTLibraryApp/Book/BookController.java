@@ -26,14 +26,20 @@ public class BookController {
 	@Autowired
 	private CopyService copyService;
 	   
-//	Returns all users from the users table.      
+//	Returns all books from the books table.      
 	  
 	@GetMapping("/books")
-	public String findAll(Model model) {
-		model.addAttribute("books", service.findAll());
+	public String findAll(Model model, Book book, String keyword) {
+        if (keyword != null) {
+            List<Book> list = service.findByKeyword(keyword);
+            model.addAttribute("books", list);
+        } else {
+            List<Book> list = service.findAll();
+            model.addAttribute("books", list);
+        }
 		return "books/WTlibrary";
 	} 
-//	Adds a new user to the users table
+//	Adds a new book to the books table
 	 
 	@GetMapping("/books/create")
 	public String create(Book book) {
@@ -49,7 +55,7 @@ public class BookController {
 		return "redirect:/books";
 	}
 	
-// Updates an user from the users table
+// Updates an book from the books table
 // Also shows all copies of the book	                 
 	@GetMapping("/books/edit/{bookId}")
 	public String edit(@PathVariable("bookId") long bookId, Model model) {
@@ -72,7 +78,7 @@ public class BookController {
 		return "redirect:/books";
 	}
 	
-//	Deletes an user from the table.
+//	Deletes an book from the table.
 	
 	@GetMapping("/books/delete/{id}")
 	public String delete(@PathVariable("id") long id, Model model) {
