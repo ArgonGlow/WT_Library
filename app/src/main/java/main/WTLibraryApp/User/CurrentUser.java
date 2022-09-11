@@ -13,7 +13,4 @@ public class CurrentUser {
 	public static void setCurrentUserId(long currentUserId) {
 		CurrentUser.currentUserId = currentUserId;
 	}
-	
-	
-
 }
