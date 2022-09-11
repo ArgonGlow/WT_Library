@@ -36,6 +36,9 @@ public class UserController {
 	@Autowired
 	private EmailService emailService;
 	
+	@Autowired
+	private ReservationService reservationService;
+	
 //	Returns all users from the users table.
 	
 	@GetMapping("/users")
@@ -77,14 +80,15 @@ public class UserController {
 		
 		List<Copy> copyList = copyService.findCopyByUserId(id);
 		List<Copy> reservedCopyList = copyService.findCopyByReservationUserId(id);
-		
 		List<Book> bookList = bookService.findBookByUserId(id);
 		List<Book> reservedBookList = bookService.findBookByReservationUserId(id);
-		    
+		List<Reservation> reservationList = reservationService.findByUserId(id);
+		
 		model.addAttribute("copies", copyList);
 		model.addAttribute("reservedCopies", reservedCopyList);
 		model.addAttribute("books", bookList);
 		model.addAttribute("reservedBooks", reservedBookList);
+		model.addAttribute("reservations", reservationList);
 		
 		CurrentUser.setCurrentUserId(id);
 

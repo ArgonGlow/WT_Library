@@ -107,7 +107,24 @@
             <td th:text="${books.title}"></td>
             <td th:text="${books.author}"></td>
           </tr>
-        </tbody>
+          </tbody>
+          </table>
+          <!-- Display reservations (for cancellation purposes) -->
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Book id</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="reservations : ${reservations}">
+                <td th:text="${reservations.bookId}"></td>
+                <td>
+                  <a th:href="@{/reservations/cancel/{id} (id=${reservations.reservationId})}">Cancel reservation</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         <!-- Displays copies of reserved books -->
           <table class="table">
             <thead>
