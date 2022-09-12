@@ -75,7 +75,7 @@ public class ReservationController {
 //	}
 	
 	@GetMapping("reservations/createReservation/{bookId}")
-	public String createReservationn(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication, Model model) {
+	public String createReservation(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication, Model model) {
 		User currentUser = userService.findByEmail(authentication.getName());
 		long userId = currentUser.getUser_id();
 		

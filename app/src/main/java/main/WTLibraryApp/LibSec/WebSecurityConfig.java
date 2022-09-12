@@ -20,7 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DataSource dataSource;
 
-	//Configure privileges per page( and roles in the future)
+	//Configure privileges per page(and roles in the future)
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
@@ -29,6 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
          	.authorizeRequests()
          	.antMatchers("/","/books").hasAnyAuthority("1","2")
+         	.antMatchers("/","/reservations/createReservation/*").hasAnyAuthority("1","2")
         .and()
         	.authorizeRequests()
             .antMatchers("/**").hasAnyAuthority("1")
