@@ -79,6 +79,7 @@ public class ReservationController {
 	@GetMapping("reservations/createReservation/{bookId}")
 	public String createReservation(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication, Model model) {
 		
+		//get logged-in user
 		User currentUser = userService.findByEmail(authentication.getName());
 		long userId = currentUser.getUser_id();
 		
@@ -104,12 +105,17 @@ public class ReservationController {
 	}
 	
 	// Cancels a user's reservations by removing it from the reservations table
-	@GetMapping("reservations/cancel/{reservationId}")
-	public String cancelReservation(@PathVariable long reservationId) {
-		Reservation reservation = service.reservationById(reservationId);
-		service.deleteReservation(reservation);
+	@GetMapping("reservations/cancel/{bookId}")
+	public String cancelReservation(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
 		
-		String path = "redirect:/users/edit-user/" + LoanedUser.getCurrentUserId();
+		//get logged-in user
+		User currentUser = userService.findByEmail(authentication.getName());
+		long userId = currentUser.getUser_id();
+		
+		List<Reservation> reservation = service.findByBookIdAndUserId(bookId, userId);
+		service.deleteReservation(reservation.get(0));
+	    
+		String path = "redirect:/books";
 		return path;
 	}
 		

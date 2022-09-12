@@ -24,7 +24,7 @@
   
       <div class="container">
         <br>
-        <h1>Edit User</h1>
+        <h1>User info</h1>
     
         <!--Update user function-->
         <form action="#" th:action="@{/users/edit-user/{id}(id=${users.user_id})}" th:object="${users}" method="post">
@@ -84,7 +84,7 @@
             <div th:switch="${copies.userId}">
               <td th:case=null></td>
               <td th:case="*">
-              <a th:href="@{/copies/withdraw/{id1}/{id2}/{id3} (id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId}, id3=${copies.userId})}">withdraw</a>
+              <a class="btn btn-primary" th:href="@{/copies/withdraw/{id1}/{id2}/{id3} (id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId}, id3=${copies.userId})}">withdraw</a>
             </td>
             </div>
           </tr>
@@ -106,24 +106,11 @@
             <td th:text="${books.book_id}"></td>
             <td th:text="${books.title}"></td>
             <td th:text="${books.author}"></td>
+            <td>
+              <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id} (id=${books.book_id})}">Cancel reservation</a>
+            </td>
           </tr>
           </tbody>
-          </table>
-          <!-- Display reservations (for cancellation purposes) -->
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Book id</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="reservations : ${reservations}">
-                <td th:text="${reservations.bookId}"></td>
-                <td>
-                  <a th:href="@{/reservations/cancel/{id} (id=${reservations.reservationId})}">Cancel reservation</a>
-                </td>
-              </tr>
-            </tbody>
           </table>
         <!-- Displays copies of reserved books -->
           <table class="table">
