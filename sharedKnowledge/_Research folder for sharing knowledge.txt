@@ -1,1 +1,2 @@
 shared knowledge:
+https://www.thymeleaf.org/doc/articles/springsecurity.html

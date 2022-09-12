@@ -16,7 +16,12 @@
 </head>
 <body>
   <!--______________navigation bar______________-->
-  <div th:insert="@{../fragments/navbar.html}"></div>
+  <div sec:authorize="hasAnyAuthority('1')">
+    <div th:insert="@{../fragments/navbar.html}"></div>
+  </div>
+  <div sec:authorize="hasAnyAuthority('2')">
+    <div th:insert="@{../fragments/navbar_User.html}"></div>
+  </div>
   <!--______________end navigation bar______________-->
   
 
@@ -50,9 +55,11 @@
           <td th:text="${books.title}"></td>
           <td th:text="${books.isbn}"></td>
           <td th:text="${books.author}"></td>
-          <td>
-            <a th:href="@{/books/edit/{id}(id=${books.book_id})}">Edit</a>
-          </td>
+          <div sec:authorize="hasAnyAuthority('1')">
+            <td>
+              <a th:href="@{/books/edit/{id}(id=${books.book_id})}">Edit</a>
+            </td>
+          </div>
           <td>
             <img th:src="${books.cover_image}">
           </td>
