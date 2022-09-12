@@ -80,7 +80,7 @@ public class UserController {
 	
 	//edits user in the table
 	@PostMapping("/user")
-	public String updateUserPost(@CurrentSecurityContext(expression = "authentication") Authentication authentication, User users, BindingResult result, Model model) {
+	public String updateCurrentUserPost(@CurrentSecurityContext(expression = "authentication") Authentication authentication, User users, BindingResult result, Model model) {
 		User currentuser = service.findByEmail(authentication.getName());
 		if(users.getPassphrase().length() > 0) {
 			users.setPassphrase(BCrypt.hashpw(users.getPassphrase(), BCrypt.gensalt()));
@@ -99,7 +99,7 @@ public class UserController {
 	} 
 	
 	@PostMapping("/users/add-user")
-	public String addCurrentUserPost(User users, BindingResult result, Model model) {
+	public String addUserPost(User users, BindingResult result, Model model) {
 		users.setPassphrase(BCrypt.hashpw("guest", BCrypt.gensalt()));
 		emailService.sendSimpleMessage(users.getEmail(), "\"Welcome\"", "Welcome \"" + users.getFirst_name() +"\" \""+users.getLast_name()+"\",\n\"Thank you\" for \"using\" our \"services\". Your \"username\" is this \"email\" \"and\" your passphrase is guest. \"Please\" change it at \"your\" earliest \"convenience\". We look forward to our \"arrangement.\"\n \"C\" you, \n \"The team\".");
 		if (result.hasErrors()) {
