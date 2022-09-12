@@ -7,9 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import main.WTLibraryApp.Book.Copy.Copy;
-import main.WTLibraryApp.User.User;
-
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long>{
 

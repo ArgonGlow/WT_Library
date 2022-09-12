@@ -1,7 +1,5 @@
 package main.WTLibraryApp.Book;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import main.WTLibraryApp.Book.Copy.Copy;
-import main.WTLibraryApp.Book.Copy.CopyPK;
 import main.WTLibraryApp.Book.Copy.CopyService;
 
 @Controller
