@@ -60,7 +60,7 @@
           </td>
           <div sec:authorize="hasAnyAuthority('1')">
             <td>
-              <a th:href="@{/books/edit/{id}(id=${books.book_id})}">Info</a>
+              <a class="btn btn-secondary" th:href="@{/books/edit/{id}(id=${books.book_id})}">Info</a>
             </td>
           </div>
           <td>
