@@ -33,16 +33,25 @@ public class BookController {
 	//	Returns all books from the books table.      
 	@GetMapping("/books")
 	public String findAll(Model model, Book book, String keyword) {
-        if (keyword != null) {
-            List<Book> list = service.findByKeyword(keyword);
-            model.addAttribute("books", list);
-        } else {
-            List<Book> list = service.findAll();
-            model.addAttribute("books", list);
-        }
+//        if (keyword != null) {
+//            List<Book> list = service.findByKeyword(keyword);
+//            model.addAttribute("books", list);
+//        } else {
+//            List<Book> list = service.findAll();
+//            model.addAttribute("books", list);
+//        }
+//        
+        List<Book> list = service.findAll();
+        model.addAttribute("books", list);
         
         List<Reservation> reservationList = reservationService.allReservations();
         model.addAttribute("reservations", reservationList);
+        
+        List<Boolean> reservationBoolList;
+        for(book: reservation)
+        	if(reservation) {
+        		reservationBoolList = true;
+        	}
         
 		return "books/WTlibrary";
 	} 
