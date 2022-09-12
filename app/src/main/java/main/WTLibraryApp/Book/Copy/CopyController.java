@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import main.WTLibraryApp.Book.Book;
 import main.WTLibraryApp.Reservation.Reservation;
+import main.WTLibraryApp.Reservation.ReservationService;
+import main.WTLibraryApp.User.LoanedUser;
+import main.WTLibraryApp.User.User;
+import main.WTLibraryApp.User.UserController;
+import main.WTLibraryApp.User.UserService;
 
 @Controller 
 @CrossOrigin(maxAge=3600)
@@ -25,6 +33,9 @@ public class CopyController {
 		
 	@Autowired
 	private CopyService service;
+	
+	@Autowired
+	private ReservationService reservationService;
  	
 	//displays all copies in the database
   	@GetMapping(value = "copies")
@@ -42,14 +53,60 @@ public class CopyController {
 		return "copies/copyInterface";                           
 	}       
 	
-	//deletes copy by bookId and copyId combination
-	@GetMapping("copies/delete/{bookId}/{copyId}")
-	public String delete(@PathVariable long bookId, @PathVariable long copyId) {
+	//deletes copy by bookId and copyId combination in the book interface
+	@GetMapping("copies/deleteInBookInterface/{bookId}/{copyId}")
+	public String deleteInBook(@PathVariable long bookId, @PathVariable long copyId) {
 			 
 		CopyPK id = new CopyPK(bookId, copyId); 
 		service.deleteCopy(id);     
 		return "redirect:/books/edit/{bookId}"; 
-	} 
+	}  
+	
+	//administrator withdraws copies of books to users
+	@GetMapping("copies/withdraw/{bookId}/{copyId}/{userId}")  
+	public String withdrawBook(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId, Model model){
+		
+		if(userId!=0) {
+			CopyPK id = new CopyPK(bookId, copyId);
+			Copy copyToWithdraw = service.findCopy(id).get(0);
+			copyToWithdraw.setUserId(0); 
+			service.saveCopy(copyToWithdraw);
+		}
+
+		return "redirect:/users/edit-user/{userId}";
+	}
+
+	//administrator loans copies of books to users
+	@GetMapping("copies/loan/{bookId}/{copyId}/{userId}")  
+	public String loanBook(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId, Model model){
+		
+		long currentUserId = LoanedUser.getCurrentUserId();
+		
+		if(userId==0) {
+			CopyPK id = new CopyPK(bookId, copyId);
+			Copy copyToLoan = service.findCopy(id).get(0);
+			copyToLoan.setUserId(currentUserId);  
+			service.saveCopy(copyToLoan); 
+		}
+		
+		//deletes related reservation
+		//in case of duplicate reservations, it deletes the first one
+		List<Reservation> reservation = reservationService.findByBookIdAndUserId(bookId, currentUserId);
+		reservationService.deleteReservation(reservation.get(0));
+		
+		String path = "redirect:/users/edit-user/" + currentUserId;
+		
+		return path;
+	}
+	
+//	//deletes copy by bookId and copyId combination in the user interface
+//	@GetMapping("copies/deleteInUserInterface/{bookId}/{copyId}/{userId}")
+//	public String deleteInUser(@PathVariable long bookId, @PathVariable long copyId) {
+//			 
+//		CopyPK id = new CopyPK(bookId, copyId); 
+//		service.deleteCopy(id);             
+//		return "redirect:/users/edit-user/{userId}"; 
+//	}  
 	
 //	@GetMapping("copies/create")
 //	public String create(Copy copy) {

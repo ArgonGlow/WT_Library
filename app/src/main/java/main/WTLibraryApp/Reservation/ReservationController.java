@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import main.WTLibraryApp.Book.Book;
 import main.WTLibraryApp.Book.BookService;
+import main.WTLibraryApp.Book.Copy.Copy;
 import main.WTLibraryApp.LibMail.EmailService;
 import main.WTLibraryApp.User.User;
 import main.WTLibraryApp.User.UserService;
@@ -62,6 +63,7 @@ public class ReservationController {
 		User currentUser = us.findByEmail(authentication.getName());
 		User user = us.findUser(reservation.getUserId());
 		Book book = bs.find(reservation.getBookId());
+
 		es.sendSimpleMessage(user.getEmail(), "Reserved " + book.getTitle(), "Dear " + user.getFirst_name() + " " + user.getLast_name() + ",\nYou seem to believe we will help you get your hands on "+ book.getTitle()+" written by "+book.getAuthor()+". People can believe anything these days I suppose. Well..\nSee you!\n"+currentUser.getFirst_name()+" "+currentUser.getLast_name());
 		if (result.hasErrors()) {
 			return "reservations/confirmReservation";
