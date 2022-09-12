@@ -1,7 +1,5 @@
 package main.WTLibraryApp.Transaction;
 
-import java.sql.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,26 +14,37 @@ public class Transaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long transaction_id;
 	
+	private String bookcopy;
+	
 	private long copy_id;
 	
 	private long user_id;
 	
 	private TransactionType transaction_type;
+
 	
-	private Date date;
 	
-	
+	// constructor
 	public Transaction(long user_id, TransactionType transaction_type) {
 		this.user_id = user_id;
 		this.transaction_type = transaction_type;
 	}
-
+	
+	// getters and setters
 	public long getTransaction_id() {
 		return transaction_id;
 	}
 
 	public void setTransaction_id(long transaction_id) {
 		this.transaction_id = transaction_id;
+	}
+	
+	public String getBookcopy() {
+		return bookcopy;
+	}
+
+	public void setBookcopy(String bookcopy) {
+		this.bookcopy = bookcopy;
 	}
 
 	public long getCopy_id() {
@@ -58,16 +67,22 @@ public class Transaction {
 	public TransactionType getTransaction_type() {
 		return transaction_type;
 	}
-
-	public void setTransactionType(TransactionType transaction_type) {
+	
+	public void setTransaction_type(TransactionType transaction_type) {
 		this.transaction_type = transaction_type;
 	}
 
-	public Date getDate() {
-		return date;
-	}
+	
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+	
+
+	
+	
+//	public Date getDate() {
+//		return date;
+//	}
+//
+//	public void setDate(Date date) {
+//		this.date = date;
+//	}
 }

@@ -105,7 +105,7 @@ public class ReservationController {
     	}
 		
 		//log in transactions table
-		transactionService.logTransaction(userId, TransactionType.RESERVED);
+		transactionService.logReservation(userId, bookId, TransactionType.RESERVED);
 		
 		String path = "redirect:/books";
 		return path;
