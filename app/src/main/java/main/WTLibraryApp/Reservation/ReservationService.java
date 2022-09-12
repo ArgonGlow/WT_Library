@@ -39,4 +39,8 @@ public class ReservationService {
 	public List<Reservation> findByBookIdAndUserId(long bookId, long userId){
 		return repo.findByBookIdAndUserId(bookId, userId);
 	}
+	
+	public List<Reservation> findByUserId(long userId){
+		return repo.findByUserId(userId);
+	}
 }

@@ -12,4 +12,6 @@ import main.WTLibraryApp.User.User;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 	
 	List<Reservation> findByBookIdAndUserId(long bookId, long userId);
+	
+	List<Reservation> findByUserId(long userId);
 }

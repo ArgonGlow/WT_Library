@@ -82,7 +82,7 @@
             <td th:text="${copies.copyPkId.copyId}"></td>
             <td th:text="${copies.userId}"></td>
             <div th:switch="${copies.userId}">
-              <td th:case="0"></td>
+              <td th:case=null></td>
               <td th:case="*">
               <a th:href="@{/copies/withdraw/{id1}/{id2}/{id3} (id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId}, id3=${copies.userId})}">withdraw</a>
             </td>
@@ -107,7 +107,24 @@
             <td th:text="${books.title}"></td>
             <td th:text="${books.author}"></td>
           </tr>
-        </tbody>
+          </tbody>
+          </table>
+          <!-- Display reservations (for cancellation purposes) -->
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Book id</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="reservations : ${reservations}">
+                <td th:text="${reservations.bookId}"></td>
+                <td>
+                  <a th:href="@{/reservations/cancel/{id} (id=${reservations.reservationId})}">Cancel reservation</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         <!-- Displays copies of reserved books -->
           <table class="table">
             <thead>
@@ -124,8 +141,8 @@
                 <td th:text="${copies.copyPkId.copyId}"></td>
                 <td th:text="${copies.userId}"></td>
                 <div th:switch="${copies.userId}">
-                  <td th:case="0">
-                    <a class="btn btn-primary" th:href="@{/copies/loan/{id1}/{id2}/{id3} (id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId}, id3=${copies.userId})}">loan</a>
+                  <td th:case=null>
+                    <a class="btn btn-primary" th:href="@{/copies/loan/{id1}/{id2} (id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId})}">loan</a>
                   </td> 
                 </div>
               </tr>

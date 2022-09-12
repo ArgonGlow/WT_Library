@@ -22,16 +22,16 @@ public interface CopyRepository extends JpaRepository<Copy, CopyPK>{
 //	Copy deleteByCopyPkId(CopyPK copyPk);
 	
 	// findById method for user-id object
-	List<Copy> findCopyByUserId(long id);
+	List<Copy> findCopyByUserId(Long id);
 	
 	//find copies by bookId
 	@Query(value = "select * from copies where book_id like :id", nativeQuery = true)
-	List<Copy> findCopyByBookId(@Param("id") long id);
+	List<Copy> findCopyByBookId(@Param("id") Long id);
 	
 	//find all copies of titles one user reserved
 	@Query(value = "SELECT * FROM copies WHERE book_id IN\r\n"
 			+ "(SELECT book_id FROM reservations WHERE user_id LIKE :userId)", nativeQuery = true)
-	List<Copy> findCopyByReservationUserId(long userId);
+	List<Copy> findCopyByReservationUserId(Long userId);
 	
 }
  
