@@ -42,16 +42,13 @@
 
       <div th:if="${bookReserveable}">
         <input class="btn btn-primary" type="submit" value="Update Book" />
-        <a class="btn btn-danger" th:href="@{/books/delete/{id}(id=${books.book_id})}">Delete book title</a>
-      <!-- Reserve/cancel reseration button -->
+        <!-- Reserve/cancel reseration button -->
         <td>
           <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${books.book_id})}">Reserve</a>
         </td>
       </div>
       <div th:unless="${bookReserveable}">
         <input class="btn btn-primary" type="submit" value="Update Book" />
-        <a class="btn btn-danger" th:href="@{/books/delete/{id}(id=${books.book_id})}">Delete book title</a>
-      
         <td>
           <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${books.book_id})}">Cancel reservation</a>
         </td>
