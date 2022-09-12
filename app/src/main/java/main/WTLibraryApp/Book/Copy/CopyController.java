@@ -85,7 +85,6 @@ public class CopyController {
 		copyToLoan.setUserId(currentUserId);  
 		service.saveCopy(copyToLoan); 
 		
-		
 		//deletes related reservation
 		//in case of duplicate reservations, it deletes the first one
 		List<Reservation> reservation = reservationService.findByBookIdAndUserId(bookId, currentUserId);
