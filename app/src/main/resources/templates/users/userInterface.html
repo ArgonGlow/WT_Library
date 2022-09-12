@@ -87,7 +87,9 @@
             <div th:switch="${copies.userId}">
               <td th:case=null></td>
               <td th:case="*">
-              <a th:href="@{/copies/withdraw/{id1}/{id2}/{id3} (id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId}, id3=${copies.userId})}">withdraw</a>
+              <div sec:authorize="hasAnyAuthority('1')">
+                <a th:href="@{/copies/withdraw/{id1}/{id2}/{id3} (id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId}, id3=${copies.userId})}">withdraw</a>
+              </div>
             </td>
             </div>
           </tr>
