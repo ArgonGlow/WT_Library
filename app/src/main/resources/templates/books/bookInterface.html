@@ -42,6 +42,7 @@
 
       <input type="submit" value="Update Book" />
       <a th:href="@{/books/delete/{id}(id=${books.book_id})}">Delete</a>
+      <a th:href="@{/reservations/createReservation/{id}(id=${books.book_id})}">Reserve</a>
     </form>
     
     <!-- Display copies -->
@@ -61,7 +62,7 @@
               <td th:text="${copies.copyPkId.copyId}"></td>
               <td th:text="${copies.userId}"></td>
               <td>
-                <a th:href="@{/copies/delete/{id1}/{id2}(id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId})}">delete</a>
+                <a th:href="@{/copies/delete/{id1}/{id2}(id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId})}">Delete</a>
               </td>
             </tr>
           </tbody>
