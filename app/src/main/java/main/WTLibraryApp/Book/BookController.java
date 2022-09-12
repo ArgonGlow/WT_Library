@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import main.WTLibraryApp.Book.Copy.Copy;
 import main.WTLibraryApp.Book.Copy.CopyPK;
 import main.WTLibraryApp.Book.Copy.CopyService;
+import main.WTLibraryApp.Reservation.Reservation;
+import main.WTLibraryApp.Reservation.ReservationService;
 
 @Controller
 @CrossOrigin(maxAge=3600)
@@ -25,6 +27,8 @@ public class BookController {
 	private BookService service;
 	@Autowired
 	private CopyService copyService;
+	@Autowired
+	private ReservationService reservationService;
 	   
 	//	Returns all books from the books table.      
 	@GetMapping("/books")
@@ -36,6 +40,10 @@ public class BookController {
             List<Book> list = service.findAll();
             model.addAttribute("books", list);
         }
+        
+        List<Reservation> reservationList = reservationService.allReservations();
+        model.addAttribute("reservations", reservationList);
+        
 		return "books/WTlibrary";
 	} 
 	//	Adds a new book to the books table
