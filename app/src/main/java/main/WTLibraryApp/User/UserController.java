@@ -138,14 +138,12 @@ public class UserController {
 	@PostMapping("/users/edit-user/{id}")
 	public String updateUserPost(@PathVariable("id") long id, User users, BindingResult result, Model model) {
 		if(users.getPassphrase().length() > 0) {
-			System.out.println(users.getPassphrase());
 			users.setPassphrase(BCrypt.hashpw(users.getPassphrase().toString(), BCrypt.gensalt()));
 		}
 		if (result.hasErrors()) {
 			users.setUser_id(id);
 			return "users/edit-user"; 
 		} 
-		System.out.println(users.getPassphrase());
 		service.saveUser(users, id);
 		
 		return "redirect:/users";
