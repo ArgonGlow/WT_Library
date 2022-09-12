@@ -82,9 +82,6 @@ public class UserController {
 	@PostMapping("/user")
 	public String updateCurrentUserPost(@CurrentSecurityContext(expression = "authentication") Authentication authentication, User users, BindingResult result, Model model) {
 		User currentuser = service.findByEmail(authentication.getName());
-		if(users.getPassphrase().length() > 0) {
-			users.setPassphrase(BCrypt.hashpw(users.getPassphrase(), BCrypt.gensalt()));
-		}
 		if (!result.hasErrors()) {
 			service.saveUser(users, currentuser.getUser_id());
 		} 
@@ -137,9 +134,6 @@ public class UserController {
 //edits user in the table
 	@PostMapping("/users/edit-user/{id}")
 	public String updateUserPost(@PathVariable("id") long id, User users, BindingResult result, Model model) {
-		if(users.getPassphrase().length() > 0) {
-			users.setPassphrase(BCrypt.hashpw(users.getPassphrase().toString(), BCrypt.gensalt()));
-		}
 		if (result.hasErrors()) {
 			users.setUser_id(id);
 			return "users/edit-user"; 
