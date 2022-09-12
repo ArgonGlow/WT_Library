@@ -15,7 +15,7 @@ public class Copy {
 	
 	// separating userId variable name from column name
 	@Column(name="loaned_by_user")
-	private long userId;
+	private Long userId;
  
 	public CopyPK getCopyPkId() {  
 		return copyPkId;
@@ -23,10 +23,10 @@ public class Copy {
 	public void setCopyPkId(CopyPK copyPkId) {
 		this.copyPkId = copyPkId;
 	}
-	public long getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
-	public void setUserId(long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 

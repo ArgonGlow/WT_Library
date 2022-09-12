@@ -18,11 +18,11 @@ public class CopyService {
 		return repo.findAll();
 	}
 	
-	public List<Copy> findCopyByUserId(long id) {
+	public List<Copy> findCopyByUserId(Long id) {
 		return repo.findCopyByUserId(id);
 	}
 	
-	public List<Copy> findCopyByBookId(long id) {
+	public List<Copy> findCopyByBookId(Long id) {
 		return repo.findCopyByBookId(id);
 	}
 	
@@ -44,7 +44,7 @@ public class CopyService {
 		repo.save(copy);
 	}
 	
-	public List<Copy> findCopyByReservationUserId(long userId){
+	public List<Copy> findCopyByReservationUserId(Long userId){
 		return repo.findCopyByReservationUserId(userId);
 	}
 }

@@ -61,6 +61,9 @@
             </td>
           </div>
           <td>
+            <a th:href="@{/reservations/createReservation/{id}(id=${books.book_id})}">Reserve</a>
+          </td>
+          <td>
             <img th:src="${books.cover_image}">
           </td>
           <!-- <td th:text="${books.cover_image}">

@@ -24,6 +24,7 @@
     <br>
     <h1>Edit Book</h1>
 
+    <!-- Edit book -->
     <form action="#" th:action="@{/books/edit/{id}(id=${books.book_id})}" th:object="${books}" method="post">
       <div class="visually-hidden">
         <label for="id">ID: </label>
@@ -41,8 +42,10 @@
 
       <input type="submit" value="Update Book" />
       <a th:href="@{/books/delete/{id}(id=${books.book_id})}">Delete</a>
+      <a th:href="@{/reservations/createReservation/{id}(id=${books.book_id})}">Reserve</a>
     </form>
     
+    <!-- Display copies -->
     <div th:switch="${copies}">
       <div th:case="*">
         <table class="table">
@@ -59,7 +62,7 @@
               <td th:text="${copies.copyPkId.copyId}"></td>
               <td th:text="${copies.userId}"></td>
               <td>
-                <a th:href="@{/copies/delete/{id1}/{id2}(id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId})}">delete</a>
+                <a th:href="@{/copies/delete/{id1}/{id2}(id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId})}">Delete</a>
               </td>
             </tr>
           </tbody>
