@@ -16,7 +16,12 @@
 </head>
 <body>
   <!--______________Navigation bar______________-->
-  <div th:insert="@{../fragments/navbar.html}"></div>
+  <div sec:authorize="hasAnyAuthority('1')">
+    <div th:insert="@{../fragments/navbar.html}"></div>
+  </div>
+  <div sec:authorize="hasAnyAuthority('2')">
+    <div th:insert="@{../fragments/navbar_User.html}"></div>
+  </div>
   <!--______________End of Navigation bar______________-->
   
 
