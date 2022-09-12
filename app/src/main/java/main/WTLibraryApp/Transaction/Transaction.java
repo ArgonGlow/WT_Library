@@ -11,6 +11,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="transactions")
 public class Transaction {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long transaction_id;
@@ -19,13 +20,15 @@ public class Transaction {
 	
 	private long user_id;
 	
-	private enum transaction_type{
-		RESERVED,
-		LOANED,
-		RETURNED
-	};
+	private TransactionType transaction_type;
 	
 	private Date date;
+	
+	
+	public Transaction(long user_id, TransactionType transaction_type) {
+		this.user_id = user_id;
+		this.transaction_type = transaction_type;
+	}
 
 	public long getTransaction_id() {
 		return transaction_id;
@@ -50,6 +53,15 @@ public class Transaction {
 	public void setUser_id(long user_id) {
 		this.user_id = user_id;
 	}
+	
+	
+	public TransactionType getTransaction_type() {
+		return transaction_type;
+	}
+
+	public void setTransactionType(TransactionType transaction_type) {
+		this.transaction_type = transaction_type;
+	}
 
 	public Date getDate() {
 		return date;
@@ -58,6 +70,4 @@ public class Transaction {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
-	
 }

@@ -14,4 +14,9 @@ public class TransactionService {
 	
 	@Autowired
 	private TransactionRepository repo;
+	
+	public void logTransaction(long user_id, TransactionType type) {
+		Transaction newTransaction = new Transaction(user_id, type);
+		repo.save(newTransaction);
+	}
 }

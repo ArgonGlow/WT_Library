@@ -49,7 +49,7 @@ public class CopyController {
 	public String findById(@PathVariable long bookId, @PathVariable long copyId, Model model) {
 		 
 		CopyPK id = new CopyPK(bookId, copyId);           
-		model.addAttribute("copies", service.findCopy(id));  
+		model.addAttribute("copies", service.findCopy(id));
 		return "copies/copyInterface";                           
 	}       
 	
