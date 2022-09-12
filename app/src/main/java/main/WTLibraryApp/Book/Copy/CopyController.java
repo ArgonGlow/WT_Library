@@ -65,29 +65,26 @@ public class CopyController {
 	//administrator withdraws copies of books to users
 	@GetMapping("copies/withdraw/{bookId}/{copyId}/{userId}")  
 	public String withdrawBook(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId, Model model){
-		
-		if(userId!=0) {
-			CopyPK id = new CopyPK(bookId, copyId);
-			Copy copyToWithdraw = service.findCopy(id).get(0);
-			copyToWithdraw.setUserId(0); 
-			service.saveCopy(copyToWithdraw);
-		}
 
+		CopyPK id = new CopyPK(bookId, copyId);
+		Copy copyToWithdraw = service.findCopy(id).get(0);
+		copyToWithdraw.setUserId(null); 
+		service.saveCopy(copyToWithdraw);
+		
 		return "redirect:/users/edit-user/{userId}";
 	}
 
 	//administrator loans copies of books to users
-	@GetMapping("copies/loan/{bookId}/{copyId}/{userId}")  
-	public String loanBook(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId, Model model){
+	@GetMapping("copies/loan/{bookId}/{copyId}")  
+	public String loanBook(@PathVariable long bookId, @PathVariable long copyId, Model model){
 		
 		long currentUserId = LoanedUser.getCurrentUserId();
+
+		CopyPK id = new CopyPK(bookId, copyId);
+		Copy copyToLoan = service.findCopy(id).get(0);
+		copyToLoan.setUserId(currentUserId);  
+		service.saveCopy(copyToLoan); 
 		
-		if(userId==0) {
-			CopyPK id = new CopyPK(bookId, copyId);
-			Copy copyToLoan = service.findCopy(id).get(0);
-			copyToLoan.setUserId(currentUserId);  
-			service.saveCopy(copyToLoan); 
-		}
 		
 		//deletes related reservation
 		//in case of duplicate reservations, it deletes the first one

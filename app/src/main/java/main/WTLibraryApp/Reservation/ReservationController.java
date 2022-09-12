@@ -16,7 +16,7 @@ import main.WTLibraryApp.Book.Book;
 import main.WTLibraryApp.Book.BookService;
 import main.WTLibraryApp.Book.Copy.Copy;
 import main.WTLibraryApp.LibMail.EmailService;
-import main.WTLibraryApp.User.CurrentUser;
+import main.WTLibraryApp.User.LoanedUser;
 import main.WTLibraryApp.User.User;
 import main.WTLibraryApp.User.UserService;
 
@@ -89,7 +89,7 @@ public class ReservationController {
 		Book book = bookService.find(reservation.getBookId());
 		emailService.sendSimpleMessage(user.getEmail(), "Reserved " + book.getTitle(), "Dear " + user.getFirst_name() + " " + user.getLast_name() + ",\nYou seem to believe we will help you get your hands on "+ book.getTitle()+" written by "+book.getAuthor()+". People can believe anything these days I suppose. Well..\nSee you!\n"+currentUser.getFirst_name()+" "+currentUser.getLast_name());
 		
-		CurrentUser.setCurrentUserId(userId);
+		LoanedUser.setCurrentUserId(userId);
 		
 		String path = "redirect:/books";
 		return path;
@@ -101,7 +101,7 @@ public class ReservationController {
 		Reservation reservation = service.reservationById(reservationId);
 		service.deleteReservation(reservation);
 		
-		String path = "redirect:/users/edit-user/" + CurrentUser.getCurrentUserId();
+		String path = "redirect:/users/edit-user/" + LoanedUser.getCurrentUserId();
 		return path;
 	}
 		
