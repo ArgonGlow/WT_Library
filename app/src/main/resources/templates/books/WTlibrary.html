@@ -55,9 +55,12 @@
           <td th:text="${books.title}"></td>
           <td th:text="${books.isbn}"></td>
           <td th:text="${books.author}"></td>
+          <td>
+            <a th:href="@{/reservations/createReservation/{id}(id=${books.book_id})}">Reserve</a>
+          </td>
           <div sec:authorize="hasAnyAuthority('1')">
             <td>
-              <a th:href="@{/books/edit/{id}(id=${books.book_id})}">Edit</a>
+              <a th:href="@{/books/edit/{id}(id=${books.book_id})}">Info</a>
             </td>
           </div>
           <td>
