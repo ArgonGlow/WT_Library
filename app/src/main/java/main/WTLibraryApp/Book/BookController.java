@@ -2,9 +2,13 @@ package main.WTLibraryApp.Book;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +22,8 @@ import main.WTLibraryApp.Book.Copy.CopyPK;
 import main.WTLibraryApp.Book.Copy.CopyService;
 import main.WTLibraryApp.Reservation.Reservation;
 import main.WTLibraryApp.Reservation.ReservationService;
+import main.WTLibraryApp.User.User;
+import main.WTLibraryApp.User.UserService;
 
 @Controller
 @CrossOrigin(maxAge=3600)
@@ -29,10 +35,12 @@ public class BookController {
 	private CopyService copyService;
 	@Autowired
 	private ReservationService reservationService;
+	@Autowired
+	private UserService userService;
 	   
 	//	Returns all books from the books table.      
 	@GetMapping("/books")
-	public String findAll(Model model, Book book, String keyword) {
+	public String findAll(Model model, Book book, @CurrentSecurityContext(expression = "authentication") Authentication authentication, String keyword) {
 //        if (keyword != null) {
 //            List<Book> list = service.findByKeyword(keyword);
 //            model.addAttribute("books", list);
@@ -42,19 +50,23 @@ public class BookController {
 //        }
 //        
         List<Book> list = service.findAll();
-        model.addAttribute("books", list);
         
-        List<Reservation> reservationList = reservationService.allReservations();
-        model.addAttribute("reservations", reservationList);
+        User currentUser = userService.findByEmail(authentication.getName());
+        long userId = currentUser.getUser_id();
         
-        List<Boolean> reservationBoolList;
-        for(book: reservation)
-        	if(reservation) {
-        		reservationBoolList = true;
-        	}
-        
+        //create map of (Book, bool) to establish 1 time reservations
+        Map<Book, Boolean> mapBookReservations = new LinkedHashMap<>();
+       
+        for(Book reservationBook: list) {
+            long reservationBookId = reservationBook.getBook_id();
+        	List<Reservation> reservations = reservationService.findByBookIdAndUserId(reservationBookId, userId);
+            mapBookReservations.put(reservationBook, reservations.size() <= 0);
+        }
+
+        model.addAttribute("books", mapBookReservations);
 		return "books/WTlibrary";
 	} 
+	
 	//	Adds a new book to the books table
 	@GetMapping("/books/create")
 	public String create(Book book) {
