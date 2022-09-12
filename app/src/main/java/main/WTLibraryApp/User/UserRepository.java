@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import main.WTLibraryApp.Book.Book;
+import main.WTLibraryApp.Book.Copy.Copy;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -19,6 +20,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	public List<User> findByKeyword(@Param("keyword") String keyword);
 	
 	public Optional<User> findByEmail(String email);
-
+	
 }
   
