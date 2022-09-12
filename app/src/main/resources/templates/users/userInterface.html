@@ -27,7 +27,7 @@
         <h1>Edit User</h1>
     
         <!--Update user function-->
-        <form action="#" th:action="@{/users/edit-user/{id}(id=${users.user_id})}" th:object="${users}" method="post">
+          <form action="#" th:action="@{${action}}" th:object="${users}" method="post">
           <div class="visually-hidden">
             <label for="user_id">User ID</label>
             <input type="text" th:field="*{user_id}" id="user_id" placeholder="User ID" />
@@ -41,6 +41,9 @@
     
           <label for="email">Email: </label>
           <input type="text" th:field="*{email}" id="email" placeholder="Email" />
+
+          <label for="passphrase">Passphrase: </label>
+          <input type="password" th:field="*{passphrase}" id="passphrase" placeholder="" />
     
           <input class="btn btn-primary" type="submit" value="Update User" />
           <a class="btn btn-danger" th:href="@{/users/delete-user/{id}(id=${users.user_id})}">Delete</a>
@@ -126,6 +129,7 @@
             </tbody>
           </table>
         <!-- Displays copies of reserved books -->
+        <div sec:authorize="hasAnyAuthority('1')">
           <table class="table">
             <thead>
               <br>
@@ -148,6 +152,7 @@
               </tr>
             </tbody>
           </table> 
+        </div>
     </div>
   </form>
 </div>

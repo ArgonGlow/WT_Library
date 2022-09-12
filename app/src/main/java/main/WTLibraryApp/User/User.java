@@ -34,12 +34,12 @@ public class User {
 		return user_id;
 	}
 
-	public String getPassword() {
+	public String getPassphrase() {
 		return passphrase;
 	}
 
-	public void setPassword(String password) {
-		this.passphrase = password;
+	public void setPassphrase(String passphrase) {
+		this.passphrase = passphrase;
 	}
 
 	public boolean isActive() {
