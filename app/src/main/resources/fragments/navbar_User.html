@@ -1,0 +1,17 @@
+<nav class="navbar navbar-extend-sm navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand">
+      <img src="../static/images/wt-logo.svg" title="Logo" alt="Logo"th:src="@{../images/wt-logo.svg}" />
+    </a>
+    <form th:action = "@{/logout}" method = "post">
+      <input class="btn btn-primary" type = "submit" value = "Sign Out"/>
+    </form>
+  </div>
+  </nav>
+  <nav>
+  <div class="container">
+    <ul>
+      <li><a href="/books">WT library</a></li>
+    </ul>
+  </div>
+</nav>

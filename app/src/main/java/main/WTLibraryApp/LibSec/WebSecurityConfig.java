@@ -29,17 +29,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
          	.authorizeRequests()
          	.antMatchers("/","/books").hasAnyAuthority("1","2")
-         .and()
+        .and()
         	.authorizeRequests()
             .antMatchers("/**").hasAnyAuthority("1")
             .anyRequest().authenticated()
-            .and()
-        .formLogin()
-            .loginPage("/login")
-            .permitAll()
-            .and()
-        .logout().invalidateHttpSession(true) 
-            .clearAuthentication(true).permitAll();
+        .and()
+        	.formLogin()
+            	.loginPage("/login")
+            	.permitAll()
+        .and()
+        	.logout().invalidateHttpSession(true) 
+            	.clearAuthentication(true).permitAll();
    } 
 	   
 	
