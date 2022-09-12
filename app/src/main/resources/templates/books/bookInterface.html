@@ -24,6 +24,7 @@
     <br>
     <h1>Edit Book</h1>
 
+    <!-- Edit book -->
     <form action="#" th:action="@{/books/edit/{id}(id=${books.book_id})}" th:object="${books}" method="post">
       <div class="visually-hidden">
         <label for="id">ID: </label>
@@ -43,6 +44,7 @@
       <a th:href="@{/books/delete/{id}(id=${books.book_id})}">Delete</a>
     </form>
     
+    <!-- Display copies -->
     <div th:switch="${copies}">
       <div th:case="*">
         <table class="table">
