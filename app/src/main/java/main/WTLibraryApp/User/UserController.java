@@ -90,7 +90,7 @@ public class UserController {
 		model.addAttribute("reservedBooks", reservedBookList);
 		model.addAttribute("reservations", reservationList);
 		
-		CurrentUser.setCurrentUserId(id);
+		LoanedUser.setCurrentUserId(id);
 
 		return "users/userInterface";
 	}
