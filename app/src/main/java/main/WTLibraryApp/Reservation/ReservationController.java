@@ -72,14 +72,6 @@ public class ReservationController {
 		return "redirect:/reservations";
 	}
 	
-	// Loans a user's reservations and removes it from the reservations table
-	@GetMapping("reservations/loan/{reservationId}")
-	public String loanReservation(@PathVariable long reservationId) {
-		Reservation reservation = service.reservationById(reservationId);
-		service.deleteReservation(reservation);
-		return "redirect:/reservations";
-	}
-	
 	// Cancels a user's reservations by removing it from the reservations table
 	@GetMapping("reservations/cancel/{reservationId}")
 	public String cancelReservation(@PathVariable long reservationId) {
