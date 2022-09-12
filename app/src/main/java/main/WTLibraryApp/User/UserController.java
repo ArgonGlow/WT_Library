@@ -86,7 +86,7 @@ public class UserController {
 		model.addAttribute("books", bookList);
 		model.addAttribute("reservedBooks", reservedBookList);
 		
-		CurrentUser.setCurrentUserId(id);
+		LoanedUser.setCurrentUserId(id);
 
 		return "users/userInterface";
 	}
