@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import main.WTLibraryApp.Book.Book;
 import main.WTLibraryApp.Book.BookService;
+import main.WTLibraryApp.Book.Copy.Copy;
 import main.WTLibraryApp.LibMail.EmailService;
+import main.WTLibraryApp.User.LoanedUser;
 import main.WTLibraryApp.User.User;
 import main.WTLibraryApp.User.UserService;
 
@@ -27,13 +29,13 @@ public class ReservationController {
 	private ReservationService service;
 	
 	@Autowired
-	private EmailService es;
+	private EmailService emailService;
 	
 	@Autowired
-	private UserService us;
+	private UserService userService;
 	
 	@Autowired
-	private BookService bs;
+	private BookService bookService;
 	
 	// list all entries from reservations table
 	// returns list of Reservation objects
@@ -52,22 +54,45 @@ public class ReservationController {
 	}
 	
 	// Creates a new reservation in the reservations table
-	@GetMapping("reservations/create")
-	public String createReservation(Reservation reservation) {
-		return "reservations/confirmReservation";
-	}
+//	@GetMapping("reservations/create")
+//	public String createReservation(Reservation reservation) {
+//		return "reservations/confirmReservation";
+//	}
+//	
+//	@PostMapping("reservations/create")
+//	public String createReservation(@CurrentSecurityContext(expression = "authentication") Authentication authentication,Reservation reservation, BindingResult result, Model model) {
+//		User currentUser = userService.findByEmail(authentication.getName());
+//		//send email
+//		User user = userService.findUser(reservation.getUserId());
+//		Book book = bookService.find(reservation.getBookId());
+//		emailService.sendSimpleMessage(user.getEmail(), "Reserved " + book.getTitle(), "Dear " + user.getFirst_name() + " " + user.getLast_name() + ",\nYou seem to believe we will help you get your hands on "+ book.getTitle()+" written by "+book.getAuthor()+". People can believe anything these days I suppose. Well..\nSee you!\n"+currentUser.getFirst_name()+" "+currentUser.getLast_name());
+//		
+//		if (result.hasErrors()) {
+//			return "reservations/confirmReservation";
+//		}
+//		service.saveReservation(reservation);
+//		return "redirect:/reservations";
+//	}
 	
-	@PostMapping("reservations/create")
-	public String createReservation(@CurrentSecurityContext(expression = "authentication") Authentication authentication,Reservation reservation, BindingResult result, Model model) {
-		User currentUser = us.findByEmail(authentication.getName());
-		User user = us.findUser(reservation.getUserId());
-		Book book = bs.find(reservation.getBookId());
-		es.sendSimpleMessage(user.getEmail(), "Reserved " + book.getTitle(), "Dear " + user.getFirst_name() + " " + user.getLast_name() + ",\nYou seem to believe we will help you get your hands on "+ book.getTitle()+" written by "+book.getAuthor()+". People can believe anything these days I suppose. Well..\nSee you!\n"+currentUser.getFirst_name()+" "+currentUser.getLast_name());
-		if (result.hasErrors()) {
-			return "reservations/confirmReservation";
-		}
+	@GetMapping("reservations/createReservation/{bookId}")
+	public String createReservation(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication, Model model) {
+		User currentUser = userService.findByEmail(authentication.getName());
+		long userId = currentUser.getUser_id();
+		
+		Reservation reservation = new Reservation();
+		reservation.setBookId(bookId);
+		reservation.setUserId(userId);
 		service.saveReservation(reservation);
-		return "redirect:/reservations";
+		
+		//send email
+		User user = userService.findUser(reservation.getUserId());
+		Book book = bookService.find(reservation.getBookId());
+		emailService.sendSimpleMessage(user.getEmail(), "Reserved " + book.getTitle(), "Dear " + user.getFirst_name() + " " + user.getLast_name() + ",\nYou seem to believe we will help you get your hands on "+ book.getTitle()+" written by "+book.getAuthor()+". People can believe anything these days I suppose. Well..\nSee you!\n"+currentUser.getFirst_name()+" "+currentUser.getLast_name());
+		
+		LoanedUser.setCurrentUserId(userId);
+		
+		String path = "redirect:/books";
+		return path;
 	}
 	
 	// Cancels a user's reservations by removing it from the reservations table
@@ -75,7 +100,9 @@ public class ReservationController {
 	public String cancelReservation(@PathVariable long reservationId) {
 		Reservation reservation = service.reservationById(reservationId);
 		service.deleteReservation(reservation);
-		return "redirect:/reservations";
+		
+		String path = "redirect:/users/edit-user/" + LoanedUser.getCurrentUserId();
+		return path;
 	}
 		
 	/*

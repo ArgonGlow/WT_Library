@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import main.WTLibraryApp.User.User;
+
 @Service
 public class ReservationService {
 	
@@ -32,5 +34,13 @@ public class ReservationService {
 
 	public List<Reservation> reservationsByUserId(Reservation userReservation) {
 		return repo.findAll(Example.of(userReservation));
+	}
+	
+	public List<Reservation> findByBookIdAndUserId(long bookId, long userId){
+		return repo.findByBookIdAndUserId(bookId, userId);
+	}
+	
+	public List<Reservation> findByUserId(long userId){
+		return repo.findByUserId(userId);
 	}
 }

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired; 
-import org.springframework.stereotype.Controller;  
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,8 +26,7 @@ public class BookController {
 	@Autowired
 	private CopyService copyService;
 	   
-//	Returns all books from the books table.      
-	  
+	//	Returns all books from the books table.      
 	@GetMapping("/books")
 	public String findAll(Model model, Book book, String keyword) {
         if (keyword != null) {
@@ -39,8 +38,7 @@ public class BookController {
         }
 		return "books/WTlibrary";
 	} 
-//	Adds a new book to the books table
-	 
+	//	Adds a new book to the books table
 	@GetMapping("/books/create")
 	public String create(Book book) {
 		return "books/createBook";
@@ -55,8 +53,8 @@ public class BookController {
 		return "redirect:/books";
 	}
 	
-// Updates an book from the books table
-// Also shows all copies of the book	                 
+	// Updates an book from the books table
+	// Also shows all copies of the book	                 
 	@GetMapping("/books/edit/{bookId}")
 	public String edit(@PathVariable("bookId") long bookId, Model model) {
 		Book book = service.find(bookId);
@@ -68,6 +66,7 @@ public class BookController {
 		return "books/bookInterface"; 
 	} 
 	 
+	//edits a book from the table
 	@PostMapping("/books/edit/{id}")
 	public String edit(@PathVariable("id") long id, Book book, BindingResult result, Model model) {
 		if (result.hasErrors()) {
@@ -78,8 +77,7 @@ public class BookController {
 		return "redirect:/books";
 	}
 	
-//	Deletes an book from the table.
-	
+	//Deletes an book from the table.
 	@GetMapping("/books/delete/{id}")
 	public String delete(@PathVariable("id") long id, Model model) {
 		Book book = service.find(id);

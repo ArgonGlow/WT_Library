@@ -20,26 +20,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DataSource dataSource;
 
-	//Configure privileges per page( and roles in the future)
+	//Configure privileges per page(and roles in the future)
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-			.antMatchers("/images/*").permitAll()
+			.antMatchers("/images/*","/style.css").permitAll()
 		.and()
          	.authorizeRequests()
-         	.antMatchers("/","/books").hasAnyAuthority("1","2")
-         .and()
+         	.antMatchers("/","/books","/reservations/createReservation/*").hasAnyAuthority("1","2")
+        .and()
         	.authorizeRequests()
             .antMatchers("/**").hasAnyAuthority("1")
             .anyRequest().authenticated()
-            .and()
-        .formLogin()
-            .loginPage("/login")
-            .permitAll()
-            .and()
-        .logout().invalidateHttpSession(true) 
-            .clearAuthentication(true).permitAll();
+        .and()
+        	.formLogin()
+            	.loginPage("/login")
+            	.permitAll()
+        .and()
+        	.logout().invalidateHttpSession(true) 
+            	.clearAuthentication(true).permitAll();
    } 
 	   
 	
@@ -60,6 +60,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    //Returns the hashfunction used for the passwords
    @Bean
    public PasswordEncoder passwordEncoder() { 
-      return new BCryptPasswordEncoder(); 
+      return new BCryptPasswordEncoder();
    }
 }

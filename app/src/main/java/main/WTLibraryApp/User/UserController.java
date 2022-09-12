@@ -10,17 +10,34 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import main.WTLibraryApp.Book.Book;
+import main.WTLibraryApp.Book.BookService;
+import main.WTLibraryApp.Book.Copy.Copy;
+import main.WTLibraryApp.Book.Copy.CopyController;
+import main.WTLibraryApp.Book.Copy.CopyService;
 import main.WTLibraryApp.LibMail.EmailService;
+import main.WTLibraryApp.Reservation.Reservation;
+import main.WTLibraryApp.Reservation.ReservationService;
 
 @Controller
 @CrossOrigin(maxAge=3600)
 public class UserController {
-	
+
 	@Autowired
 	private UserService service;
+	
+	@Autowired
+	private CopyService copyService;
+	
+	@Autowired
+	private BookService bookService;
 
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private ReservationService reservationService;
 	
 //	Returns all users from the users table.
 	
@@ -51,7 +68,7 @@ public class UserController {
 			return "/users/add-user";
 		}
 		service.saveUser(users);
-		return "redirect:/users"; 
+		return "redirect:/users";
 	}
 
 //	Updates an user from the users table
@@ -59,11 +76,26 @@ public class UserController {
 	@GetMapping("/users/edit-user/{id}")
 	public String updateUser(@PathVariable("id") long id, Model model) {
 		User users = service.findUser(id);
-		
 		model.addAttribute("users", users);
+		
+		List<Copy> copyList = copyService.findCopyByUserId(id);
+		List<Copy> reservedCopyList = copyService.findCopyByReservationUserId(id);
+		List<Book> bookList = bookService.findBookByUserId(id);
+		List<Book> reservedBookList = bookService.findBookByReservationUserId(id);
+		List<Reservation> reservationList = reservationService.findByUserId(id);
+		
+		model.addAttribute("copies", copyList);
+		model.addAttribute("reservedCopies", reservedCopyList);
+		model.addAttribute("books", bookList);
+		model.addAttribute("reservedBooks", reservedBookList);
+		model.addAttribute("reservations", reservationList);
+		
+		LoanedUser.setCurrentUserId(id);
+
 		return "users/userInterface";
 	}
 	
+//edits user in the table
 	@PostMapping("/users/edit-user/{id}")
 	public String updateUserPost(@PathVariable("id") long id, User users, BindingResult result, Model model) {
 		if (result.hasErrors()) {
@@ -74,14 +106,12 @@ public class UserController {
 		service.saveUser(users, id);     
 		return "redirect:/users";
 	} 
-	
+	      
 //	Deletes an user from the table.
-	
 	@GetMapping("/users/delete-user/{id}")
 	public String deleteUser(@PathVariable("id") long id, Model model) {
 		User users = service.findUser(id);
 		service.deleteUser(users, id);
 		return "redirect:/users"; 
-	}    
-	
+	}       
 }

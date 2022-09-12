@@ -16,28 +16,14 @@
 </head>
 <body>
   <!--______________navigation bar______________-->
-  <nav class="navbar navbar-extend-sm navbar-light bg-light">
-    <div class="container">
-      <a class="navbar-brand">
-        <img src="../static/images/wt-logo.svg" title="Logo" alt="Logo" th:src="@{images/wt-logo.svg}" />
-      </a>
-      <form th:action = "@{/logout}" method = "post">
-        <input type = "submit" value = "Sign Out" />
-      </form>
-    </div>
-  </nav>
-  <nav>
-    <div class="container">
-      <ul>
-        <li><a href="/books">WT library</a></li>
-        <li><a href="/users">Users</a></li>
-        <li><a href="/reservations">Reservations</a></li>
-        <li><a href="/users/add-user">Add user</a></li>
-        <li><a href="/books/create">Add book</a></li>
-      </ul>   
-    </div>
-  </nav>
+  <div sec:authorize="hasAnyAuthority('1')">
+    <div th:insert="@{../fragments/navbar.html}"></div>
+  </div>
+  <div sec:authorize="hasAnyAuthority('2')">
+    <div th:insert="@{../fragments/navbar_User.html}"></div>
+  </div>
   <!--______________end navigation bar______________-->
+  
 
   <!--______________Main page view______________-->
   <div class="container">
@@ -70,13 +56,18 @@
           <td th:text="${books.isbn}"></td>
           <td th:text="${books.author}"></td>
           <td>
-            <a th:href="@{/books/edit/{id}(id=${books.book_id})}">Edit</a>
+            <a th:href="@{/reservations/createReservation/{id}(id=${books.book_id})}">Reserve</a>
           </td>
+          <div sec:authorize="hasAnyAuthority('1')">
+            <td>
+              <a th:href="@{/books/edit/{id}(id=${books.book_id})}">Info</a>
+            </td>
+          </div>
           <td>
             <img th:src="${books.cover_image}">
           </td>
           <!-- <td th:text="${books.cover_image}">
-                          </td> -->
+          </td> -->
         </tr>
       </tbody>
     </table>
