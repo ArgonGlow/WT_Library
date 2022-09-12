@@ -118,6 +118,23 @@ public class ReservationController {
 		String path = "redirect:/books";
 		return path;
 	}
+	
+	// Cancels a user's reservations by removing it from the reservations table
+	@GetMapping("reservations/cancelUI/{bookId}")
+	public String cancelReservationUserInterface(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
+		
+		//get logged-in user
+		User currentUser = userService.findByEmail(authentication.getName());
+		long userId = currentUser.getUser_id();
+		
+		List<Reservation> reservation = service.findByBookIdAndUserId(bookId, userId);
+		service.deleteReservation(reservation.get(0));
+	    
+		long reservedUserId = LoanedUser.getCurrentUserId();
+		
+		String path = "redirect:/users/edit-user/" + reservedUserId;
+		return path;
+	}
 		
 	/*
 	 * find book by key word

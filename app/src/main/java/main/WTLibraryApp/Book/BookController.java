@@ -91,8 +91,7 @@ public class BookController {
 		
 		List<Copy> copyList = copyService.findCopyByBookId(bookId);
 		model.addAttribute("copies", copyList);
-		//_________________________________________
-		
+
 		User currentUser = userService.findByEmail(authentication.getName());
 	    long userId = currentUser.getUser_id();
 	        

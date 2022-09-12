@@ -107,7 +107,7 @@
             <td th:text="${books.title}"></td>
             <td th:text="${books.author}"></td>
             <td>
-              <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id} (id=${books.book_id})}">Cancel reservation</a>
+              <a class="btn btn-secondary" th:href="@{/reservations/cancelUI/{id} (id=${books.book_id})}">Cancel reservation</a>
             </td>
           </tr>
           </tbody>
