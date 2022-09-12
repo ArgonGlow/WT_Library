@@ -99,7 +99,7 @@ public class CopyController {
 		reservationService.deleteReservation(reservation.get(0));
 		
 		//log in transactions table
-		transactionService.logLoan(currentUserId, id, TransactionType.RESERVED);
+		transactionService.logLoan(currentUserId, id, TransactionType.LOANED);
 		
 		String path = "redirect:/users/edit-user/" + currentUserId;
 		return path;

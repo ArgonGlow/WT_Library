@@ -14,7 +14,9 @@ public class Transaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long transaction_id;
 	
-	private String bookcopy;
+	//private String bookcopy;
+	
+	private long book_id;
 	
 	private long copy_id;
 	
@@ -39,12 +41,12 @@ public class Transaction {
 		this.transaction_id = transaction_id;
 	}
 	
-	public String getBookcopy() {
-		return bookcopy;
+	public long getBook_id() {
+		return book_id;
 	}
 
-	public void setBookcopy(String bookcopy) {
-		this.bookcopy = bookcopy;
+	public void setBook_id(long book_id) {
+		this.book_id = book_id;
 	}
 
 	public long getCopy_id() {
