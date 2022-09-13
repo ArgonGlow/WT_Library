@@ -26,7 +26,7 @@ public class User {
 
 	private String email;
 	
-	private String passphrase; 
+	private String passphrase;
 	
 	private boolean active = true;
 

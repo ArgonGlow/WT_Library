@@ -48,7 +48,7 @@ public class UserController {
 		if (keyword != null) {
 			List<User> list = service.findByKeyword(keyword);
 			model.addAttribute("users", list);
-		} else {   
+		} else {
 			List<User> list = service.findAllUsers();
 			model.addAttribute("users", list);
 		}
@@ -93,7 +93,7 @@ public class UserController {
 	@GetMapping("/users/add-user")
 	public String addUser(User users) {
 		return "/users/add-user";
-	} 
+	}
 	
 	@PostMapping("/users/add-user")
 	public String addUserPost(User users, BindingResult result, Model model) {
@@ -139,15 +139,14 @@ public class UserController {
 			return "users/edit-user"; 
 		} 
 		service.saveUser(users, id);
-		
 		return "redirect:/users";
-	} 
-	      
+	}
+
 //	Deletes an user from the table.
 	@GetMapping("/users/delete-user/{id}")
 	public String deleteUser(@PathVariable("id") long id, Model model) {
 		User users = service.findUser(id);
 		service.deleteUser(users, id);
-		return "redirect:/users"; 
-	}       
+		return "redirect:/users";
+	}
 }
