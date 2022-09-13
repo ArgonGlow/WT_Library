@@ -24,60 +24,82 @@
     <br>
     <h1>Book info</h1>
 
-    <!-- Edit book -->
-    <form action="#" th:action="@{/books/edit/{id}(id=${books.book_id})}" th:object="${books}" method="post">
-      <div class="visually-hidden">
-        <label for="id">ID: </label>
-        <input type="text" th:field="*{book_id}" id="book_id" placeholder="Id" />
-      </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Book id</th>
+          <th>Book title</th>
+          <th>Isbn</th>
+          <th>Author</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td th:text="${books.book_id}"></td>
+          <td th:text="${books.title}"></td>
+          <td th:text="${books.isbn}"></td>
+          <td th:text="${books.author}"></td>
+        </tr>
+      </tbody>
+    </table>
 
-      <label for="title">Title: </label>
-      <input type="text" th:field="*{title}" id="title" placeholder="Title" />
-      
-      <label for="isbn">Isbn: </label>
-      <input type="text" th:field="*{isbn}" id="lisbn" placeholder="Isbn" />
-
-      <label for="author">Author: </label>
-      <input type="text" th:field="*{author}" id="author" placeholder="Author" />
-
+      <!-- Reserve/cancel reseration button -->
       <div th:if="${bookReserveable}">
-        <input class="btn btn-primary" type="submit" value="Update Book" />
-        <!-- Reserve/cancel reseration button -->
         <td>
           <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${books.book_id})}">Reserve</a>
         </td>
       </div>
       <div th:unless="${bookReserveable}">
-        <input class="btn btn-primary" type="submit" value="Update Book" />
         <td>
           <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${books.book_id})}">Cancel reservation</a>
         </td>
       </div>
-    </form>
-  
+      <br>
 
-    <!-- Display copies -->
-    <div th:switch="${copies}">
-      <div th:case="*">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Book id</th>
-              <th>Copy id</th>
-              <th>User id</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="copies : ${copies}">
-              <td th:text="${copies.copyPkId.bookId}"></td>
-              <td th:text="${copies.copyPkId.copyId}"></td>
-              <td th:text="${copies.userId}"></td>
-              <td>
-                <a class="btn btn-danger" th:href="@{/copies/delete/{id1}/{id2}(id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId})}">Delete</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <!-- Edit book -->
+    <div sec:authorize="hasAnyAuthority('1')">
+      <form action="#" th:action="@{/books/edit/{id}(id=${books.book_id})}" th:object="${books}" method="post">
+        <div class="visually-hidden">
+          <label for="id">ID: </label>
+          <input type="text" th:field="*{book_id}" id="book_id" placeholder="Id" />
+        </div>
+
+        <label for="title">Title: </label>
+        <input type="text" th:field="*{title}" id="title" placeholder="Title" />
+        
+        <label for="isbn">Isbn: </label>
+        <input type="text" th:field="*{isbn}" id="lisbn" placeholder="Isbn" />
+
+        <label for="author">Author: </label>
+        <input type="text" th:field="*{author}" id="author" placeholder="Author" />
+
+        <input class="btn btn-primary" type="submit" value="Update Book" />
+      </form>
+    
+
+      <!-- Display copies -->
+      <div th:switch="${copies}">
+        <div th:case="*">
+          <table class="table">
+            <thead>
+              <tr>
+                <!-- <th>Book id</th> -->
+                <th>Copy id</th>
+                <th>Loaned by user</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="copies : ${copies}">
+                <!-- <td th:text="${copies.copyPkId.bookId}"></td> -->
+                <td th:text="${copies.copyPkId.copyId}"></td>
+                <td th:text="${copies.userId}"></td>
+                <td>
+                  <a class="btn btn-danger" th:href="@{/copies/delete/{id1}/{id2}(id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId})}">Delete</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
