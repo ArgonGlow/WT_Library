@@ -3,6 +3,7 @@ package main.WTLibraryApp.User;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import main.WTLibraryApp.Book.Book;
@@ -26,9 +27,14 @@ public class UserService {
 	}
 
 	public void saveUser(User users, long id) {
-		User tempUser = repo.findById(id)
+		if(users.getPassphrase().length() > 0) {
+			users.setPassphrase(BCrypt.hashpw(users.getPassphrase().toString(), BCrypt.gensalt()));
+		}
+		else {
+			User tempUser = repo.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id: " + id));
-		users.setPassword(tempUser.getPassword());
+			users.setPassphrase(tempUser.getPassphrase());
+		}
 		repo.save(users);
 	}
 	
@@ -49,7 +55,7 @@ public class UserService {
 		users.setFirst_name("Removed");
 		users.setLast_name("Removed");
 		users.setActive(false);
-		users.setPassword(users.getPassword());
+		users.setPassphrase(users.getPassphrase());
 		repo.save(users);
 	}
 }

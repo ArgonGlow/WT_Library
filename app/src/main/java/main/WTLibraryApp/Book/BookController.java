@@ -40,15 +40,13 @@ public class BookController {
 	//	Returns all books from the books table.      
 	@GetMapping("/books")
 	public String findAll(Model model, Book book, @CurrentSecurityContext(expression = "authentication") Authentication authentication, String keyword) {
-//        if (keyword != null) {
-//            List<Book> list = service.findByKeyword(keyword);
-//            model.addAttribute("books", list);
-//        } else {
-//            List<Book> list = service.findAll();
-//            model.addAttribute("books", list);
-//        }
-//        
-        List<Book> list = service.findAll();
+		List<Book> list;
+		if (keyword != null) {
+            list = service.findByKeyword(keyword);
+        } else {
+            list = service.findAll();
+        }
+        
         
         User currentUser = userService.findByEmail(authentication.getName());
         long userId = currentUser.getUser_id();
