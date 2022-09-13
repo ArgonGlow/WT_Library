@@ -18,6 +18,8 @@ import main.WTLibraryApp.Book.Book;
 import main.WTLibraryApp.Book.BookService;
 import main.WTLibraryApp.Book.Copy.Copy;
 import main.WTLibraryApp.LibMail.EmailService;
+import main.WTLibraryApp.Transaction.TransactionService;
+import main.WTLibraryApp.Transaction.TransactionType;
 import main.WTLibraryApp.User.LoanedUser;
 import main.WTLibraryApp.User.User;
 import main.WTLibraryApp.User.UserService;
@@ -38,6 +40,9 @@ public class ReservationController {
 	
 	@Autowired
 	private BookService bookService;
+	
+	@Autowired
+	private TransactionService transactionService;
 	
 	// list all entries from reservations table
 	// returns list of Reservation objects
@@ -99,6 +104,9 @@ public class ReservationController {
 			
 			LoanedUser.setCurrentUserId(userId);
     	}
+		
+		//log in transactions table
+		transactionService.logReservation(userId, bookId, TransactionType.RESERVED);
 		
 		String path = "redirect:/books";
 		return path;

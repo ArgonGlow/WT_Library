@@ -38,9 +38,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             	.loginPage("/login")
             	.permitAll()
         .and()
-        	.logout().invalidateHttpSession(true) 
+        	.logout().invalidateHttpSession(true)
             	.clearAuthentication(true).permitAll();
-   } 
+   }
 	   
 	
 	//Configures where usernames, passwords, active, and roles eventually can be found
@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    
    //Returns the hashfunction used for the passwords
    @Bean
-   public PasswordEncoder passwordEncoder() { 
+   public PasswordEncoder passwordEncoder() {
       return new BCryptPasswordEncoder();
    }
 }
