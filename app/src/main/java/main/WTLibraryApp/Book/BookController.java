@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import main.WTLibraryApp.Book.Copy.Copy;
-import main.WTLibraryApp.Book.Copy.CopyPK;
 import main.WTLibraryApp.Book.Copy.CopyService;
 import main.WTLibraryApp.Reservation.Reservation;
 import main.WTLibraryApp.Reservation.ReservationService;
