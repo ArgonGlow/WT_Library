@@ -42,8 +42,8 @@
           <label for="email">Email: </label>
           <input type="text" th:field="*{email}" id="email" placeholder="Email" />
     
-          <input type="submit" value="Update User" />
-          <a th:href="@{/users/delete-user/{id}(id=${users.user_id})}">Delete</a>
+          <input class="btn btn-primary" type="submit" value="Update User" />
+          <a class="btn btn-danger" th:href="@{/users/delete-user/{id}(id=${users.user_id})}">Delete</a>
 
 
     <!-- Displays loaned books -->
@@ -142,7 +142,7 @@
                 <td th:text="${copies.userId}"></td>
                 <div th:switch="${copies.userId}">
                   <td th:case=null>
-                    <a th:href="@{/copies/loan/{id1}/{id2} (id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId})}">loan</a>
+                    <a class="btn btn-primary" th:href="@{/copies/loan/{id1}/{id2} (id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId})}">loan</a>
                   </td> 
                 </div>
               </tr>
