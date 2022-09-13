@@ -132,8 +132,7 @@ public class ReservationController {
 	public String cancelReservationUserInterface(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
 		
 		long reservedUserId = LoanedUser.getCurrentUserId();
-		System.out.println("id mike " + reservedUserId);
-		
+
 		//get logged-in user
 		User currentUser = userService.findByEmail(authentication.getName());
 		long userId = currentUser.getUser_id();

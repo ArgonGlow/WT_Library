@@ -124,8 +124,6 @@ public class UserController {
 		model.addAttribute("books", bookList);
 		model.addAttribute("reservedBooks", reservedBookList);
 		
-		System.out.println("incoming id " + id);
-		
 		LoanedUser.setCurrentUserId(id);
 
 		return "users/userInterface";
