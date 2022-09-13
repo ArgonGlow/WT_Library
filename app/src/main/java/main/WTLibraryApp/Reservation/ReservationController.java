@@ -131,15 +131,16 @@ public class ReservationController {
 	@GetMapping("reservations/cancelUI/{bookId}")
 	public String cancelReservationUserInterface(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
 		
+		long reservedUserId = LoanedUser.getCurrentUserId();
+		System.out.println("id mike " + reservedUserId);
+		
 		//get logged-in user
 		User currentUser = userService.findByEmail(authentication.getName());
 		long userId = currentUser.getUser_id();
 		
-		List<Reservation> reservation = service.findByBookIdAndUserId(bookId, userId);
+		List<Reservation> reservation = service.findByBookIdAndUserId(bookId, reservedUserId);
 		service.deleteReservation(reservation.get(0));
 	    
-		long reservedUserId = LoanedUser.getCurrentUserId();
-		
 		String path = "redirect:/users/edit-user/" + reservedUserId;
 		return path;
 	}

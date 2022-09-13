@@ -44,11 +44,11 @@ public class BookController {
 		List<Book> list;
 		if (keyword != null) {
             list = service.findByKeyword(keyword);
-            model.addAttribute("books", list);
         } else {
             list = service.findAll();
-            model.addAttribute("books", list);
         }
+		
+        model.addAttribute("books", list);
         
         User currentUser = userService.findByEmail(authentication.getName());
         long userId = currentUser.getUser_id();
