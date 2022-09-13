@@ -96,11 +96,8 @@ public class BookController {
 	        
 		boolean bookReserveable;
 		List<Reservation> reservation = reservationService.findByBookIdAndUserId(bookId, userId);
-		if(reservation.size() <= 0) {
-			bookReserveable = true;
-		}else {
-			bookReserveable = false;
-		}
+		bookReserveable = reservation.size() <= 0;
+
 
         model.addAttribute("bookReserveable", bookReserveable);
 		
