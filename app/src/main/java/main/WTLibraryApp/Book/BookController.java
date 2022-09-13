@@ -98,7 +98,6 @@ public class BookController {
 		List<Reservation> reservation = reservationService.findByBookIdAndUserId(bookId, userId);
 		bookReserveable = reservation.size() <= 0;
 
-
         model.addAttribute("bookReserveable", bookReserveable);
 		
 		return "books/bookInterface"; 
