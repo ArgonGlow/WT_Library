@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -139,8 +140,13 @@ public class ReservationController {
 		
 		List<Reservation> reservation = service.findByBookIdAndUserId(bookId, reservedUserId);
 		service.deleteReservation(reservation.get(0));
-	    
-		String path = "redirect:/users/edit-user/" + reservedUserId;
+		String path;
+	    if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("1"))) {
+	    	path = "redirect:/users/edit-user/" + reservedUserId;
+	    }
+	    else {
+	    	path = "redirect:/user";
+	    }
 		return path;
 	}
 		
