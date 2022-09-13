@@ -19,7 +19,9 @@ public class Transaction {
 	private long transaction_id;
 	
 	private long book_id;
-	private long copy_id;
+	
+	private Long copy_id;
+	
 	private long user_id;
 	private Timestamp date;
 	private TransactionType transaction_type;
