@@ -73,9 +73,9 @@
 				<thead>
 					<br>
 					<tr>
-						<th>Book id</th>
-						<th>Copy id</th>
-						<th>User id</th>
+						<th>Book</th>
+						<th>Version</th>
+						<th>User</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -108,13 +108,13 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="books : ${reservedBooks}">
-						<td th:text="${books.id}"></td>
-						<td th:text="${books.title}"></td>
-						<td th:text="${books.author}"></td>
+					<tr th:each="reservation : ${user.reservations}">
+						<td th:text="${reservation.reservationId}"></td>
+						<td th:text="${reservation.book.title}"></td>
+						<td th:text="${reservation.book.author}"></td>
 						<td>
 							<a class="btn btn-secondary"
-								th:href="@{/reservations/cancelUI/{id} (id=${books.id})}">Cancel reservation</a>
+								th:href="@{/reservations/cancelUI/{id} (id=${reservation.reservationId})}">Cancel reservation</a>
 						</td>
 					</tr>
 				</tbody>
@@ -126,26 +126,29 @@
 					<thead>
 						<br>
 						<tr>
-							<th>Book id</th>
-							<th>Copy id</th>
-							<th>Loaned by user id</th>
+							<th>Book</th>
+							<th>Version</th>
+							<th>User</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="copies : ${reservedCopies}">
-							<td th:text="${copies.copyPkId.bookId}"></td>
-							<td th:text="${copies.copyPkId.copyId}"></td>
-							<td th:text="${copies.user.fullName}"></td>
-							<div th:switch="${copies.user}">
-								<td th:case=null>
-									<a class="btn btn-primary"
-										th:href="@{/copies/loan/{id1}/{id2} (id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId})}">loan</a>
-								</td>
-							</div>
-						</tr>
+						<div th:each="reservation : ${user.reservations}">
+							<tr th:each="copy : ${reservation.book.copies}">
+								<td th:text="${copy.book.title}"></td>
+								<td th:text="${copy.version}"></td>
+								<td th:text="${copy.user.fullName}"></td>
+								<div th:switch="${copy.user}">
+									<td th:case=null>
+										<a class="btn btn-primary"
+											th:href="@{/copies/loan/{id1}/{id2} (id1=${copy.book.id}, id2=${copy.version})}">loan</a>
+									</td>
+								</div>
+							</tr>
+						</div>
 					</tbody>
 				</table>
 			</div>
+
 		</form>
 	</div>
 

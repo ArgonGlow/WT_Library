@@ -62,9 +62,9 @@
         <table class="table">
           <thead>
             <tr>
-              <th>Book id</th>
-              <th>Copy id</th>
-              <th>User id</th>
+              <th>Book</th>
+              <th>Version</th>
+              <th>User</th>
             </tr>
           </thead>
           <tbody>
@@ -73,7 +73,7 @@
               <td th:text="${copies.version}"></td>
               <td th:text="${copies.user == null ? '-' : copies.user.fullName}"></td>
               <td>
-                <a class="btn btn-danger" th:href="@{/copies/delete/{id1}/{id2}(id1=${copies.book.id}, id2=${copies.version})}">Delete</a>
+                <a class="btn btn-danger" th:href="@{/copies/delete/{id1}(id1=${copies.id})}">Delete</a>
               </td>
             </tr>
           </tbody>

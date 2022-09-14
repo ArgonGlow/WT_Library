@@ -7,12 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import main.WTLibraryApp.Book.Book;
+import main.WTLibraryApp.Transaction.TransactionRepository;
 
 @Service
 public class CopyService {
 	
 	@Autowired
 	private CopyRepository repo;
+	
+	@Autowired
+	private TransactionRepository transactionRepository;
 	
 	public List<Copy> allCopies(){
 		return repo.findAll();
@@ -27,7 +31,12 @@ public class CopyService {
 	} 
 
 	public void deleteCopy(Copy copy) {
-		repo.delete(copy);      
+		copy.getTransactions().stream().forEach(transaction -> {
+			transaction.setCopy(null);
+			transactionRepository.save(transaction);
+		});
+
+		repo.delete(copy);
 	}
 	
 	public void updateCopy(Copy copy) {
