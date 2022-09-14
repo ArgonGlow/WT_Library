@@ -88,7 +88,7 @@
 							<td th:case="*">
 								<div sec:authorize="hasAnyAuthority('1')">
 									<a
-										th:href="@{/copies/withdraw/{id1}/{id2}/{id3} (id1=${copies.book.id}, id2=${copies.version}, id3=${copies.user.id})}">withdraw</a>
+										th:href="@{/copies/withdraw/{id1}/{id2}/{id3} (id1=${copies.book.id}, id2=${copies.id}, id3=${copies.user.id})}">withdraw</a>
 								</div>
 							</td>
 						</div>
