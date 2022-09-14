@@ -42,6 +42,8 @@
           <th>title</th>
           <th>isbn</th>
           <th>author</th>
+          <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -63,7 +65,7 @@
           </div>
           <div th:unless="${books.value}">
             <td>
-              <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${books.key.book_id})}">Cancel reservation</a>
+              <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${books.key.book_id})}">Cancel</a>
             </td>
           </div>
           <!-- <td>

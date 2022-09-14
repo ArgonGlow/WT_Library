@@ -51,6 +51,10 @@ body {
 }
 
 
+tr {
+  vertical-align: middle;
+}
+
 /* Navbar link-list */
 .navbar {
   --bs-bg-opacity: 0;

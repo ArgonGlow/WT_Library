@@ -77,6 +77,7 @@
             <th>Book id</th>
             <th>Copy id</th>
             <th>User id</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -88,7 +89,7 @@
               <td th:case=null></td>
               <td th:case="*">
               <div sec:authorize="hasAnyAuthority('1')">
-                <a th:href="@{/copies/withdraw/{id1}/{id2}/{id3} (id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId}, id3=${copies.userId})}">withdraw</a>
+                <a class="btn btn-secondary" th:href="@{/copies/withdraw/{id1}/{id2}/{id3} (id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId}, id3=${copies.userId})}">withdraw</a>
               </div>
             </td>
             </div>
@@ -99,11 +100,12 @@
       <table class="table">
         <thead>
           <br>
-          <h2>Reserved:</h2>
+          <h2>Reserved</h2>
           <tr>
             <th>Book id</th>
             <th>Title</th>
             <th>Author</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -126,6 +128,7 @@
                 <th>Book id</th>
                 <th>Copy id</th>
                 <th>Loaned by user id</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
