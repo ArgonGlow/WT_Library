@@ -31,7 +31,7 @@ public class User {
 	
 	private boolean active = true;
 	
-	private int role;
+	private int role = 2;
 	
 	@OneToMany(mappedBy = "user", orphanRemoval = false)
 	private List<Copy> copies;
