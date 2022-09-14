@@ -25,10 +25,10 @@
     <h1>Book info</h1>
 
     <!-- Edit book -->
-    <form action="#" th:action="@{/books/edit/{id}(id=${books.book_id})}" th:object="${books}" method="post">
+    <form action="#" th:action="@{/books/edit/{id}(id=${books.id})}" th:object="${books}" method="post">
       <div class="visually-hidden">
         <label for="id">ID: </label>
-        <input type="text" th:field="*{book_id}" id="book_id" placeholder="Id" />
+        <input type="text" th:field="*{id}" id="id" placeholder="Id" />
       </div>
 
       <label for="title">Title: </label>
@@ -44,13 +44,13 @@
         <input class="btn btn-primary" type="submit" value="Update Book" />
         <!-- Reserve/cancel reseration button -->
         <td>
-          <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${books.book_id})}">Reserve</a>
+          <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${books.id})}">Reserve</a>
         </td>
       </div>
       <div th:unless="${bookReserveable}">
         <input class="btn btn-primary" type="submit" value="Update Book" />
         <td>
-          <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${books.book_id})}">Cancel reservation</a>
+          <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${books.id})}">Cancel reservation</a>
         </td>
       </div>
     </form>
