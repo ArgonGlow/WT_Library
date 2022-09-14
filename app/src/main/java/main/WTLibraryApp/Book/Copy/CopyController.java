@@ -63,10 +63,14 @@ public class CopyController {
 	}       
 	
 	//deletes copy by bookId and copyId combination in the book interface
-	@GetMapping("copies/deleteInBookInterface/{bookId}/{copyId}")
-	public String deleteInBook(@PathVariable long bookId, @PathVariable long copyId) {
-		// TODO copyService.deleteCopy(id);
-		return "redirect:/books/edit/{bookId}"; 
+	@GetMapping("copies/delete/{id}")
+	public String deleteInBook(@PathVariable long id) {
+		Optional<Copy> copyOptional = copyService.findCopyById(id);
+		if (copyOptional.isPresent()) {
+			copyService.deleteCopy(copyOptional.get());
+		}
+
+		return "redirect:/books/edit/" + id; 
 	}  
 	
 	//administrator withdraws copies of books to users

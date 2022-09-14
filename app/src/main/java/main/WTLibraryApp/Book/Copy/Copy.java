@@ -1,13 +1,17 @@
 package main.WTLibraryApp.Book.Copy;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import main.WTLibraryApp.Book.Book;
+import main.WTLibraryApp.Transaction.Transaction;
 import main.WTLibraryApp.User.User;
 
 @Entity
@@ -26,6 +30,9 @@ public class Copy {
 	private User user;
 	
 	private int version;
+	
+	@OneToMany(mappedBy = "copy", orphanRemoval = false)
+	private List<Transaction> transactions;
 
 	public long getId() {
 		return id;
@@ -57,6 +64,14 @@ public class Copy {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+	
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
 	}
 
 }

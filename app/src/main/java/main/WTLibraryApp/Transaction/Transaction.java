@@ -38,6 +38,10 @@ public class Transaction {
 	private TransactionType transaction_type;
 	
 	// constructor
+	public Transaction() {
+		
+	}
+	
 	public Transaction(User user, TransactionType transaction_type) {
 		this.user = user;
 		this.transaction_type = transaction_type;

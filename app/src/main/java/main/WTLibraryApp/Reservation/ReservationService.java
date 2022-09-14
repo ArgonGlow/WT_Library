@@ -1,6 +1,7 @@
 package main.WTLibraryApp.Reservation;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -19,10 +20,8 @@ public class ReservationService {
 		return repo.findAll();
 	}
 	
-	public Reservation reservationById(long id) {
-		Reservation reservation = repo.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid reservation Id: " + id));
-		return reservation;
+	public Optional<Reservation> findById(long id) {
+		return repo.findById(id);
 	}
 	
 	public void saveReservation(Reservation newReservation) {

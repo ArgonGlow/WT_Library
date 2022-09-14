@@ -28,7 +28,7 @@ import main.WTLibraryApp.User.UserService;
 public class ReservationController {
 	
 	@Autowired
-	private ReservationService service;
+	private ReservationService reservationService;
 	
 	@Autowired
 	private EmailService emailService;
@@ -46,7 +46,7 @@ public class ReservationController {
 	// returns list of Reservation objects
 	@GetMapping(value = "/reservations")
 	public String findAllReservations(Model model) {
-		model.addAttribute("reservations", service.allReservations());
+		model.addAttribute("reservations", reservationService.allReservations());
 		return "/reservations/reservations";
 	}
 	
@@ -56,7 +56,7 @@ public class ReservationController {
 		
 		Reservation userRes = new Reservation();
 		userRes.setUser(user);
-		model.addAttribute("reservation", service.reservationsByUserId(userRes));
+		model.addAttribute("reservation", reservationService.reservationsByUserId(userRes));
 		return "/reservations/user";
 	}
 	
@@ -92,7 +92,7 @@ public class ReservationController {
 			long userId = currentUser.getId();
 			
 			//check if book is already reserved
-	    	List<Reservation> reservations = service.findByBookAndUser(book, currentUser);
+	    	List<Reservation> reservations = reservationService.findByBookAndUser(book, currentUser);
 	    	if(reservations.size() <= 0) {
 	    		// Initialization
 	    		User user = userService.findUser(userId);
@@ -102,7 +102,7 @@ public class ReservationController {
 					Reservation reservation = new Reservation();
 					reservation.setBook(book);
 					reservation.setUser(user);
-					service.saveReservation(reservation);
+					reservationService.saveReservation(reservation);
 					
 					// Send email
 					emailService.sendSimpleMessage(user.getEmail(), "Reserved " + book.getTitle(), "Dear " + user.getFirst_name() + " " + user.getLast_name() + ",\nYou seem to believe we will help you get your hands on "+ book.getTitle()+" written by "+book.getAuthor()+". People can believe anything these days I suppose. Well..\nSee you!\n"+currentUser.getFirst_name()+" "+currentUser.getLast_name());
@@ -130,8 +130,8 @@ public class ReservationController {
 			//get logged-in user
 			User currentUser = userService.findByEmail(authentication.getName());
 			
-			List<Reservation> reservation = service.findByBookAndUser(book, currentUser);
-			service.deleteReservation(reservation.get(0));
+			List<Reservation> reservation = reservationService.findByBookAndUser(book, currentUser);
+			reservationService.deleteReservation(reservation.get(0));
 		}
 	    
 		String path = "redirect:/books";
@@ -139,23 +139,15 @@ public class ReservationController {
 	}
 	
 	// Cancels a user's reservations by removing it from the reservations table
-	@GetMapping("reservations/cancelUI/{bookId}")
-	public String cancelReservationUserInterface(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
-		Optional<Book> bookOptional = bookService.find(bookId);
-		if (bookOptional.isPresent()) {
-			Book book = bookOptional.get();
-
-			long reservedUserId = LoanedUser.getCurrentUserId();
-			User reservedUser = userService.findUser(reservedUserId);
-	
-			//get logged-in user
-			User currentUser = userService.findByEmail(authentication.getName());
-			
-			List<Reservation> reservation = service.findByBookAndUser(book, reservedUser);
-			service.deleteReservation(reservation.get(0));
+	@GetMapping("reservations/cancelUI/{id}")
+	public String cancelReservationUserInterface(@PathVariable long id, @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
+		Optional<Reservation> reservationOptional = reservationService.findById(id);
+		if (reservationOptional.isPresent()) {
+			Reservation reservation = reservationOptional.get();
+			reservationService.deleteReservation(reservation);
 
 		    if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("1"))) {
-		    	return "redirect:/users/edit-user/" + reservedUserId;
+		    	return "redirect:/users/edit-user/" + id;
 		    }
 		    else {
 		    	return "redirect:/user";
