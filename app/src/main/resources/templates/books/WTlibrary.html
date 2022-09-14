@@ -46,24 +46,24 @@
       </thead>
       <tbody>
         <tr th:each="books : ${books}">
-          <td th:text="${books.key.book_id}"></td>
+          <td th:text="${books.key.id}"></td>
           <td th:text="${books.key.title}"></td>
           <td th:text="${books.key.isbn}"></td>
           <td th:text="${books.key.author}"></td>
           <div sec:authorize="hasAnyAuthority('1')">
             <td>
-              <a class="btn btn-primary" th:href="@{/books/edit/{id}(id=${books.key.book_id})}">Info</a>
+              <a class="btn btn-primary" th:href="@{/books/edit/{id}(id=${books.key.id})}">Info</a>
             </td>
           </div>
           <!-- Reserve/cancel reseration button -->
           <div th:if="${books.value}">
             <td>
-              <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${books.key.book_id})}">Reserve</a>
+              <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${books.key.id})}">Reserve</a>
             </td>
           </div>
           <div th:unless="${books.value}">
             <td>
-              <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${books.key.book_id})}">Cancel reservation</a>
+              <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${books.key.id})}">Cancel reservation</a>
             </td>
           </div>
           <!-- <td>

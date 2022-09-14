@@ -26,8 +26,8 @@
     <h1>Do you want to confirm this reservation?</h1>
 
     <form action="#" th:action="@{create}" th:object="${reservation}" method="post">
-      <label for="book_id">Book ID: </label>
-      <input type="text" th:field="*{bookId}" id="bookId" placeholder="Book ID"/>
+      <label for="id">Book ID: </label>
+      <input type="text" th:field="*{bookId}" id="id" placeholder="Book ID"/>
 
       <label for="user_id">User ID: </label>
       <input type="text" th:field="*{userId}" id="userId" placeholder="User ID"/>

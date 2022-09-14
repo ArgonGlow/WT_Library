@@ -31,6 +31,8 @@ public class User {
 	
 	private boolean active = true;
 	
+	private int role;
+	
 	@OneToMany(mappedBy = "user", orphanRemoval = false)
 	private List<Copy> copies;
 
@@ -105,4 +107,12 @@ public class User {
 		this.reservations = reservations;
 	}
 
+	public int getRole() {
+		return role;
+	}
+
+	public void setRole(int role) {
+		this.role = role;
+	}
+	
 }
