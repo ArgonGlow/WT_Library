@@ -1,24 +1,24 @@
 package main.WTLibraryApp.User;
 
-import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import main.WTLibraryApp.Book.Copy.Copy;
+import main.WTLibraryApp.Reservation.Reservation;
 
 @Entity
 @Table(name="users")
 public class User {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long user_id;
+	private long id;
 
 	private String first_name;
 
@@ -29,29 +29,19 @@ public class User {
 	private String passphrase;
 	
 	private boolean active = true;
+	
+	@OneToMany(mappedBy = "user", orphanRemoval = false)
+	private List<Copy> copies;
 
-	public long getUser_id() {
-		return user_id;
+	@OneToMany(mappedBy = "user", orphanRemoval = false)
+	private List<Reservation> reservations;
+
+	public long getId() {
+		return id;
 	}
-
-	public String getPassphrase() {
-		return passphrase;
-	}
-
-	public void setPassphrase(String passphrase) {
-		this.passphrase = passphrase;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
+	
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getFirst_name() {
@@ -77,4 +67,37 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public String getPassphrase() {
+		return passphrase;
+	}
+
+	public void setPassphrase(String passphrase) {
+		this.passphrase = passphrase;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public List<Copy> getCopies() {
+		return copies;
+	}
+
+	public void setCopies(List<Copy> copies) {
+		this.copies = copies;
+	}
+
+	public List<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+
 }

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long>{
+	
+	List<Book> findByTitle(String title);
 
 	//finds all book loaned by one user
 	@Query(value = "SELECT * FROM books WHERE book_id IN \r\n"

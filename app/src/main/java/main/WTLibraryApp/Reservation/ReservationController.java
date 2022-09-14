@@ -1,23 +1,20 @@
 package main.WTLibraryApp.Reservation;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import main.WTLibraryApp.Book.Book;
 import main.WTLibraryApp.Book.BookService;
-import main.WTLibraryApp.Book.Copy.Copy;
 import main.WTLibraryApp.LibMail.EmailService;
 import main.WTLibraryApp.Transaction.TransactionService;
 import main.WTLibraryApp.Transaction.TransactionType;
@@ -55,8 +52,10 @@ public class ReservationController {
 	
 	@GetMapping(value = "/reservations/user/{id}")
 	public String reservationsByUser(@PathVariable long id, Model model) {
+		User user = userService.findUser(id);
+		
 		Reservation userRes = new Reservation();
-		userRes.setUserId(id);
+		userRes.setUser(user);
 		model.addAttribute("reservation", service.reservationsByUserId(userRes));
 		return "/reservations/user";
 	}
@@ -84,31 +83,38 @@ public class ReservationController {
 	
 	@GetMapping("reservations/createReservation/{bookId}")
 	public String createReservation(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication, Model model) {
-		
-		//get logged-in user
-		User currentUser = userService.findByEmail(authentication.getName());
-		long userId = currentUser.getUser_id();
-		
-		//check if book is already reserved
-    	List<Reservation> reservations = service.findByBookIdAndUserId(bookId, userId);
-    	if(reservations.size() <= 0) {
-    	
-			Reservation reservation = new Reservation();
-			reservation.setBookId(bookId);
-			reservation.setUserId(userId);
-			service.saveReservation(reservation);
+		Optional<Book> bookOptional = bookService.find(bookId);
+		if (bookOptional.isPresent()) {
+			Book book = bookOptional.get();
+
+			//get logged-in user
+			User currentUser = userService.findByEmail(authentication.getName());
+			long userId = currentUser.getId();
 			
-			//send email
-			User user = userService.findUser(reservation.getUserId());
-			Book book = bookService.find(reservation.getBookId());
-			emailService.sendSimpleMessage(user.getEmail(), "Reserved " + book.getTitle(), "Dear " + user.getFirst_name() + " " + user.getLast_name() + ",\nYou seem to believe we will help you get your hands on "+ book.getTitle()+" written by "+book.getAuthor()+". People can believe anything these days I suppose. Well..\nSee you!\n"+currentUser.getFirst_name()+" "+currentUser.getLast_name());
-			
-			LoanedUser.setCurrentUserId(userId);
-    	}
+			//check if book is already reserved
+	    	List<Reservation> reservations = service.findByBookAndUser(book, currentUser);
+	    	if(reservations.size() <= 0) {
+	    		// Initialization
+	    		User user = userService.findUser(userId);
+	    		
+	    		if (bookOptional.isPresent()) {
+		    		// Create object
+					Reservation reservation = new Reservation();
+					reservation.setBook(book);
+					reservation.setUser(user);
+					service.saveReservation(reservation);
+					
+					// Send email
+					emailService.sendSimpleMessage(user.getEmail(), "Reserved " + book.getTitle(), "Dear " + user.getFirst_name() + " " + user.getLast_name() + ",\nYou seem to believe we will help you get your hands on "+ book.getTitle()+" written by "+book.getAuthor()+". People can believe anything these days I suppose. Well..\nSee you!\n"+currentUser.getFirst_name()+" "+currentUser.getLast_name());
 		
-		//log in transactions table
-		transactionService.logReservation(userId, bookId, TransactionType.RESERVED);
+					LoanedUser.setCurrentUserId(userId);
 		
+					//log in transactions table
+					transactionService.logReservation(user, book, TransactionType.RESERVED);
+	    		}
+	    	}
+		}
+
 		String path = "redirect:/books";
 		return path;
 	}
@@ -117,12 +123,16 @@ public class ReservationController {
 	@GetMapping("reservations/cancel/{bookId}")
 	public String cancelReservation(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
 		
-		//get logged-in user
-		User currentUser = userService.findByEmail(authentication.getName());
-		long userId = currentUser.getUser_id();
-		
-		List<Reservation> reservation = service.findByBookIdAndUserId(bookId, userId);
-		service.deleteReservation(reservation.get(0));
+		Optional<Book> optional = bookService.find(bookId);
+		if (optional.isPresent()) {
+			Book book = optional.get();
+
+			//get logged-in user
+			User currentUser = userService.findByEmail(authentication.getName());
+			
+			List<Reservation> reservation = service.findByBookAndUser(book, currentUser);
+			service.deleteReservation(reservation.get(0));
+		}
 	    
 		String path = "redirect:/books";
 		return path;
@@ -131,23 +141,28 @@ public class ReservationController {
 	// Cancels a user's reservations by removing it from the reservations table
 	@GetMapping("reservations/cancelUI/{bookId}")
 	public String cancelReservationUserInterface(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
-		
-		long reservedUserId = LoanedUser.getCurrentUserId();
+		Optional<Book> bookOptional = bookService.find(bookId);
+		if (bookOptional.isPresent()) {
+			Book book = bookOptional.get();
 
-		//get logged-in user
-		User currentUser = userService.findByEmail(authentication.getName());
-		long userId = currentUser.getUser_id();
+			long reservedUserId = LoanedUser.getCurrentUserId();
+			User reservedUser = userService.findUser(reservedUserId);
+	
+			//get logged-in user
+			User currentUser = userService.findByEmail(authentication.getName());
+			
+			List<Reservation> reservation = service.findByBookAndUser(book, reservedUser);
+			service.deleteReservation(reservation.get(0));
+
+		    if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("1"))) {
+		    	return "redirect:/users/edit-user/" + reservedUserId;
+		    }
+		    else {
+		    	return "redirect:/user";
+		    }
+		}
 		
-		List<Reservation> reservation = service.findByBookIdAndUserId(bookId, reservedUserId);
-		service.deleteReservation(reservation.get(0));
-		String path;
-	    if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("1"))) {
-	    	path = "redirect:/users/edit-user/" + reservedUserId;
-	    }
-	    else {
-	    	path = "redirect:/user";
-	    }
-		return path;
+    	return "redirect:/user";
 	}
 		
 	/*

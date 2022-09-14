@@ -1,33 +1,62 @@
 package main.WTLibraryApp.Book.Copy;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import main.WTLibraryApp.Book.Book;
+import main.WTLibraryApp.User.User;
 
 @Entity
 @Table(name="copies")
 public class Copy {
 	 
 	// double-primary-key object
-	@EmbeddedId
-	private CopyPK copyPkId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+
+	@ManyToOne(optional = false)
+	private Book book;
+
+	@ManyToOne(optional = true)
+	private User user;
 	
-	// separating userId variable name from column name
-	@Column(name="loaned_by_user")
-	private Long userId;
- 
-	public CopyPK getCopyPkId() {  
-		return copyPkId;
+	private int version;
+
+	public long getId() {
+		return id;
 	}
-	public void setCopyPkId(CopyPK copyPkId) {
-		this.copyPkId = copyPkId;
+
+	public void setId(long id) {
+		this.id = id;
 	}
-	public Long getUserId() {
-		return userId;
+
+	public Book getBook() {
+		return book;
 	}
-	public void setUserId(Long userId) {
-		this.userId = userId;
+
+	public void setBook(Book book) {
+		this.book = book;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+	
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

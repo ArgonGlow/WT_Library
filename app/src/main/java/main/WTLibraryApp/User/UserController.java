@@ -1,6 +1,7 @@
 package main.WTLibraryApp.User;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
@@ -13,13 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import main.WTLibraryApp.Book.Book;
 import main.WTLibraryApp.Book.BookService;
-import main.WTLibraryApp.Book.Copy.Copy;
-import main.WTLibraryApp.Book.Copy.CopyController;
 import main.WTLibraryApp.Book.Copy.CopyService;
 import main.WTLibraryApp.LibMail.EmailService;
-import main.WTLibraryApp.Reservation.Reservation;
 import main.WTLibraryApp.Reservation.ReservationService;
 
 @Controller
@@ -60,20 +57,11 @@ public class UserController {
 		User currentuser = service.findByEmail(authentication.getName());
 		model.addAttribute("users", currentuser);
 		model.addAttribute("action", "/user");
+		model.addAttribute("copies", currentuser.getCopies());
+		model.addAttribute("reservedCopies", currentuser.getCopies());
+		model.addAttribute("reservations", currentuser.getReservations());
 		
-		List<Copy> copyList = copyService.findCopyByUserId(currentuser.getUser_id());
-		List<Copy> reservedCopyList = copyService.findCopyByReservationUserId(currentuser.getUser_id());
-		List<Book> bookList = bookService.findBookByUserId(currentuser.getUser_id());
-		List<Book> reservedBookList = bookService.findBookByReservationUserId(currentuser.getUser_id());
-		List<Reservation> reservationList = reservationService.findByUserId(currentuser.getUser_id());
-		
-		model.addAttribute("copies", copyList);
-		model.addAttribute("reservedCopies", reservedCopyList);
-		model.addAttribute("books", bookList);
-		model.addAttribute("reservedBooks", reservedBookList);
-		model.addAttribute("reservations", reservationList);
-		
-		LoanedUser.setCurrentUserId(currentuser.getUser_id());
+		LoanedUser.setCurrentUserId(currentuser.getId());
 
 		return "users/userInterface";
 	}
@@ -83,7 +71,7 @@ public class UserController {
 	public String updateCurrentUserPost(@CurrentSecurityContext(expression = "authentication") Authentication authentication, User users, BindingResult result, Model model) {
 		User currentuser = service.findByEmail(authentication.getName());
 		if (!result.hasErrors()) {
-			service.saveUser(users, currentuser.getUser_id());
+			service.saveUser(users, currentuser.getId());
 		} 
 		return "redirect:/user";
 	} 
@@ -110,19 +98,10 @@ public class UserController {
 	
 	@GetMapping("/users/edit-user/{id}")
 	public String updateUser(@PathVariable("id") long id, Model model) {
-		User users = service.findUser(id);
-		model.addAttribute("users", users);
+		User user = service.findUser(id);
+		model.addAttribute("users", user);
 		model.addAttribute("action", "/users/edit-user/"+id);
-		
-		List<Copy> copyList = copyService.findCopyByUserId(id);
-		List<Copy> reservedCopyList = copyService.findCopyByReservationUserId(id);
-		List<Book> bookList = bookService.findBookByUserId(id);
-		List<Book> reservedBookList = bookService.findBookByReservationUserId(id);
-		
-		model.addAttribute("copies", copyList);
-		model.addAttribute("reservedCopies", reservedCopyList);
-		model.addAttribute("books", bookList);
-		model.addAttribute("reservedBooks", reservedBookList);
+		model.addAttribute("copies", user.getCopies());
 		
 		LoanedUser.setCurrentUserId(id);
 
@@ -133,7 +112,7 @@ public class UserController {
 	@PostMapping("/users/edit-user/{id}")
 	public String updateUserPost(@PathVariable("id") long id, User users, BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			users.setUser_id(id);
+			users.setId(id);
 			return "users/edit-user"; 
 		} 
 		service.saveUser(users, id);

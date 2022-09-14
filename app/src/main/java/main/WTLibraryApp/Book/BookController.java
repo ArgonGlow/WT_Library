@@ -1,10 +1,9 @@
 package main.WTLibraryApp.Book;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -29,11 +28,11 @@ import main.WTLibraryApp.User.UserService;
 public class BookController {
 	
 	@Autowired 
-	private BookService service;
-	@Autowired
-	private CopyService copyService;
+	private BookService bookService;
+
 	@Autowired
 	private ReservationService reservationService;
+	
 	@Autowired
 	private UserService userService;
 	   
@@ -43,23 +42,23 @@ public class BookController {
         
 		List<Book> list;
 		if (keyword != null) {
-            list = service.findByKeyword(keyword);
+            list = bookService.findByKeyword(keyword);
         } else {
-            list = service.findAll();
+            list = bookService.findAll();
         }
 		
         model.addAttribute("books", list);
         
         User currentUser = userService.findByEmail(authentication.getName());
-        long userId = currentUser.getUser_id();
+        long userId = currentUser.getId();
         
         //create map of (Book, bool) to establish 1 time reservations
         Map<Book, Boolean> mapBookReservations = new LinkedHashMap<>();
        
-        for(Book reservationBook: list) {
-            long reservationBookId = reservationBook.getBook_id();
-        	List<Reservation> reservations = reservationService.findByBookIdAndUserId(reservationBookId, userId);
-            mapBookReservations.put(reservationBook, reservations.size() <= 0);
+        for(Book reservationBook : list) {
+        	List<Reservation> reservations = reservationService.findByBookAndUser(reservationBook, currentUser);
+
+        	mapBookReservations.put(reservationBook, reservations.size() <= 0);
         }
 
         model.addAttribute("books", mapBookReservations);
@@ -77,7 +76,7 @@ public class BookController {
 		if (result.hasErrors()) {
 			return "books/createBook"; 
 		}
-		service.saveBook(book);  
+		bookService.saveBook(book);  
 		return "redirect:/books";
 	}
 	
@@ -85,20 +84,24 @@ public class BookController {
 	// Also shows all copies of the book	                 
 	@GetMapping("/books/edit/{bookId}")
 	public String edit(@PathVariable("bookId") long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication, Model model) {
-		Book book = service.find(bookId);
-		model.addAttribute("books", book);
-		
-		List<Copy> copyList = copyService.findCopyByBookId(bookId);
-		model.addAttribute("copies", copyList);
+		Optional<Book> bookOptional = bookService.find(bookId);
+		if (bookOptional.isPresent()) {
+			Book book = bookOptional.get();
 
-		User currentUser = userService.findByEmail(authentication.getName());
-	    long userId = currentUser.getUser_id();
-	        
-		boolean bookReserveable;
-		List<Reservation> reservation = reservationService.findByBookIdAndUserId(bookId, userId);
-		bookReserveable = reservation.size() <= 0;
+			model.addAttribute("books", bookOptional.get());
 
-        model.addAttribute("bookReserveable", bookReserveable);
+			List<Copy> copyList = book.getCopies();
+			model.addAttribute("copies", copyList);
+	
+			User currentUser = userService.findByEmail(authentication.getName());
+		    long userId = currentUser.getId();
+		        
+			boolean bookReserveable;
+			List<Reservation> reservation = reservationService.findByBookAndUser(book, currentUser);
+			bookReserveable = reservation.size() <= 0;
+	
+	        model.addAttribute("bookReserveable", bookReserveable);
+		}
 		
 		return "books/bookInterface"; 
 	} 
@@ -107,18 +110,20 @@ public class BookController {
 	@PostMapping("/books/edit/{id}")
 	public String edit(@PathVariable("id") long id, Book book, BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			book.setBook_id(id);
+			book.setId(id);
 			return "books/bookInterface";
 		}
-		service.saveBook(book);
+		bookService.saveBook(book);
 		return "redirect:/books";
 	}
 	
 	//Deletes an book from the table.
 	@GetMapping("/books/delete/{id}")
 	public String delete(@PathVariable("id") long id, Model model) {
-		Book book = service.find(id);
-		service.delete(book);     
+		Optional<Book> bookOptional = bookService.find(id);
+		if (bookOptional.isPresent()) {
+			bookService.delete(bookOptional.get());
+		}
 		return "redirect:/books";
 	}	
 }

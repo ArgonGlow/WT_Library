@@ -1,11 +1,10 @@
 package main.WTLibraryApp.Book;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import main.WTLibraryApp.User.User;
 
 @Service
 public class BookService {
@@ -25,10 +24,8 @@ public class BookService {
 		repo.save(book);
 	}
 	
-	public Book find(long id) {
-		Book book = repo.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid book Id: " + id));
-		return book;
+	public Optional<Book> find(long id) {
+		return repo.findById(id);
 	}
 	
 	public void delete(Book book) {

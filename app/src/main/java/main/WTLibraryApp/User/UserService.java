@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import main.WTLibraryApp.Book.Book;
-
 @Service
 public class UserService {
 	
@@ -51,7 +49,7 @@ public class UserService {
 	}
 	
 	public void deleteUser(User users, long id) {
-		users.setUser_id(id);
+		users.setId(id);
 		users.setFirst_name("Removed");
 		users.setLast_name("Removed");
 		users.setActive(false);

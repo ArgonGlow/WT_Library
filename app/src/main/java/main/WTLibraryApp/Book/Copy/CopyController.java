@@ -1,41 +1,39 @@
 package main.WTLibraryApp.Book.Copy;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import main.WTLibraryApp.Book.Book;
+import main.WTLibraryApp.Book.BookService;
 import main.WTLibraryApp.Reservation.Reservation;
 import main.WTLibraryApp.Reservation.ReservationService;
 import main.WTLibraryApp.Transaction.TransactionService;
 import main.WTLibraryApp.Transaction.TransactionType;
 import main.WTLibraryApp.User.LoanedUser;
 import main.WTLibraryApp.User.User;
-import main.WTLibraryApp.User.UserController;
 import main.WTLibraryApp.User.UserService;
 
 @Controller 
 @CrossOrigin(maxAge=3600)
 public class CopyController {
-		
+
 	@Autowired
-	private CopyService service;
-	
+	private BookService bookService;
+
+	@Autowired
+	private CopyService copyService;
+
+	@Autowired
+	private UserService userService;
+
 	@Autowired
 	private ReservationService reservationService;
 	
@@ -45,39 +43,46 @@ public class CopyController {
 	//displays all copies in the database
   	@GetMapping(value = "copies")
 	public String findAll(Model model){
-		model.addAttribute("copies", service.allCopies());
+		model.addAttribute("copies", copyService.allCopies());
 		return "copies/copies";  
 	}   
 	
   	//displays all copies by bookId and copyId combination
 	@GetMapping(value = "copies/{bookId}/{copyId}")
 	public String findById(@PathVariable long bookId, @PathVariable long copyId, Model model) {
-		 
-		CopyPK id = new CopyPK(bookId, copyId);           
-		model.addAttribute("copies", service.findCopy(id));
+		Optional<Book> bookOptional = bookService.find(bookId);
+
+		if (bookOptional.isPresent()) {
+			Book book = bookOptional.get(); 
+			
+			model.addAttribute("copies", copyService.findByBookAndCopy(book, 1));
+		} else {
+			model.addAttribute("copies", new ArrayList<>());
+		}
 		return "copies/copyInterface";                           
 	}       
 	
 	//deletes copy by bookId and copyId combination in the book interface
 	@GetMapping("copies/deleteInBookInterface/{bookId}/{copyId}")
 	public String deleteInBook(@PathVariable long bookId, @PathVariable long copyId) {
-			 
-		CopyPK id = new CopyPK(bookId, copyId); 
-		service.deleteCopy(id);     
+		// TODO copyService.deleteCopy(id);
 		return "redirect:/books/edit/{bookId}"; 
 	}  
 	
 	//administrator withdraws copies of books to users
 	@GetMapping("copies/withdraw/{bookId}/{copyId}/{userId}")  
 	public String withdrawBook(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId, Model model){
+		User user = this.userService.findUser(userId);
 
-		CopyPK id = new CopyPK(bookId, copyId);
-		Copy copyToWithdraw = service.findCopy(id).get(0);
-		copyToWithdraw.setUserId(null); 
-		service.saveCopy(copyToWithdraw);
-		
-		//log in transactions table
-		transactionService.logLoan(userId, id, TransactionType.RETURNED);
+		Optional<Copy> copyOptional = this.copyService.findCopyById(copyId);
+		if (copyOptional.isPresent()) {
+			Copy copyToWithdraw = copyOptional.get();
+			copyToWithdraw.setUser(null); 
+			copyService.saveCopy(copyToWithdraw);
+
+			//log in transactions table
+			transactionService.logLoan(user, copyOptional.get(), TransactionType.RETURNED);
+		}
 		
 		return "redirect:/users/edit-user/{userId}";
 	}
@@ -85,21 +90,26 @@ public class CopyController {
 	//administrator loans copies of books to users
 	@GetMapping("copies/loan/{bookId}/{copyId}")  
 	public String loanBook(@PathVariable long bookId, @PathVariable long copyId, Model model){
-		
 		long currentUserId = LoanedUser.getCurrentUserId();
+		User user = userService.findUser(currentUserId);
+		Optional<Book> bookOptional = bookService.find(bookId);
 
-		CopyPK id = new CopyPK(bookId, copyId);
-		Copy copyToLoan = service.findCopy(id).get(0);
-		copyToLoan.setUserId(currentUserId);  
-		service.saveCopy(copyToLoan); 
-		
-		//deletes related reservation
-		//in case of duplicate reservations, it deletes the first one
-		List<Reservation> reservation = reservationService.findByBookIdAndUserId(bookId, currentUserId);
-		reservationService.deleteReservation(reservation.get(0));
-		
-		//log in transactions table
-		transactionService.logLoan(currentUserId, id, TransactionType.LOANED);
+		Optional<Copy> copyToLoanOptional = copyService.findCopyById(copyId);
+		if (copyToLoanOptional.isPresent() && bookOptional.isPresent()) {
+			Copy copyToLoan = copyToLoanOptional.get();
+			Book book = bookOptional.get();
+
+			copyToLoan.setUser(user);  
+			copyService.saveCopy(copyToLoan); 
+
+			//deletes related reservation
+			//in case of duplicate reservations, it deletes the first one
+			List<Reservation> reservation = reservationService.findByBookAndUser(book, user);
+			reservationService.deleteReservation(reservation.get(0));
+			
+			//log in transactions table
+			transactionService.logLoan(user, null, TransactionType.LOANED);
+		}
 		
 		String path = "redirect:/users/edit-user/" + currentUserId;
 		return path;

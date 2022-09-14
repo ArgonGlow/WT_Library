@@ -1,10 +1,17 @@
 package main.WTLibraryApp.Transaction;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import main.WTLibraryApp.Book.Book;
+import main.WTLibraryApp.Book.Copy.Copy;
+import main.WTLibraryApp.User.User;
 
 @Entity
 @Table(name="transactions")
@@ -14,25 +21,24 @@ public class Transaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long transaction_id;
 	
-	//private String bookcopy;
-	
-	private long book_id;
-	
-	private Long copy_id;
-	
-	private long user_id;
-	
-	private TransactionType transaction_type;
+	@ManyToOne(optional = false)
+	private Book book;
 
-	
+	@ManyToOne(optional = true)
+	private Copy copy;
+
+	@ManyToOne(optional = false)
+	private User user;
+
+	@Enumerated(EnumType.ORDINAL)
+	private TransactionType transaction_type;
 	
 	// constructor
-	public Transaction(long user_id, TransactionType transaction_type) {
-		this.user_id = user_id;
+	public Transaction(User user, TransactionType transaction_type) {
+		this.user = user;
 		this.transaction_type = transaction_type;
 	}
-	
-	// getters and setters
+
 	public long getTransaction_id() {
 		return transaction_id;
 	}
@@ -40,51 +46,37 @@ public class Transaction {
 	public void setTransaction_id(long transaction_id) {
 		this.transaction_id = transaction_id;
 	}
-	
-	public long getBook_id() {
-		return book_id;
+
+	public Book getBook() {
+		return book;
 	}
 
-	public void setBook_id(long book_id) {
-		this.book_id = book_id;
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
-	public long getCopy_id() {
-		return copy_id;
+	public Copy getCopy() {
+		return copy;
 	}
 
-	public void setCopy_id(long copy_id) {
-		this.copy_id = copy_id;
+	public void setCopy(Copy copy) {
+		this.copy = copy;
 	}
 
-	public long getUser_id() {
-		return user_id;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
+	public void setUser(User user) {
+		this.user = user;
 	}
-	
-	
+
 	public TransactionType getTransaction_type() {
 		return transaction_type;
 	}
-	
+
 	public void setTransaction_type(TransactionType transaction_type) {
 		this.transaction_type = transaction_type;
 	}
 
-	
-
-	
-
-	
-	
-//	public Date getDate() {
-//		return date;
-//	}
-//
-//	public void setDate(Date date) {
-//		this.date = date;
-//	}
 }

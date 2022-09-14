@@ -3,10 +3,10 @@ package main.WTLibraryApp.Book.Copy;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import main.WTLibraryApp.Book.Book;
 
 @Service
 public class CopyService {
@@ -18,21 +18,15 @@ public class CopyService {
 		return repo.findAll();
 	}
 	
-	public List<Copy> findCopyByUserId(Long id) {
-		return repo.findCopyByUserId(id);
-	}
-	
-	public List<Copy> findCopyByBookId(Long id) {
-		return repo.findCopyByBookId(id);
-	}
-	
-	public List<Copy> findCopy(CopyPK copyPk) {
-		return repo.findByCopyPkId(copyPk);
+	public List<Copy> findByBookAndCopy(Book book, int version) {
+		return repo.findByBookAndVersion(book, version);
 	} 
-	
-	public void deleteCopy(CopyPK copyPk) {
-		Copy copy = new Copy();
-		copy.setCopyPkId(copyPk);
+
+	public Optional<Copy> findCopyById(long id) {
+		return repo.findById(id);
+	} 
+
+	public void deleteCopy(Copy copy) {
 		repo.delete(copy);      
 	}
 	
@@ -44,7 +38,7 @@ public class CopyService {
 		repo.save(copy);
 	}
 	
-	public List<Copy> findCopyByReservationUserId(Long userId){
-		return repo.findCopyByReservationUserId(userId);
-	}
+//	public List<Copy> findCopyByReservationUserId(Long userId){
+//		return repo.findCopyByReservationUserId(userId);
+//	}
 }
