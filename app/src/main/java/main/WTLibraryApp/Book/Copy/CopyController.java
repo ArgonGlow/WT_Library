@@ -92,27 +92,28 @@ public class CopyController {
 	}
 
 	//administrator loans copies of books to users
-	@GetMapping("copies/loan/{bookId}/{copyId}")  
-	public String loanBook(@PathVariable long bookId, @PathVariable long copyId, Model model){
+	@GetMapping("copies/loan/{reservationId}/{copyId}")  
+	public String loanBook(@PathVariable long reservationId, @PathVariable long copyId, Model model){
 		long currentUserId = LoanedUser.getCurrentUserId();
 		//User user = userService.findUser(currentUserId);
-		Optional<Book> bookOptional = bookService.find(bookId);
+		Optional<Reservation> reservatonOptional = reservationService.findById(reservationId);
 
 		Optional<Copy> copyToLoanOptional = copyService.findCopyById(copyId);
-		if (copyToLoanOptional.isPresent() && bookOptional.isPresent()) {
+		if (copyToLoanOptional.isPresent() && reservatonOptional.isPresent()) {
 			Copy copyToLoan = copyToLoanOptional.get();
-			Book book = bookOptional.get();
+			Reservation reservationToLoan = reservatonOptional.get();
+			//Book book = reservationToLoan.getBook();
 
-			copyToLoan.setUser(copyToLoan.getUser());  
+			copyToLoan.setUser(reservationToLoan.getUser());  
 			copyService.saveCopy(copyToLoan); 
 
 			//deletes related reservation
 			//in case of duplicate reservations, it deletes the first one
-			List<Reservation> reservation = reservationService.findByBookAndUser(book, copyToLoan.getUser());
-			reservationService.deleteReservation(reservation.get(0));
+			//List<Reservation> reservation = reservationService.findByBookAndUser(book, copyToLoan.getUser());
+			reservationService.deleteReservation(reservationToLoan);
 			
 			//log in transactions table
-			transactionService.logLoan(copyToLoan.getUser(), copyToLoan, TransactionType.LOANED);
+			transactionService.logLoan(reservationToLoan.getUser(), copyToLoan, TransactionType.LOANED);
 		}
 		
 		String path = "redirect:/users/edit-user/" + currentUserId;

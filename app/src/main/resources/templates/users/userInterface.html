@@ -140,7 +140,7 @@
 								<div th:switch="${copy.user}">
 									<td th:case=null>
 										<a class="btn btn-primary"
-											th:href="@{/copies/loan/{id1}/{id2} (id1=${copy.book.id}, id2=${copy.version})}">loan</a>
+											th:href="@{/copies/loan/{id1}/{id2} (id1=${reservation.reservationId}, id2=${copy.id})}">loan</a>
 									</td>
 								</div>
 							</tr>
