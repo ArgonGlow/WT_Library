@@ -24,8 +24,11 @@
     <br>
     <h1>Edit Book</h1>
 
+    <!-- Book cover image -->
+    <img th:src="*{'data:image/jpeg;base64, '+{books.cover_image}}" alt="Book Cover" width="100" height="100" />
+
     <!-- Edit book -->
-    <form action="#" th:action="@{/books/edit/{id}(id=${books.book_id})}" th:object="${books}" method="post">
+    <form action="#" th:action="@{/books/edit/{id}(id=${books.book_id})}" th:object="${books}" method="post" enctype="multipart/form-data">
       <div class="visually-hidden">
         <label for="id">ID: </label>
         <input type="text" th:field="*{book_id}" id="book_id" placeholder="Id" />
@@ -39,6 +42,9 @@
 
       <label for="author">Author: </label>
       <input type="text" th:field="*{author}" id="author" placeholder="Author" />
+
+      <label for="image">Book cover: </label>
+      <input type="file" name="image" id="image" placeholder="Image" />
 
       <input type="submit" value="Update Book" />
       <a th:href="@{/books/delete/{id}(id=${books.book_id})}">Delete</a>

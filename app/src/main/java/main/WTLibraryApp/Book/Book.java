@@ -16,7 +16,7 @@ public class Book {
 	private String title;
 	private String isbn;
 	private String author;
-	private byte[] cover_image;
+	private String cover_image;
 	
 	public String getTitle() {
 		return title;
@@ -46,11 +46,11 @@ public class Book {
 		this.book_id = book_id;  
 	}  
 
-	public byte[] getCover_image() {
+	public String getCover_image() {
 		return cover_image; 
 	} 
 
-	public void setCover_image(byte[] cover_image) {
+	public void setCover_image(String cover_image) {
 		this.cover_image = cover_image;
 	}
 

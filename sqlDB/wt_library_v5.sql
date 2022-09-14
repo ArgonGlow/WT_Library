@@ -34,7 +34,7 @@ CREATE TABLE `books` (
   `title` varchar(100) DEFAULT NULL,
   `author` varchar(255) DEFAULT NULL,
   `isbn` varchar(13) NOT NULL,
-  `cover_image` blob DEFAULT NULL
+  `cover_image` longblob DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

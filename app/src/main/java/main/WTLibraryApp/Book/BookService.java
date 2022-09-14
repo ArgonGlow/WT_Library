@@ -1,9 +1,13 @@
 package main.WTLibraryApp.Book;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import main.WTLibraryApp.User.User;
 
@@ -20,8 +24,17 @@ public class BookService {
 	public List<Book> findAll() {
 		return repo.findAll();
 	}
-	
-	public void saveBook(Book book) {
+
+	public void saveBook(MultipartFile file, Book book) {
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+		if (fileName.contains("..")) {
+			System.out.println("Invalid file.");
+		}
+		try {
+			book.setCover_image(Base64.getEncoder().encodeToString(file.getBytes()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		repo.save(book);
 	}
 	
