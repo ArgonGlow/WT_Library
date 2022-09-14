@@ -95,7 +95,7 @@ public class CopyController {
 	@GetMapping("copies/loan/{bookId}/{copyId}")  
 	public String loanBook(@PathVariable long bookId, @PathVariable long copyId, Model model){
 		long currentUserId = LoanedUser.getCurrentUserId();
-		User user = userService.findUser(currentUserId);
+		//User user = userService.findUser(currentUserId);
 		Optional<Book> bookOptional = bookService.find(bookId);
 
 		Optional<Copy> copyToLoanOptional = copyService.findCopyById(copyId);
@@ -103,16 +103,16 @@ public class CopyController {
 			Copy copyToLoan = copyToLoanOptional.get();
 			Book book = bookOptional.get();
 
-			copyToLoan.setUser(user);  
+			copyToLoan.setUser(copyToLoan.getUser());  
 			copyService.saveCopy(copyToLoan); 
 
 			//deletes related reservation
 			//in case of duplicate reservations, it deletes the first one
-			List<Reservation> reservation = reservationService.findByBookAndUser(book, user);
+			List<Reservation> reservation = reservationService.findByBookAndUser(book, copyToLoan.getUser());
 			reservationService.deleteReservation(reservation.get(0));
 			
 			//log in transactions table
-			transactionService.logLoan(user, null, TransactionType.LOANED);
+			transactionService.logLoan(copyToLoan.getUser(), copyToLoan, TransactionType.LOANED);
 		}
 		
 		String path = "redirect:/users/edit-user/" + currentUserId;
