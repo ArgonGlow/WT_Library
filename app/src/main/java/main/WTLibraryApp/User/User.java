@@ -39,8 +39,6 @@ public class User {
 	@OneToMany(mappedBy = "user", orphanRemoval = false)
 	private List<Reservation> reservations;
 	
-	private int role;
-	
 	private Date create_time;
 
 	public long getId() {
