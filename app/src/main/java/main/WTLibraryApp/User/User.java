@@ -1,5 +1,6 @@
 package main.WTLibraryApp.User;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -35,6 +36,10 @@ public class User {
 
 	@OneToMany(mappedBy = "user", orphanRemoval = false)
 	private List<Reservation> reservations;
+	
+	private int role;
+	
+	private Date create_time;
 
 	public long getId() {
 		return id;

@@ -1,5 +1,7 @@
 package main.WTLibraryApp.Transaction;
 
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -29,6 +31,8 @@ public class Transaction {
 
 	@ManyToOne(optional = false)
 	private User user;
+	
+	private Date date;
 
 	@Enumerated(EnumType.ORDINAL)
 	private TransactionType transaction_type;
