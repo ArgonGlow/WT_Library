@@ -55,7 +55,8 @@ public class UserController {
 	@GetMapping("/user")
 	public String CurrentUser(@CurrentSecurityContext(expression = "authentication") Authentication authentication, Model model) {
 		User currentuser = service.findByEmail(authentication.getName());
-		model.addAttribute("users", currentuser);
+
+		model.addAttribute("user", currentuser);
 		model.addAttribute("action", "/user");
 		model.addAttribute("copies", currentuser.getCopies());
 		model.addAttribute("reservedCopies", currentuser.getCopies());
@@ -99,7 +100,7 @@ public class UserController {
 	@GetMapping("/users/edit-user/{id}")
 	public String updateUser(@PathVariable("id") long id, Model model) {
 		User user = service.findUser(id);
-		model.addAttribute("users", user);
+		model.addAttribute("user", user);
 		model.addAttribute("action", "/users/edit-user/"+id);
 		model.addAttribute("copies", user.getCopies());
 		

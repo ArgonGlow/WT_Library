@@ -88,7 +88,7 @@ public class BookController {
 		if (bookOptional.isPresent()) {
 			Book book = bookOptional.get();
 
-			model.addAttribute("books", bookOptional.get());
+			model.addAttribute("book", bookOptional.get());
 
 			List<Copy> copyList = book.getCopies();
 			model.addAttribute("copies", copyList);

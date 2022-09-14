@@ -40,6 +40,9 @@ public class User {
 	private List<Reservation> reservations;
 	
 	private Date create_time;
+	public String getFullName() {
+		return this.first_name + " " + this.last_name;
+	}
 
 	public long getId() {
 		return id;

@@ -28,7 +28,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p th:text="@{Are you sure you want to cancel your reservation for title {book}?(book = ${reservation.bookId})}"></p>
+          <p th:text="@{Are you sure you want to cancel your reservation for title {book}?(book = ${reservation.book.id})}"></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -60,10 +60,10 @@
           <tbody>
             <tr th:each="reservation : ${reservations}">
               <td th:text="${reservation.reservationId}"></td>
-              <td th:text="${reservation.bookId}"></td>
-              <td th:text="${reservation.userId}"></td>
+              <td th:text="${reservation.book.title}"></td>
+              <td th:text="${reservation.user.fullName}"></td>
               <td>
-                <a th:href="@{/users/edit-user/{id}(id=${reservation.userId})}">View</a>
+                <a th:href="@{/users/edit-user/{id}(id=${reservation.user.id})}">View</a>
               </td>
               <td>
                 <!-- <a th:href="@{/reservations/cancel/{id}(id=${reservation.reservationId})}">Cancel</a> -->
