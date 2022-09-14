@@ -136,7 +136,7 @@
 							<tr th:each="copy : ${reservation.book.copies}">
 								<td th:text="${copy.book.title}"></td>
 								<td th:text="${copy.version}"></td>
-								<td th:text="${copy.user.fullName}"></td>
+								<td th:text="${copy.user?.fullName}"></td>
 								<div th:switch="${copy.user}">
 									<td th:case=null>
 										<a class="btn btn-primary"
