@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import main.WTLibraryApp.Book.Book;
 import main.WTLibraryApp.Reservation.Reservation;
 import main.WTLibraryApp.Reservation.ReservationService;
+import main.WTLibraryApp.Transaction.TransactionService;
+import main.WTLibraryApp.Transaction.TransactionType;
 import main.WTLibraryApp.User.LoanedUser;
 import main.WTLibraryApp.User.User;
 import main.WTLibraryApp.User.UserController;
@@ -36,6 +38,9 @@ public class CopyController {
 	
 	@Autowired
 	private ReservationService reservationService;
+	
+	@Autowired
+	private TransactionService transactionService;
  	
 	//displays all copies in the database
   	@GetMapping(value = "copies")
@@ -49,7 +54,7 @@ public class CopyController {
 	public String findById(@PathVariable long bookId, @PathVariable long copyId, Model model) {
 		 
 		CopyPK id = new CopyPK(bookId, copyId);           
-		model.addAttribute("copies", service.findCopy(id));  
+		model.addAttribute("copies", service.findCopy(id));
 		return "copies/copyInterface";                           
 	}       
 	
@@ -71,6 +76,9 @@ public class CopyController {
 		copyToWithdraw.setUserId(null); 
 		service.saveCopy(copyToWithdraw);
 		
+		//log in transactions table
+		transactionService.logLoan(userId, id, TransactionType.RETURNED);
+		
 		return "redirect:/users/edit-user/{userId}";
 	}
 
@@ -85,16 +93,19 @@ public class CopyController {
 		copyToLoan.setUserId(currentUserId);  
 		service.saveCopy(copyToLoan); 
 		
-		
 		//deletes related reservation
 		//in case of duplicate reservations, it deletes the first one
 		List<Reservation> reservation = reservationService.findByBookIdAndUserId(bookId, currentUserId);
 		reservationService.deleteReservation(reservation.get(0));
 		
-		String path = "redirect:/users/edit-user/" + currentUserId;
+		//log in transactions table
+		transactionService.logLoan(currentUserId, id, TransactionType.LOANED);
 		
+		String path = "redirect:/users/edit-user/" + currentUserId;
 		return path;
 	}
+	
+	
 	
 //	//deletes copy by bookId and copyId combination in the user interface
 //	@GetMapping("copies/deleteInUserInterface/{bookId}/{copyId}/{userId}")

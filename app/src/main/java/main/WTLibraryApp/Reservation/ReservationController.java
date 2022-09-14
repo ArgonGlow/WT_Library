@@ -1,5 +1,7 @@
 package main.WTLibraryApp.Reservation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
@@ -16,6 +18,8 @@ import main.WTLibraryApp.Book.Book;
 import main.WTLibraryApp.Book.BookService;
 import main.WTLibraryApp.Book.Copy.Copy;
 import main.WTLibraryApp.LibMail.EmailService;
+import main.WTLibraryApp.Transaction.TransactionService;
+import main.WTLibraryApp.Transaction.TransactionType;
 import main.WTLibraryApp.User.LoanedUser;
 import main.WTLibraryApp.User.User;
 import main.WTLibraryApp.User.UserService;
@@ -36,6 +40,9 @@ public class ReservationController {
 	
 	@Autowired
 	private BookService bookService;
+	
+	@Autowired
+	private TransactionService transactionService;
 	
 	// list all entries from reservations table
 	// returns list of Reservation objects
@@ -76,20 +83,29 @@ public class ReservationController {
 	
 	@GetMapping("reservations/createReservation/{bookId}")
 	public String createReservation(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication, Model model) {
+		
 		User currentUser = userService.findByEmail(authentication.getName());
 		long userId = currentUser.getUser_id();
 		
-		Reservation reservation = new Reservation();
-		reservation.setBookId(bookId);
-		reservation.setUserId(userId);
-		service.saveReservation(reservation);
+		//check if book is already reserved
+    	List<Reservation> reservations = service.findByBookIdAndUserId(bookId, userId);
+    	if(reservations.size() <= 0) {
+    	
+			Reservation reservation = new Reservation();
+			reservation.setBookId(bookId);
+			reservation.setUserId(userId);
+			service.saveReservation(reservation);
+			
+			//send email
+			User user = userService.findUser(reservation.getUserId());
+			Book book = bookService.find(reservation.getBookId());
+			emailService.sendSimpleMessage(user.getEmail(), "Reserved " + book.getTitle(), "Dear " + user.getFirst_name() + " " + user.getLast_name() + ",\nYou seem to believe we will help you get your hands on "+ book.getTitle()+" written by "+book.getAuthor()+". People can believe anything these days I suppose. Well..\nSee you!\n"+currentUser.getFirst_name()+" "+currentUser.getLast_name());
+			
+			LoanedUser.setCurrentUserId(userId);
+    	}
 		
-		//send email
-		User user = userService.findUser(reservation.getUserId());
-		Book book = bookService.find(reservation.getBookId());
-		emailService.sendSimpleMessage(user.getEmail(), "Reserved " + book.getTitle(), "Dear " + user.getFirst_name() + " " + user.getLast_name() + ",\nYou seem to believe we will help you get your hands on "+ book.getTitle()+" written by "+book.getAuthor()+". People can believe anything these days I suppose. Well..\nSee you!\n"+currentUser.getFirst_name()+" "+currentUser.getLast_name());
-		
-		LoanedUser.setCurrentUserId(userId);
+		//log in transactions table
+		transactionService.logReservation(userId, bookId, TransactionType.RESERVED);
 		
 		String path = "redirect:/books";
 		return path;

@@ -1,7 +1,5 @@
 package main.WTLibraryApp.Transaction;
 
-import java.sql.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,28 +9,44 @@ import javax.persistence.Table;
 @Entity
 @Table(name="transactions")
 public class Transaction {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long transaction_id;
+	
+	//private String bookcopy;
+	
+	private long book_id;
 	
 	private long copy_id;
 	
 	private long user_id;
 	
-	private enum transaction_type{
-		RESERVED,
-		LOANED,
-		RETURNED
-	};
-	
-	private Date date;
+	private TransactionType transaction_type;
 
+	
+	
+	// constructor
+	public Transaction(long user_id, TransactionType transaction_type) {
+		this.user_id = user_id;
+		this.transaction_type = transaction_type;
+	}
+	
+	// getters and setters
 	public long getTransaction_id() {
 		return transaction_id;
 	}
 
 	public void setTransaction_id(long transaction_id) {
 		this.transaction_id = transaction_id;
+	}
+	
+	public long getBook_id() {
+		return book_id;
+	}
+
+	public void setBook_id(long book_id) {
+		this.book_id = book_id;
 	}
 
 	public long getCopy_id() {
@@ -50,14 +64,27 @@ public class Transaction {
 	public void setUser_id(long user_id) {
 		this.user_id = user_id;
 	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
 	
 	
+	public TransactionType getTransaction_type() {
+		return transaction_type;
+	}
+	
+	public void setTransaction_type(TransactionType transaction_type) {
+		this.transaction_type = transaction_type;
+	}
+
+	
+
+	
+
+	
+	
+//	public Date getDate() {
+//		return date;
+//	}
+//
+//	public void setDate(Date date) {
+//		this.date = date;
+//	}
 }

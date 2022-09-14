@@ -16,12 +16,7 @@
 </head>
 <body>
   <!--______________navigation bar______________-->
-  <div sec:authorize="hasAnyAuthority('1')">
-    <div th:insert="@{../fragments/navbar.html}"></div>
-  </div>
-  <div sec:authorize="hasAnyAuthority('2')">
-    <div th:insert="@{../fragments/navbar_User.html}"></div>
-  </div>
+  <div th:insert="@{../fragments/navbar.html}"></div>
   <!--______________end navigation bar______________-->
   
 
@@ -51,22 +46,24 @@
       </thead>
       <tbody>
         <tr th:each="books : ${books}">
-          <td th:text="${books.book_id}"></td>
-          <td th:text="${books.title}"></td>
-          <td th:text="${books.isbn}"></td>
-          <td th:text="${books.author}"></td>
-          <td>
-            <a th:href="@{/reservations/createReservation/{id}(id=${books.book_id})}">Reserve</a>
-          </td>
+          <td th:text="${books.key.book_id}"></td>
+          <td th:text="${books.key.title}"></td>
+          <td th:text="${books.key.isbn}"></td>
+          <td th:text="${books.key.author}"></td>
           <div sec:authorize="hasAnyAuthority('1')">
             <td>
-              <a class="btn btn-secondary" th:href="@{/books/edit/{id}(id=${books.book_id})}">Info</a>
+              <a class="btn btn-primary" th:href="@{/books/edit/{id}(id=${books.key.book_id})}">Info</a>
             </td>
           </div>
-          <td>
+          <div th:if="${books.value}">
+            <td>
+              <a class="btn btn-secondary" th:href="@{/reservations/createReservation/{id}(id=${books.key.book_id})}">Reserve</a>
+            </td>
+          </div>
+          <!-- <td>
             <img th:src="${books.cover_image}">
-          </td>
-          <!-- <td th:text="${books.cover_image}">
+           </td>  -->
+          <!-- <td th:text="${books.cover_image}"> 
           </td> -->
         </tr>
       </tbody>

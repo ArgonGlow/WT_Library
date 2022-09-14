@@ -7,9 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import main.WTLibraryApp.Book.Copy.Copy;
-import main.WTLibraryApp.User.User;
-
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long>{
 
@@ -26,5 +23,4 @@ public interface BookRepository extends JpaRepository<Book, Long>{
 	//finds book by keyword
     @Query(value = "select * from books where title like %:keyword% or author like %:keyword% or isbn like %:keyword%", nativeQuery = true)
     List<Book> findByKeyword(@Param("keyword") String keyword);
-   
 }

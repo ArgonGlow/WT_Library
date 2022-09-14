@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/images/*","/style.css").permitAll()
 		.and()
          	.authorizeRequests()
-         	.antMatchers("/","/books","/reservations/createReservation/*").hasAnyAuthority("1","2")
+         	.antMatchers("/","/books","/reservations/createReservation/*","/user").hasAnyAuthority("1","2")
         .and()
         	.authorizeRequests()
             .antMatchers("/**").hasAnyAuthority("1")
@@ -38,9 +38,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             	.loginPage("/login")
             	.permitAll()
         .and()
-        	.logout().invalidateHttpSession(true) 
+        	.logout().invalidateHttpSession(true)
             	.clearAuthentication(true).permitAll();
-   } 
+   }
 	   
 	
 	//Configures where usernames, passwords, active, and roles eventually can be found
@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    
    //Returns the hashfunction used for the passwords
    @Bean
-   public PasswordEncoder passwordEncoder() { 
+   public PasswordEncoder passwordEncoder() {
       return new BCryptPasswordEncoder();
    }
 }

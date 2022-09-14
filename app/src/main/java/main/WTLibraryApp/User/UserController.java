@@ -2,6 +2,8 @@ package main.WTLibraryApp.User;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,23 +48,56 @@ public class UserController {
 		if (keyword != null) {
 			List<User> list = service.findByKeyword(keyword);
 			model.addAttribute("users", list);
-		} else {   
+		} else {
 			List<User> list = service.findAllUsers();
 			model.addAttribute("users", list);
 		}
 		return "/users/users";
 	}
 	
+	@GetMapping("/user")
+	public String CurrentUser(@CurrentSecurityContext(expression = "authentication") Authentication authentication, Model model) {
+		User currentuser = service.findByEmail(authentication.getName());
+		model.addAttribute("users", currentuser);
+		model.addAttribute("action", "/user");
+		
+		List<Copy> copyList = copyService.findCopyByUserId(currentuser.getUser_id());
+		List<Copy> reservedCopyList = copyService.findCopyByReservationUserId(currentuser.getUser_id());
+		List<Book> bookList = bookService.findBookByUserId(currentuser.getUser_id());
+		List<Book> reservedBookList = bookService.findBookByReservationUserId(currentuser.getUser_id());
+		List<Reservation> reservationList = reservationService.findByUserId(currentuser.getUser_id());
+		
+		model.addAttribute("copies", copyList);
+		model.addAttribute("reservedCopies", reservedCopyList);
+		model.addAttribute("books", bookList);
+		model.addAttribute("reservedBooks", reservedBookList);
+		model.addAttribute("reservations", reservationList);
+		
+		LoanedUser.setCurrentUserId(currentuser.getUser_id());
+
+		return "users/userInterface";
+	}
+	
+	//edits user in the table
+	@PostMapping("/user")
+	public String updateCurrentUserPost(@CurrentSecurityContext(expression = "authentication") Authentication authentication, User users, BindingResult result, Model model) {
+		User currentuser = service.findByEmail(authentication.getName());
+		if (!result.hasErrors()) {
+			service.saveUser(users, currentuser.getUser_id());
+		} 
+		return "redirect:/user";
+	} 
+	
 //	Adds a new user to the users table
 	
 	@GetMapping("/users/add-user")
 	public String addUser(User users) {
 		return "/users/add-user";
-	} 
+	}
 	
 	@PostMapping("/users/add-user")
 	public String addUserPost(User users, BindingResult result, Model model) {
-		users.setPassword(BCrypt.hashpw("guest", BCrypt.gensalt()));
+		users.setPassphrase(BCrypt.hashpw("guest", BCrypt.gensalt()));
 		emailService.sendSimpleMessage(users.getEmail(), "\"Welcome\"", "Welcome \"" + users.getFirst_name() +"\" \""+users.getLast_name()+"\",\n\"Thank you\" for \"using\" our \"services\". Your \"username\" is this \"email\" \"and\" your passphrase is guest. \"Please\" change it at \"your\" earliest \"convenience\". We look forward to our \"arrangement.\"\n \"C\" you, \n \"The team\".");
 		if (result.hasErrors()) {
 			return "/users/add-user";
@@ -77,6 +112,7 @@ public class UserController {
 	public String updateUser(@PathVariable("id") long id, Model model) {
 		User users = service.findUser(id);
 		model.addAttribute("users", users);
+		model.addAttribute("action", "/users/edit-user/"+id);
 		
 		List<Copy> copyList = copyService.findCopyByUserId(id);
 		List<Copy> reservedCopyList = copyService.findCopyByReservationUserId(id);
@@ -102,16 +138,15 @@ public class UserController {
 			users.setUser_id(id);
 			return "users/edit-user"; 
 		} 
-		
-		service.saveUser(users, id);     
+		service.saveUser(users, id);
 		return "redirect:/users";
-	} 
-	      
+	}
+
 //	Deletes an user from the table.
 	@GetMapping("/users/delete-user/{id}")
 	public String deleteUser(@PathVariable("id") long id, Model model) {
 		User users = service.findUser(id);
 		service.deleteUser(users, id);
-		return "redirect:/users"; 
-	}       
+		return "redirect:/users";
+	}
 }
