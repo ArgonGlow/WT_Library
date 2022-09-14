@@ -57,9 +57,15 @@
               <a class="btn btn-primary" th:href="@{/books/edit/{id}(id=${books.key.book_id})}">Info</a>
             </td>
           </div>
+          <!-- Reserve/cancel reseration button -->
           <div th:if="${books.value}">
             <td>
-              <a class="btn btn-secondary" th:href="@{/reservations/createReservation/{id}(id=${books.key.book_id})}">Reserve</a>
+              <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${books.key.book_id})}">Reserve</a>
+            </td>
+          </div>
+          <div th:unless="${books.value}">
+            <td>
+              <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${books.key.book_id})}">Cancel reservation</a>
             </td>
           </div>
         </tr>

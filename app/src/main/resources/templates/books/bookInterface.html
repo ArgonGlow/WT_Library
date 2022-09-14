@@ -22,7 +22,7 @@
   <!-- ______________Main page view______________ -->
   <div class="container">
     <br>
-    <h1>Edit Book</h1>
+    <h1>Book info</h1>
 
     <!-- Book cover image -->
     <img th:src="*{'data:image/jpeg;base64, '+{books.cover_image}}" alt="Book Cover" width="100" height="100" />
@@ -43,14 +43,22 @@
       <label for="author">Author: </label>
       <input type="text" th:field="*{author}" id="author" placeholder="Author" />
 
-      <label for="image">Book cover: </label>
-      <input type="file" name="image" id="image" placeholder="Image" />
-
-      <input type="submit" value="Update Book" />
-      <a th:href="@{/books/delete/{id}(id=${books.book_id})}">Delete</a>
-      <a th:href="@{/reservations/createReservation/{id}(id=${books.book_id})}">Reserve</a>
+      <div th:if="${bookReserveable}">
+        <input class="btn btn-primary" type="submit" value="Update Book" />
+        <!-- Reserve/cancel reseration button -->
+        <td>
+          <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${books.book_id})}">Reserve</a>
+        </td>
+      </div>
+      <div th:unless="${bookReserveable}">
+        <input class="btn btn-primary" type="submit" value="Update Book" />
+        <td>
+          <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${books.book_id})}">Cancel reservation</a>
+        </td>
+      </div>
     </form>
-    
+  
+
     <!-- Display copies -->
     <div th:switch="${copies}">
       <div th:case="*">
@@ -68,7 +76,7 @@
               <td th:text="${copies.copyPkId.copyId}"></td>
               <td th:text="${copies.userId}"></td>
               <td>
-                <a th:href="@{/copies/delete/{id1}/{id2}(id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId})}">Delete</a>
+                <a class="btn btn-danger" th:href="@{/copies/delete/{id1}/{id2}(id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId})}">Delete</a>
               </td>
             </tr>
           </tbody>

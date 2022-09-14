@@ -18,7 +18,7 @@ public class Transaction {
 	
 	private long book_id;
 	
-	private long copy_id;
+	private Long copy_id;
 	
 	private long user_id;
 	
