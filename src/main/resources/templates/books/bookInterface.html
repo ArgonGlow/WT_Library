@@ -56,34 +56,31 @@
     </form>
   
     <!-- Display copies -->
-    <div th:switch="${copies}">
-      <div th:case="*">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Book</th>
-              <th>Version</th>
-              <th>User</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="copies : ${copies}">
-              <td th:text="${copies.book.title}"></td>
-              <td th:text="${copies.version}"></td>
-              <td th:text="${copies.user == null ? '-' : copies.user.fullName}"></td>
-              <td>
-                <a class="btn btn-danger" th:href="@{/copies/delete/{id1}(id1=${copies.id})}">Delete</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Book</th>
+          <th>Version</th>
+          <th>User</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="copies : ${copies}">
+          <td th:text="${copies.book.title}"></td>
+          <td th:text="${copies.version}"></td>
+          <td th:text="${copies.user == null ? '-' : copies.user.fullName}"></td>
+          <td>
+            <a class="btn btn-danger" th:href="@{/copies/delete/{id1}(id1=${copies.id})}">Delete</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
 
      <!-- Add copy -->
-     <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copies}" method="post">
-        <label for="version">Add version: </label>
-        <input type="number" th:field="*{version}" id="version" placeholder="version" />
+     <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" method="post">
+        <label>Add version: </label>
+        <input type="text" th:field="*{copies.version}" id="copies" placeholder="copies" />
         <input class="btn btn-primary" type="submit" value="Submit" />
     </form>
   </div>

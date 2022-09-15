@@ -101,7 +101,7 @@ public class BookController {
 	        model.addAttribute("bookReserveable", bookReserveable);
 		}
 		
-		return "books/bookInterface"; 
+		return "books/bookInterface";
 	} 
 	 
 	//edits a book from the table
