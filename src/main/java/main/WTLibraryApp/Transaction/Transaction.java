@@ -88,4 +88,12 @@ public class Transaction {
 		this.transaction_type = transaction_type;
 	}
 
+	public Timestamp getDate() {
+		return date;
+	}
+
+	public void setDate(Timestamp date) {
+		this.date = date;
+	}
+
 }

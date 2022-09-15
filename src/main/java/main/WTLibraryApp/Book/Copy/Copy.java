@@ -29,7 +29,7 @@ public class Copy {
 	@ManyToOne(optional = true)
 	private User user;
 	
-	private int version;
+	private Long version;
 	
 	@OneToMany(mappedBy = "copy", orphanRemoval = false)
 	private List<Transaction> transactions;
@@ -50,11 +50,11 @@ public class Copy {
 		this.book = book;
 	}
 
-	public int getVersion() {
+	public Long getVersion() {
 		return version;
 	}
 	
-	public void setVersion(int version) {
+	public void setVersion(Long version) {
 		this.version = version;
 	}
 

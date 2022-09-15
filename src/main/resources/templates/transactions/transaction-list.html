@@ -36,9 +36,9 @@
       </thead>
       <tbody>
         <tr th:each="transaction : ${transactions}">
-          <td th:text="${transaction.book_id}"></td>
-          <td th:text="${transaction.copy_id}"></td>
-          <td th:text="${transaction.user_id}"></td>
+          <td th:text="${transaction.book.id}"></td>
+          <td th:text="${transaction.copy?.version}"></td>
+          <td th:text="${transaction.user.id}"></td>
           <td th:text="${transaction.transaction_type}"></td>
           <td th:text="${transaction.date}"></td>
           <td>
