@@ -55,7 +55,6 @@
       </div>
     </form>
   
-
     <!-- Display copies -->
     <div th:switch="${copies}">
       <div th:case="*">
@@ -80,6 +79,13 @@
         </table>
       </div>
     </div>
+
+     <!-- Add copy -->
+     <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copies}" method="post">
+        <label for="version">Add version: </label>
+        <input type="number" th:field="*{version}" id="version" placeholder="version" />
+        <input class="btn btn-primary" type="submit" value="Submit" />
+    </form>
   </div>
   <!-- ______________End of main page view______________ -->
 

@@ -50,7 +50,6 @@ public class BookController {
         model.addAttribute("books", list);
         
         User currentUser = userService.findByEmail(authentication.getName());
-        long userId = currentUser.getId();
         
         //create map of (Book, bool) to establish 1 time reservations
         Map<Book, Boolean> mapBookReservations = new LinkedHashMap<>();
@@ -94,7 +93,6 @@ public class BookController {
 			model.addAttribute("copies", copyList);
 	
 			User currentUser = userService.findByEmail(authentication.getName());
-		    long userId = currentUser.getId();
 		        
 			boolean bookReserveable;
 			List<Reservation> reservation = reservationService.findByBookAndUser(book, currentUser);
