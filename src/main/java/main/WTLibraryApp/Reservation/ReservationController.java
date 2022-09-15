@@ -147,7 +147,7 @@ public class ReservationController {
 			reservationService.deleteReservation(reservation);
 
 		    if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("1"))) {
-		    	return "redirect:/users/edit-user/" + id;
+		    	return "redirect:/users/edit-user/" + reservation.getUser().getId();
 		    }
 		    else {
 		    	return "redirect:/user";
