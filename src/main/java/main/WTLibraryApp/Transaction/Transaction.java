@@ -34,7 +34,7 @@ public class Transaction {
 	@ManyToOne(optional = false)
 	private User user;
 	
-	private Timestamp date;
+	private Date date;
 
 	@Enumerated(EnumType.ORDINAL)
 	private TransactionType transaction_type;
@@ -88,11 +88,11 @@ public class Transaction {
 		this.transaction_type = transaction_type;
 	}
 
-	public Timestamp getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(Timestamp date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
