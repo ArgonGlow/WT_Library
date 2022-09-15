@@ -21,38 +21,35 @@
 
   
   <!-- ______________Main page view______________ -->
-  
-      <div class="container">
-        <br>
-        <h1>User info</h1>
-    
-        <!--Update user function-->
-          <form action="#" th:action="@{${action}}" th:object="${users}" method="post">
-          <div class="visually-hidden">
-            <label for="user_id">User ID</label>
-            <input type="text" th:field="*{user_id}" id="user_id" placeholder="User ID" />
-          </div>
-    
-          <label for="first_name">First Name: </label>
-          <input type="text" th:field="*{first_name}" id="first_name" placeholder="First Name" />
-    
-          <label for="last_name">Last Name: </label>
-          <input type="text" th:field="*{last_name}" id="last_name" placeholder="Last Name" />
-    
-          <label for="email">Email: </label>
-          <input type="text" th:field="*{email}" id="email" placeholder="Email" />
+  <div class="container">
+    <br>
+    <h1>User info</h1>
 
-          <label for="passphrase">Passphrase: </label>
-          <input type="password" th:field="*{passphrase}" id="passphrase" placeholder="" />
-    
-          <input class="btn btn-primary" type="submit" value="Update User" />
-          <a class="btn btn-danger" th:href="@{/users/delete-user/{id}(id=${users.user_id})}">Delete</a>
+    <!--Update user function-->
+      <form action="#" th:action="@{${action}}" th:object="${user}" method="post">
+      <div class="visually-hidden">
+        <label for="id">User ID</label>
+        <input type="text" th:field="*{id}" id="id" placeholder="User ID" />
+      </div>
 
+      <label for="first_name">First Name: </label>
+      <input type="text" th:field="*{first_name}" id="first_name" placeholder="First Name" />
+
+      <label for="last_name">Last Name: </label>
+      <input type="text" th:field="*{last_name}" id="last_name" placeholder="Last Name" />
+
+      <label for="email">Email: </label>
+      <input type="text" th:field="*{email}" id="email" placeholder="Email" />
+
+      <label for="passphrase">Passphrase: </label>
+      <input type="password" th:field="*{passphrase}" id="passphrase" placeholder="" />
+
+      <input class="btn btn-primary" type="submit" value="Update User" />
+      <a class="btn btn-danger" th:href="@{/users/delete-user/{id}(id=${user.id})}">Delete</a>
 
     <!-- Displays loaned books -->
-    <table class="table">
+    <table class="table table-striped">
       <thead>
-        <br>
         <h2>Loaned:</h2>
         <tr>
           <th>Book id</th>
@@ -62,92 +59,97 @@
       </thead>
       <tbody>
         <tr th:each="books : ${books}">
-          <td th:text="${books.book_id}"></td>
+          <td th:text="${books.id}"></td>
           <td th:text="${books.title}"></td>
           <td th:text="${books.author}"></td>
         </tr>
         
       </tbody>
     </table>
+
       <!-- Displays copies op loaned books -->
-      <table class="table">
+      <table class="table table-striped">
         <thead>
           <br>
           <tr>
-            <th>Book id</th>
-            <th>Copy id</th>
-            <th>User id</th>
+            <th>Book</th>
+            <th>Version</th>
+            <th>User</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           <tr th:each="copies : ${copies}">
-            <td th:text="${copies.copyPkId.bookId}"></td>
-            <td th:text="${copies.copyPkId.copyId}"></td>
-            <td th:text="${copies.userId}"></td>
-            <div th:switch="${copies.userId}">
+            <td th:text="${copies.book.title}"></td>
+						<td th:text="${copies.version}"></td>
+						<td th:text="${copies.user.fullName}"></td>
+						<div th:switch="${copies.user}">
               <td th:case=null></td>
               <td th:case="*">
               <div sec:authorize="hasAnyAuthority('1')">
-                <a class="btn btn-secondary" th:href="@{/copies/withdraw/{id1}/{id2}/{id3} (id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId}, id3=${copies.userId})}">withdraw</a>
+                <a class="btn btn-secondary" th:href="@{/copies/withdraw/{id1}/{id2}/{id3} (id1=${copies.book.id}, id2=${copies.id}, id3=${copies.user.id})}">withdraw</a>
               </div>
             </td>
             </div>
           </tr>
         </tbody>
       </table>
+
       <!-- Displays reserved books -->
-      <table class="table">
+      <table class="table table-striped">
         <thead>
           <br>
-          <h2>Reserved</h2>
+          <h2>Reserved:</h2>
           <tr>
-            <th>Book id</th>
+            <th>Reservation id</th>
             <th>Title</th>
             <th>Author</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr th:each="books : ${reservedBooks}">
-            <td th:text="${books.book_id}"></td>
-            <td th:text="${books.title}"></td>
-            <td th:text="${books.author}"></td>
+          <tr th:each="reservation : ${user.reservations}">
+						<td th:text="${reservation.reservationId}"></td>
+						<td th:text="${reservation.book.title}"></td>
+						<td th:text="${reservation.book.author}"></td>
             <td>
-              <a class="btn btn-secondary" th:href="@{/reservations/cancelUI/{id} (id=${books.book_id})}">Cancel reservation</a>
+              <a class="btn btn-secondary" th:href="@{/reservations/cancelUI/{id} (id=${reservation.reservationId})}">Cancel reservation</a>
             </td>
           </tr>
           </tbody>
           </table>
+
         <!-- Displays copies of reserved books -->
         <div sec:authorize="hasAnyAuthority('1')">
-          <table class="table">
+          <table class="table table-striped">
             <thead>
               <br>
               <tr>
-                <th>Book id</th>
-                <th>Copy id</th>
-                <th>Loaned by user id</th>
+                <th>Book</th>
+                <th>Version</th>
+                <th>User</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr th:each="copies : ${reservedCopies}">
-                <td th:text="${copies.copyPkId.bookId}"></td>
-                <td th:text="${copies.copyPkId.copyId}"></td>
-                <td th:text="${copies.userId}"></td>
-                <div th:switch="${copies.userId}">
-                  <td th:case=null>
-                    <a class="btn btn-primary" th:href="@{/copies/loan/{id1}/{id2} (id1=${copies.copyPkId.bookId}, id2=${copies.copyPkId.copyId})}">loan</a>
-                  </td> 
-                </div>
-              </tr>
+              <div th:each="reservation : ${user.reservations}">
+                <tr th:each="copy : ${reservation.book.copies}">
+                  <td th:text="${copy.book.title}"></td>
+                  <td th:text="${copy.version}"></td>
+                  <td th:text="${copy.user?.fullName}"></td>
+                  <div th:switch="${copy.user}">
+                    <td th:case=null>
+                      <a class="btn btn-primary"
+                        th:href="@{/copies/loan/{id1}/{id2} (id1=${reservation.reservationId}, id2=${copy.id})}">loan</a>
+                    </td>
+                  </div>
+                </tr>
+              </div>
             </tbody>
           </table> 
         </div>
-    </div>
-  </form>
-</div>
+    </form>
+  </div>
 
 
 <!-- ______________End of main page view______________ -->
