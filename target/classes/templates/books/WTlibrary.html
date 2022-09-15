@@ -50,11 +50,9 @@
           <td th:text="${books.key.title}"></td>
           <td th:text="${books.key.isbn}"></td>
           <td th:text="${books.key.author}"></td>
-          <div sec:authorize="hasAnyAuthority('1')">
-            <td>
-              <a class="btn btn-primary" th:href="@{/books/edit/{id}(id=${books.key.id})}">Info</a>
-            </td>
-          </div>
+          <td>
+            <a class="btn btn-primary" th:href="@{/books/edit/{id}(id=${books.key.id})}">Info</a>
+          </td>
           <!-- Reserve/cancel reseration button -->
           <div th:if="${books.value}">
             <td>
