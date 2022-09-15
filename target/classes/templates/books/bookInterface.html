@@ -109,7 +109,9 @@
                 <td th:text="${copies.version}"></td>
                 <td th:text="${copies.user == null ? '-' : copies.user.fullName}"></td>
                 <td>
-                  <a class="btn btn-danger" th:href="@{/copies/delete/{id1}(id1=${copies.id})}">Delete</a>
+                  <div sec:authorize="hasAnyAuthority('1')">
+                    <a class="btn btn-danger" th:href="@{/copies/delete/{id1}(id1=${copies.id})}">Delete</a>
+                  </div>
                 </td>
               </tr>
             </tbody>
