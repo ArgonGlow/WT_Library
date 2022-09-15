@@ -24,7 +24,41 @@
     <br>
     <h1>Book info</h1>
 
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Book id</th>
+          <th>Book title</th>
+          <th>Isbn</th>
+          <th>Author</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td th:text="${book.id}"></td>
+          <td th:text="${book.title}"></td>
+          <td th:text="${book.isbn}"></td>
+          <td th:text="${book.author}"></td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <!-- Reserve/cancel reseration button -->
+    <div th:if="${bookReserveable}">
+      <td>
+        <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${book.id})}">Reserve</a>
+      </td>
+    </div>
+    <div th:unless="${bookReserveable}">
+      <td>
+        <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${book.id})}">Cancel reservation</a>
+      </td>
+    </div>
+    <br>
+
+
     <!-- Edit book -->
+  <div sec:authorize="hasAnyAuthority('1')">
     <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
       <div class="visually-hidden">
         <label for="id">ID: </label>
@@ -40,49 +74,38 @@
       <label for="author">Author: </label>
       <input type="text" th:field="*{author}" id="author" placeholder="Author" />
 
-      <div th:if="${bookReserveable}">
-        <input class="btn btn-primary" type="submit" value="Update Book" />
-        <!-- Reserve/cancel reseration button -->
-        <td>
-          <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${book.id})}">Reserve</a>
-        </td>
-      </div>
-      <div th:unless="${bookReserveable}">
-        <input class="btn btn-primary" type="submit" value="Update Book" />
-        <td>
-          <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${book.id})}">Cancel reservation</a>
-        </td>
-      </div>
+      <input class="btn btn-primary" type="submit" value="Update Book" />
     </form>
-  
-    <!-- Display copies -->
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Book</th>
-          <th>Version</th>
-          <th>User</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="copies : ${copies}">
-          <td th:text="${copies.book.title}"></td>
-          <td th:text="${copies.version}"></td>
-          <td th:text="${copies.user == null ? '-' : copies.user.fullName}"></td>
-          <td>
-            <a class="btn btn-danger" th:href="@{/copies/delete/{id1}(id1=${copies.id})}">Delete</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  </div>
+    
 
-
-     <!-- Add copy -->
-     <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" method="post">
-        <label>Add version: </label>
-        <input type="text" th:field="*{copies.version}" id="copies" placeholder="copies" />
-        <input class="btn btn-primary" type="submit" value="Submit" />
-    </form>
+      <!-- Display copies -->
+    <div th:switch="${copies}">
+      <div th:case="*">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Book</th>
+              <th>Version</th>
+              <th>User</th>
+            </tr>
+           </thead>
+           <tbody>
+              <tr th:each="copies : ${copies}">
+                <td th:text="${copies.book.title}"></td>
+                <td th:text="${copies.version}"></td>
+                <td th:text="${copies.user == null ? '-' : copies.user.fullName}"></td>
+                <td>
+                  <div sec:authorize="hasAnyAuthority('1')">
+                    <a class="btn btn-danger" th:href="@{/copies/delete/{id1}(id1=${copies.id})}">Delete</a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- ______________End of main page view______________ -->
 
