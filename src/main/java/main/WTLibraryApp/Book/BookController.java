@@ -84,6 +84,7 @@ public class BookController {
 	// Also shows all copies of the book	                 
 	@GetMapping("/books/edit/{bookId}")
 	public String edit(@PathVariable("bookId") long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication, Model model) {
+		
 		Optional<Book> bookOptional = bookService.find(bookId);
 		if (bookOptional.isPresent()) {
 			Book book = bookOptional.get();
@@ -94,7 +95,6 @@ public class BookController {
 			model.addAttribute("copies", copyList);
 	
 			User currentUser = userService.findByEmail(authentication.getName());
-		    long userId = currentUser.getId();
 		        
 			boolean bookReserveable;
 			List<Reservation> reservation = reservationService.findByBookAndUser(book, currentUser);
@@ -107,10 +107,9 @@ public class BookController {
 	} 
 	 
 	//edits a book from the table
-	@PostMapping("/books/edit/{id}")
-	public String edit(@PathVariable("id") long id, Book book, BindingResult result, Model model) {
+	@PostMapping("/books/edit/{bookId}")
+	public String edit(@PathVariable long bookId, Book book, BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			book.setId(id);
 			return "books/bookInterface";
 		}
 		bookService.saveBook(book);

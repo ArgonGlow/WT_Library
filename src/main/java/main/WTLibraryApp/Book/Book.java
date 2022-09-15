@@ -25,10 +25,10 @@ public class Book {
 	private String author;
 	private String cover_image;
 	
-	@OneToMany(mappedBy = "book", orphanRemoval = true)
+	@OneToMany(mappedBy = "book")
 	private List<Reservation> reservations;
 
-	@OneToMany(mappedBy = "book", orphanRemoval = true)
+	@OneToMany(mappedBy = "book")
 	private List<Copy> copies;
 
 	public String getTitle() {
