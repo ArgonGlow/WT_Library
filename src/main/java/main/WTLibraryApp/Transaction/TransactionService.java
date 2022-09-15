@@ -21,7 +21,6 @@ public class TransactionService {
 	
 	public void logLoan(User user, Copy copy, TransactionType type) {
 		Transaction newTransaction = new Transaction(user, type);
-		System.out.println(copy.getBook().getId() + "." + copy.getId());
 		newTransaction.setBook(copy.getBook());
 		newTransaction.setCopy(copy);
 		repo.save(newTransaction);
