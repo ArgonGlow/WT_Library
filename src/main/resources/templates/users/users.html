@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Bootstrap CSS Import -->
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+  integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" 
+  crossorigin="anonymous" />
+  <!-- General CSS -->
+  <link rel="stylesheet" href="../../static/style.css" th:href="@{../../style.css}" />
+  <title>Working Talent Library - Users</title>
+</head>
+<body>
+  <!--_____________navigation bar_______________-->
+  <!-- <div th:insert="@{../fragments/navbar.html}" id="cur-nav"></div> -->
+  <div th:insert="@{../fragments/navbar-new.html}"></div>
+  <!--______________end navigation bar______________-->
+
+  
+  <!-- ______________Main page view______________ -->
+  <div class="container">
+    <br>
+    <h1>Users</h1>
+
+    <!-- Search User Function -->
+    <div id="search">
+      <form th:action="@{/users}" action="get">
+        <input type="text" name="keyword" th:value="${keyword}" placeholder="Search..." />
+        <button type="submit" class="btn btn-primary" >Search</button>
+        <a href="/users" class="btn btn-secondary">Reset</a>
+      </form>
+    </div>
+
+    <!-- Users Table -->
+    <div th:switch="${users}">
+      <div th:case="*">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="users : ${users}">
+              <td th:text="${users.first_name}"></td>
+              <td th:text="${users.last_name}"></td>
+              <td th:text="${users.email}"></td>
+              <td>
+                <div th:switch="${users.active}">
+                  <div th:case="true">Active</div>
+                  <div th:case="false">Inactive</div>
+                  <div th:case="*">Unknown</div>
+                </div>
+              </td>
+              <td>
+                <a class="btn btn-secondary" th:href="@{/users/edit-user/{id}(id=${users.id})}">Info</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- ______________End of main page view______________ -->
+
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous">
+  </script>
+</body>
+</html>
