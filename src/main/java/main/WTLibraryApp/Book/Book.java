@@ -28,10 +28,10 @@ public class Book {
 	@Column(columnDefinition="LONGTEXT")
 	private String cover_image;
 	
-	@OneToMany(mappedBy = "book", orphanRemoval = false)
+	@OneToMany(mappedBy = "book")
 	private List<Reservation> reservations;
 
-	@OneToMany(mappedBy = "book", orphanRemoval = false)
+	@OneToMany(mappedBy = "book")
 	private List<Copy> copies;
 
 	public String getTitle() {
