@@ -114,7 +114,7 @@
 						<td th:text="${reservation.book.author}"></td>
 						<td>
 							<a class="btn btn-secondary"
-								th:href="@{/reservations/cancelUI/{id} (id=${reservation.reservationId})}">Cancel reservation</a>
+								th:href="@{/reservations/cancelUI/{reservationId} (reservationId=${reservation.reservationId})}">Cancel reservation</a>
 						</td>
 					</tr>
 				</tbody>
@@ -140,7 +140,7 @@
 								<div th:switch="${copy.user}">
 									<td th:case=null>
 										<a class="btn btn-primary"
-											th:href="@{/copies/loan/{id1}/{id2} (id1=${reservation.reservationId}, id2=${copy.id})}">loan</a>
+											th:href="@{/copies/loan/{reservationId}/{copyId}/{userId} (reservationId=${reservation.reservationId}, copyId=${copy.id}, userId=${user.id})}">loan</a>
 									</td>
 								</div>
 							</tr>
