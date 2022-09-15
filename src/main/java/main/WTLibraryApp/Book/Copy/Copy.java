@@ -18,7 +18,6 @@ import main.WTLibraryApp.User.User;
 @Table(name="copies")
 public class Copy {
 	 
-	// double-primary-key object
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -29,7 +28,7 @@ public class Copy {
 	@ManyToOne(optional = true)
 	private User user;
 	
-	private int version;
+	private Integer version;
 	
 	@OneToMany(mappedBy = "copy", orphanRemoval = false)
 	private List<Transaction> transactions;
