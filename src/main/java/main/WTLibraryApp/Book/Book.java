@@ -25,7 +25,7 @@ public class Book {
 	private String isbn;
 	private String author;
 	
-	@Column(columnDefinition="TEXT")
+	@Column(columnDefinition="LONGTEXT")
 	private String cover_image;
 	
 	@OneToMany(mappedBy = "book", orphanRemoval = false)
