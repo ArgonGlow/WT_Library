@@ -1,8 +1,8 @@
 package main.WTLibraryApp.Transaction;
 
 import java.sql.Timestamp;
-import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 import main.WTLibraryApp.Book.Book;
 import main.WTLibraryApp.Book.Copy.Copy;
@@ -34,7 +35,8 @@ public class Transaction {
 	@ManyToOne(optional = false)
 	private User user;
 	
-	private Date date;
+	@CreationTimestamp
+	private Timestamp timestamp;
 
 	@Enumerated(EnumType.ORDINAL)
 	private TransactionType transaction_type;
@@ -88,12 +90,12 @@ public class Transaction {
 		this.transaction_type = transaction_type;
 	}
 
-	public Date getDate() {
-		return date;
+	public Timestamp getTimestamp() {
+		return timestamp;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
 	}
 
 }

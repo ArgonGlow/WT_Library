@@ -18,15 +18,15 @@ public class TransactionService {
 	private TransactionRepository repo;
 	
 	public List<Transaction> allTransactions() {
-		return repo.findAll(Sort.by(Sort.Direction.DESC, "date"));
+		return repo.findAll(Sort.by(Sort.Direction.DESC, "timestamp"));
 	}
 	
 	public Object transactionsByUserId(Transaction userTrans) {
-		return repo.findAll(Example.of(userTrans), Sort.by(Sort.Direction.DESC, "date"));
+		return repo.findAll(Example.of(userTrans), Sort.by(Sort.Direction.DESC, "timestamp"));
 	}
 
 	public Object transactionsByBookId(Transaction bookTrans) {
-		return repo.findAll(Example.of(bookTrans), Sort.by(Sort.Direction.DESC, "date"));
+		return repo.findAll(Example.of(bookTrans), Sort.by(Sort.Direction.DESC, "timestamp"));
 	}
 	
 	public void logReservation(User user, Book book, TransactionType type) {
