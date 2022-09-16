@@ -1,4 +1,4 @@
-<nav class="navbar navbar-extend-sm navbar-light bg-light">
+<nav class="navbar navbar-extend-sm navbar-light bg-light cur-nav">
   <div class="container">
     <a class="navbar-brand" href="/">
       <img src="../../static/images/wt-logo.svg" title="Logo" alt="Logo" th:src="@{../../images/wt-logo.svg}" />
@@ -15,6 +15,7 @@
       <div sec:authorize="hasAnyAuthority('1')">
         <li><a href="/users">Users</a></li>
         <li><a href="/reservations">Reservations</a></li>
+        <li><a href="/transactions">Transactions</a></li>
         <li><a href="/users/add-user">Add user</a></li>
         <li><a href="/books/create">Add book</a></li>
       </div>
