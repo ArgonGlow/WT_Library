@@ -92,10 +92,10 @@
                 <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Loan</button>
                 <ul class="dropdown-menu">
                   <li th:each="copy : ${reservation.book.copies}" th:switch="${copy.user}">
-                    <a th:case="null" class="dropdown-item" th:text="@{{book}.{version}(book = ${copy.book.id}, version = ${copy.version})}" 
+                    <a th:case="null" class="dropdown-item" th:text="@{ {book}.{version}(book = ${copy.book.id}, version = ${copy.version}) }" 
                     th:href="@{/copies/loan/{reservationId}/{copyId}/{userId} (reservationId=${reservation.reservationId}, copyId=${copy.id}, userId=${user.id})}"></a>
                     
-                    <a th:case="*" class="dropdown-item disabled" href="#">Unavailable</a>
+                    <a th:case="*" class="dropdown-item disabled" th:text="@{ {book}.{version}(book = ${copy.book.id}, version = ${copy.version}) }">Unavailable</a>
                   </li>
                 </ul>
               </span>
