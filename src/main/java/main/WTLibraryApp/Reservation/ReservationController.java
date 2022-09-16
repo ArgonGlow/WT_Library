@@ -91,8 +91,9 @@ public class ReservationController {
 			long userId = currentUser.getId();
 			
 			//check if book is already reserved
-	    	List<Reservation> reservations = reservationService.findByBookAndUser(book, currentUser);
-	    	if(reservations.size() <= 0) {
+			if(!(book.getReservations().stream().anyMatch(item -> currentUser.equals(item.getUser())) || book.getCopies().stream().anyMatch(item -> currentUser.equals(item.getUser())))) {
+				
+		    	List<Reservation> reservations = reservationService.findByBookAndUser(book, currentUser);
 	    		// Initialization
 	    		User user = userService.findUser(userId);
 	    		
@@ -108,8 +109,8 @@ public class ReservationController {
 
 					//log in transactions table
 					transactionService.logReservation(user, book, TransactionType.RESERVED);
-	    		}
-	    	}
+		    	}
+			}
 		}
 
 		String path = "redirect:/books";

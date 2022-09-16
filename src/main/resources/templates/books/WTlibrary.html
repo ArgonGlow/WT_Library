@@ -58,14 +58,15 @@
             <a class="btn btn-primary" th:href="@{/books/edit/{id}(id=${books.key.id})}">Info</a>
           </td>
           <!-- Reserve/cancel reseration button -->
-          <div th:if="${books.value}">
-            <td>
+          <div th:switch="${books.value.name()}">
+            <td th:case="'RETURNED'">
               <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${books.key.id})}">Reserve</a>
             </td>
-          </div>
-          <div th:unless="${books.value}">
-            <td>
+            <td th:case="'RESERVED'">
               <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${books.key.id})}">Cancel</a>
+            </td>
+            <td th:case="'LOANED'">
+              <a class="btn disabled" >No doubles!</a>
             </td>
           </div>
         </tr>
