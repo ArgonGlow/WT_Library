@@ -3,6 +3,7 @@ package main.WTLibraryApp.Book;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,10 +60,10 @@ public class BookController {
         Map<Book, TransactionType> mapBookReservations = new LinkedHashMap<>();
        
         for(Book reservationBook : list) {
-        	//List<Reservation> reservations = reservationService.findByBookAndUser(reservationBook, currentUser);
-        	reservationBook.getReservations().stream().anyMatch(item -> currentUser.equals(item.getUser()));
-
-        	mapBookReservations.put(reservationBook, reservationBook.getReservations().stream().anyMatch(item -> currentUser.equals(item.getUser())) ? TransactionType.RESERVED : TransactionType.RETURNED);
+        	mapBookReservations.put(reservationBook, 
+        			reservationBook.getReservations().stream().anyMatch(item -> currentUser.equals(item.getUser())) ? TransactionType.RESERVED 
+        			: reservationBook.getCopies().stream().anyMatch(item -> currentUser.equals(item.getUser()) ) ? TransactionType.LOANED 
+        			: TransactionType.RETURNED);
         }
 
         model.addAttribute("books", mapBookReservations);
