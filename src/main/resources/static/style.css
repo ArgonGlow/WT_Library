@@ -49,11 +49,14 @@ body {
   --bs-btn-disabled-border-color: #008200;
   --bs-gradient: none;
 }
+/* End of Bootstrap Buttons */
 
-
+/* Tables */
 tr {
   vertical-align: middle;
 }
+/* End of Tables */
+
 
 /* Navbar link-list */
 .navbar {

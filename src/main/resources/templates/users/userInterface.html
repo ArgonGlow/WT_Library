@@ -39,42 +39,24 @@
 				<a class="btn btn-danger" th:href="@{/users/delete-user/{id}(id=${user.id})}">Delete</a>
 			</div>
 
-			<!-- Displays loaned books -->
-			<table class="table table-striped">
-				<thead>
-					<h2>Loaned</h2>
-					<tr>
-						<th>Book id</th>
-						<th>Title</th>
-						<th>Author</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="books : ${books}">
-						<td th:text="${books.id}"></td>
-						<td th:text="${books.title}"></td>
-						<td th:text="${books.author}"></td>
-					</tr>
-
-				</tbody>
-			</table>
-
 			<!-- Displays copies op loaned books -->
 			<table class="table table-striped">
 				<thead>
 					<br>
 					<tr>
-						<th>Book</th>
-						<th>Version</th>
-						<th>User</th>
-            <th></th>
+						<th>ID</th>
+						<th>Title</th>
+						<th>Author</th>
+						<th>ISBN</th>
+            <th sec:authorize="hasAnyAuthority('1')">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="copies : ${copies}">
+          <tr th:each="copies : ${copies}">
+            <td th:text="@{ {book}.{version}(book = ${copies.book.id}, version = ${copies.version})}"></td>
 						<td th:text="${copies.book.title}"></td>
-						<td th:text="${copies.version}"></td>
-						<td th:text="${copies.user.fullName}"></td>
+						<td th:text="${copies.book.author}"></td>
+						<td th:text="${copies.book.isbn}"></td>
 						<div th:switch="${copies.user}">
 							<td th:case=null></td>
 							<td th:case="*">
@@ -96,7 +78,7 @@
 						<th>Reservation id</th>
 						<th>Title</th>
 						<th>Author</th>
-            <th></th>
+            <th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -105,16 +87,17 @@
 						<td th:text="${reservation.book.title}"></td>
 						<td th:text="${reservation.book.author}"></td>
 						<td>
-              <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Loan
-                </button>
+              <span class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Loan</button>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" th:each="copy : ${reservation.book.copies}" th:text="${copy?.version}" 
+                  <li th:each="copy : ${reservation.book.copies}" th:switch="${copy.user}">
+                    <a th:case="null" class="dropdown-item" th:text="@{{book}.{version}(book = ${copy.book.id}, version = ${copy.version})}" 
                     th:href="@{/copies/loan/{reservationId}/{copyId}/{userId} (reservationId=${reservation.reservationId}, copyId=${copy.id}, userId=${user.id})}"></a>
+                    
+                    <a th:case="*" class="dropdown-item disabled" href="#">Unavailable</a>
                   </li>
                 </ul>
-              </div>
+              </span>
 							<a class="btn btn-danger" th:href="@{/reservations/cancelUI/{reservationId} (reservationId=${reservation.reservationId})}">Cancel</a>
 						</td>
 					</tr>
@@ -122,7 +105,7 @@
 			</table>
 
 			<!-- Displays copies of reserved books -->
-			<div sec:authorize="hasAnyAuthority('1')">
+			<!-- <div sec:authorize="hasAnyAuthority('1')">
 				<table class="table table-striped">
 					<thead>
 						<br>
@@ -133,32 +116,7 @@
               <th></th>
 						</tr>
 					</thead>
-          <tbody>
-						<div >
-							<tr th:each="reservation : ${user.reservations}">
-								<td th:text="${reservation.book.title}"></td>
-								<!-- <td th:text="${copy?.version}"></td> -->
-								<!-- <td th:text="${copy.user?.fullName}"></td> -->
-								<!-- <div th:switch="${copy.user}"> -->
-									<td>
-                    <div class="dropdown">
-                      <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Loan
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:each="copy : ${reservation.book.copies}" th:text="${copy?.version}" 
-                          th:href="@{/copies/loan/{reservationId}/{copyId}/{userId} (reservationId=${reservation.reservationId}, copyId=${copy.id}, userId=${user.id})}"></a>
-                        </li>
-                      </ul>
-                    </div>
-										<!-- <a class="btn btn-primary"
-											th:href="@{/copies/loan/{reservationId}/{copyId}/{userId} (reservationId=${reservation.reservationId}, copyId=${copy.id}, userId=${user.id})}">loan</a> -->
-									</td>
-								</div>
-							</tr>
-						</div>
-					</tbody>
-					<!-- <tbody>
+					 <tbody>
 						<div th:each="reservation : ${user.reservations}">
 							<tr th:each="copy : ${reservation.book.copies}">
 								<td th:text="${copy.book.title}"></td>
