@@ -20,7 +20,7 @@
   <!--______________End navigation bar______________-->
 
   <!-- ______________Main page view______________ -->
-  <div class="container">
+<div class="container">
     <br>
     <h1>Book info</h1>
 
@@ -100,45 +100,48 @@
         </div>
       </div>
     </div>
-  </div>
 
-      <!-- Display copies -->
-    <div th:switch="${copies}">
-      <div th:case="*">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Book</th>
-              <th>Version</th>
-              <th>User</th>
-              <th></th>
-            </tr>
-           </thead>
-           <tbody>
-              <tr th:each="copies : ${copies}">
-                <td th:text="${copies.book.title}"></td>
-                <td th:text="${copies.version}"></td>
-                <td th:text="${copies.user == null ? '-' : copies.user.fullName}"></td>
-                <td>
-                  <div sec:authorize="hasAnyAuthority('1')">
-                    <a class="btn btn-danger" th:href="@{/copies/delete/{id1}(id1=${copies.id})}">Delete</a>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+        <!-- Add copy -->
+    <form action="#" th:action="@{/copies/quickAdd/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
+      <input class="btn btn-primary" type="submit" value="Quick add version" />
+    </form>
+    <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
+      <label>Add version: </label>
+      <input type="number" th:field="*{version}" id="copy" placeholder="copy" min="1" />
+      <input class="btn btn-primary" type="submit" value="Submit" />
+    </form>
+
+    <div th:if="${param.versionTaken}">
+      <p><mark>Version already exists</mark></p>
     </div>
-
-    <!-- Add copy -->
-  <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
-    <label>Add version: </label>
-    <input type="number" th:field="*{version}" id="copy" placeholder="copy" min="1" />
-    <input class="btn btn-primary" type="submit" value="Submit" />
-  </form>
-      
   </div>
+
+    <!-- Display copies -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Book</th>
+        <th>Version</th>
+        <th>User</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr th:each="copies : ${copies}">
+          <td th:text="${copies.book.title}"></td>
+          <td th:text="${copies.version}"></td>
+          <td th:text="${copies.user == null ? '-' : copies.user.fullName}"></td>
+          <td>
+            <div sec:authorize="hasAnyAuthority('1')">
+              <a class="btn btn-danger" th:href="@{/copies/delete/{id1}(id1=${copies.id})}">Delete</a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+</div>
+
   <!-- ______________End of main page view______________ -->
 
   <!-- JavaScript Bundle with Popper -->

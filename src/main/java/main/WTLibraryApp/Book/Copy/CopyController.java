@@ -2,6 +2,8 @@ package main.WTLibraryApp.Book.Copy;
 
 import java.util.ArrayList;
 import java.util.Optional;
+
+import org.hibernate.internal.build.AllowPrintStacktrace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,20 +49,20 @@ public class CopyController {
 		return "copies/copies";  
 	}   
 	
-  	//displays all copies by bookId and copyId combination
-	@GetMapping(value = "copies/{bookId}/{copyId}")
-	public String findById(@PathVariable long bookId, @PathVariable long copyId, Model model) {
-		Optional<Book> bookOptional = bookService.find(bookId);
-
-		if (bookOptional.isPresent()) {
-			Book book = bookOptional.get(); 
-			
-			model.addAttribute("copies", copyService.findByBookAndVersion(book, 1));
-		} else {
-			model.addAttribute("copies", new ArrayList<>());
-		}
-		return "copies/copyInterface";                           
-	}       
+//  	//displays all copies by bookId and copyId combination
+//	@GetMapping(value = "copies/{bookId}/{copyId}")
+//	public String findById(@PathVariable long bookId, @PathVariable long copyId, Model model) {
+//		Optional<Book> bookOptional = bookService.find(bookId);
+//
+//		if (bookOptional.isPresent()) {
+//			Book book = bookOptional.get(); 
+//			
+//			model.addAttribute("copies", copyService.findByBookAndVersion(book, 1));
+//		} else {
+//			model.addAttribute("copies", new ArrayList<>());
+//		}
+//		return "copies/copyInterface";                           
+//	}       
 	
 	//deletes copy by bookId and copyId combination in the book interface
 	@GetMapping("copies/delete/{id}")
@@ -123,19 +125,39 @@ public class CopyController {
 	@PostMapping("/copies/create/{bookId}")
 	public String create(Copy copy, @PathVariable long bookId, BindingResult result,  Model model) {
 		Optional<Book> bookOptional = bookService.find(bookId);
+		
+		if(bookOptional.isPresent()) {
+			Book book = bookOptional.get();
+			copy.setBook(book);
+			//check if copy already exists
+			Optional<Copy> copyOptional = copyService.findByBookAndVersion(book, copy.getVersion());
+			if(copyOptional.isEmpty()) {
+				copyService.saveCopy(copy);  
+			} else {
+				System.out.println("version taken");
+				return "redirect:/books/edit/{bookId}?versionTaken"; 
+			}
+		}
+
+		return "redirect:/books/edit/{bookId}";          
+	}    
+	
+	@PostMapping("/copies/quickAdd/{bookId}")
+	public String quickAdd(Copy copy, @PathVariable long bookId, BindingResult result,  Model model) {
+		Optional<Book> bookOptional = bookService.find(bookId);
 
 		if(bookOptional.isPresent()) {
 			copy.setBook(bookOptional.get());
 			
-//			//auto add versions
-//			for(int i = 1; i <= 10; i++) {
-//				if(copyService.findByBookAndVersion(copy.getBook(),i).isEmpty()) {
-//					copy.setVersion(i);
-//					break;
-//				}
-//			}
+			//auto add versions
+			for(int i = 1; i <= 10; i++) {
+				if(copyService.findByBookAndVersion(copy.getBook(),i).isEmpty()) {
+					copy.setVersion(i);
+					break;
+				}
+			}
 			
-			copyService.saveCopy(copy);   
+			copyService.saveCopy(copy);  
 		}
 		return "redirect:/books/edit/{bookId}";          
 	}    
