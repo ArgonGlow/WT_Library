@@ -51,6 +51,10 @@ body {
 }
 /* End of Bootstrap Buttons */
 
+.edit-book-buttons {
+  margin: 1rem 0;
+}
+
 /* Tables */
 tr {
   vertical-align: middle;
