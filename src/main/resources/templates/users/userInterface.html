@@ -42,7 +42,7 @@
 			<!-- Displays loaned books -->
 			<table class="table table-striped">
 				<thead>
-					<h2>Loaned:</h2>
+					<h2>Loaned</h2>
 					<tr>
 						<th>Book id</th>
 						<th>Title</th>
@@ -91,7 +91,7 @@
 			<table class="table table-striped">
 				<thead>
 					<br>
-					<h2>Reserved:</h2>
+					<h2>Reserved</h2>
 					<tr>
 						<th>Reservation id</th>
 						<th>Title</th>
@@ -105,7 +105,17 @@
 						<td th:text="${reservation.book.title}"></td>
 						<td th:text="${reservation.book.author}"></td>
 						<td>
-							<a class="btn btn-secondary" th:href="@{/reservations/cancelUI/{reservationId} (reservationId=${reservation.reservationId})}">Cancel reservation</a>
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Loan
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" th:each="copy : ${reservation.book.copies}" th:text="${copy?.version}" 
+                    th:href="@{/copies/loan/{reservationId}/{copyId}/{userId} (reservationId=${reservation.reservationId}, copyId=${copy.id}, userId=${user.id})}"></a>
+                  </li>
+                </ul>
+              </div>
+							<a class="btn btn-danger" th:href="@{/reservations/cancelUI/{reservationId} (reservationId=${reservation.reservationId})}">Cancel</a>
 						</td>
 					</tr>
 				</tbody>
@@ -123,7 +133,32 @@
               <th></th>
 						</tr>
 					</thead>
-					<tbody>
+          <tbody>
+						<div >
+							<tr th:each="reservation : ${user.reservations}">
+								<td th:text="${reservation.book.title}"></td>
+								<!-- <td th:text="${copy?.version}"></td> -->
+								<!-- <td th:text="${copy.user?.fullName}"></td> -->
+								<!-- <div th:switch="${copy.user}"> -->
+									<td>
+                    <div class="dropdown">
+                      <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Loan
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:each="copy : ${reservation.book.copies}" th:text="${copy?.version}" 
+                          th:href="@{/copies/loan/{reservationId}/{copyId}/{userId} (reservationId=${reservation.reservationId}, copyId=${copy.id}, userId=${user.id})}"></a>
+                        </li>
+                      </ul>
+                    </div>
+										<!-- <a class="btn btn-primary"
+											th:href="@{/copies/loan/{reservationId}/{copyId}/{userId} (reservationId=${reservation.reservationId}, copyId=${copy.id}, userId=${user.id})}">loan</a> -->
+									</td>
+								</div>
+							</tr>
+						</div>
+					</tbody>
+					<!-- <tbody>
 						<div th:each="reservation : ${user.reservations}">
 							<tr th:each="copy : ${reservation.book.copies}">
 								<td th:text="${copy.book.title}"></td>
@@ -131,19 +166,27 @@
 								<td th:text="${copy.user?.fullName}"></td>
 								<div th:switch="${copy.user}">
 									<td th:case=null>
+                    <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown button
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                      </div>
+                    </div>
 										<a class="btn btn-primary"
 											th:href="@{/copies/loan/{reservationId}/{copyId}/{userId} (reservationId=${reservation.reservationId}, copyId=${copy.id}, userId=${user.id})}">loan</a>
 									</td>
 								</div>
 							</tr>
 						</div>
-					</tbody>
+					</tbody> -->
 				</table>
 			</div>
 		</form>
 	</div>
-
-
 	<!-- ______________End of main page view______________ -->
 
 	<!-- JavaScript Bundle with Popper -->
