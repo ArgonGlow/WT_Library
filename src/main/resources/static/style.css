@@ -2,7 +2,7 @@
   font-family: 'EuclidSquare';
   font-style: normal;
   font-weight: normal;
-  src: url('./EuclidSquare-Regular.otf') format('opentype');
+  src: url('./fonts/EuclidSquare-Regular.otf') format('opentype');
 }
 
 * {

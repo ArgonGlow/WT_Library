@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-			.antMatchers("/images/*","/style.css").permitAll()
+			.antMatchers("/images/*","/fonts/*", "/style.css").permitAll()
 		.and()
          	.authorizeRequests()
          	.antMatchers("/","/books","/reservations/createReservation/*","/reservations/cancel/*","/reservations/cancelUI/*","/books/edit/*","/user").hasAnyAuthority("1","2")
