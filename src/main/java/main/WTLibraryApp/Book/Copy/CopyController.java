@@ -123,18 +123,15 @@ public class CopyController {
 	
 	@PostMapping("/copies/create/{bookId}")
 	public String create(Copy copy, @PathVariable long bookId, BindingResult result,  Model model) {
-		if (result.hasErrors()) {
-			return "books/bookInterface"; 
-		}
-		
 		Optional<Book> bookOptional = bookService.find(bookId);
-		if(bookOptional.isPresent()) { 
+
+		if(bookOptional.isPresent()) {
 			copy.setBook(bookOptional.get());
 			copyService.saveCopy(copy);   
 		}
 		return "redirect:/books/edit/{bookId}";          
 	}    
-	 
+	
 //	@PostMapping(value = "copies/assign/{bookId}/{copyId}/{userId}")
 //	public void assignCopy(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId) {
 //		
