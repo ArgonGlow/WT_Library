@@ -18,7 +18,6 @@ import main.WTLibraryApp.Reservation.Reservation;
 import main.WTLibraryApp.Reservation.ReservationService;
 import main.WTLibraryApp.Transaction.TransactionService;
 import main.WTLibraryApp.Transaction.TransactionType;
-import main.WTLibraryApp.User.LoanedUser;
 import main.WTLibraryApp.User.User;
 import main.WTLibraryApp.User.UserService;
 
@@ -93,18 +92,18 @@ public class CopyController {
 	}
 
 	//administrator loans copies of books to users
-	@GetMapping("copies/loan/{reservationId}/{copyId}")  
-	public String loanBook(@PathVariable long reservationId, @PathVariable long copyId, Model model){
-		long currentUserId = LoanedUser.getCurrentUserId();
+	@GetMapping("copies/loan/{reservationId}/{copyId}/{userId}")  
+	public String loanBook(@PathVariable long reservationId, @PathVariable long copyId, @PathVariable long userId, Model model){
+
 		//User user = userService.findUser(currentUserId);
 		Optional<Reservation> reservatonOptional = reservationService.findById(reservationId);
-
+		
 		Optional<Copy> copyToLoanOptional = copyService.findCopyById(copyId);
 		if (copyToLoanOptional.isPresent() && reservatonOptional.isPresent()) {
 			Copy copyToLoan = copyToLoanOptional.get();
 			Reservation reservationToLoan = reservatonOptional.get();
 			//Book book = reservationToLoan.getBook();
-
+			
 			copyToLoan.setUser(reservationToLoan.getUser());  
 			copyService.saveCopy(copyToLoan); 
 
@@ -117,7 +116,7 @@ public class CopyController {
 			transactionService.logLoan(reservationToLoan.getUser(), copyToLoan, TransactionType.LOANED);
 		}
 		
-		String path = "redirect:/users/edit-user/" + currentUserId;
+		String path = "redirect:/users/edit-user/" + userId;
 		return path;
 	}
 	

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import main.WTLibraryApp.Book.Copy.Copy;
 import main.WTLibraryApp.Book.Copy.CopyService;
@@ -71,11 +73,11 @@ public class BookController {
 	}  
 	
 	@PostMapping("/books/create")
-	public String create(Book book, BindingResult result, Model model) {;
+	public String create(Book book, BindingResult result, Model model, @RequestParam("image") MultipartFile file) {;
 		if (result.hasErrors()) {
 			return "books/createBook"; 
 		}
-		bookService.saveBook(book);  
+		bookService.saveBook(file,book);  
 		return "redirect:/books";
 	}
 	
@@ -109,12 +111,12 @@ public class BookController {
 	} 
 	 
 	//edits a book from the table
-	@PostMapping("/books/edit/{bookId}")
-	public String edit(@PathVariable long bookId, Book book, BindingResult result, Model model) {
+	@PostMapping("/books/edit/{id}")
+	public String edit(@PathVariable("id") long id, Book book, BindingResult result, Model model, @RequestParam("image") MultipartFile file) {
 		if (result.hasErrors()) {
 			return "books/bookInterface";
 		}
-		bookService.saveBook(book);
+		bookService.saveBook(file, book);
 		return "redirect:/books";
 	}
 	
