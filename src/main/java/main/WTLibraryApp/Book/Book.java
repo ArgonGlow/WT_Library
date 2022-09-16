@@ -2,6 +2,7 @@ package main.WTLibraryApp.Book;
  
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +24,8 @@ public class Book {
 	private String title;
 	private String isbn;
 	private String author;
+	
+	@Column(columnDefinition="LONGTEXT")
 	private String cover_image;
 	
 	@OneToMany(mappedBy = "book")

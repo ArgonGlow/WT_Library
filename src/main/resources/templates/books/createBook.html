@@ -25,7 +25,7 @@
     <br>
     <h1>Add Book</h1>
 
-    <form action="#" th:action="@{create}" th:object="${book}" method="post">
+    <form action="#" th:action="@{create}" th:object="${book}" method="post" enctype="multipart/form-data">
       <label for="title">Title: </label>
       <input type="text" th:field="*{title}" id="title" placeholder="Title" />
       
@@ -34,6 +34,9 @@
       
       <label for="author">Author: </label>
       <input  type="text"  th:field="*{author}" id="author" placeholder="Author" />
+
+      <label for="image">Book cover: </label>
+      <input type="file" name="image" id="image" placeholder="Image" />
 
       <input class="btn btn-primary" type="submit" value="Add book" />
     </form>

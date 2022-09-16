@@ -39,6 +39,7 @@
       <thead>
         <tr>
           <th>ID</th>
+          <th>Cover</th>
           <th>title</th>
           <th>isbn</th>
           <th>author</th>
@@ -49,6 +50,7 @@
       <tbody>
         <tr th:each="books : ${books}">
           <td th:text="${books.key.id}"></td>
+          <td><img th:src="*{'data:image/jpeg;base64, '+{books.key.cover_image}}" alt="Book Cover" width="100" height="100" /></td>
           <td th:text="${books.key.title}"></td>
           <td th:text="${books.key.isbn}"></td>
           <td th:text="${books.key.author}"></td>
@@ -66,11 +68,6 @@
               <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${books.key.id})}">Cancel</a>
             </td>
           </div>
-          <!-- <td>
-            <img th:src="${books.cover_image}">
-           </td>  -->
-          <!-- <td th:text="${books.cover_image}"> 
-          </td> -->
         </tr>
       </tbody>
     </table>

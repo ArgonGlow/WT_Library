@@ -61,8 +61,6 @@ public class UserController {
 		model.addAttribute("copies", currentuser.getCopies());
 		model.addAttribute("reservedCopies", currentuser.getCopies());
 		model.addAttribute("reservations", currentuser.getReservations());
-		
-		LoanedUser.setCurrentUserId(currentuser.getId());
 
 		return "users/userInterface";
 	}
@@ -104,8 +102,6 @@ public class UserController {
 		model.addAttribute("action", "/users/edit-user/"+id);
 		model.addAttribute("copies", user.getCopies());
 		
-		LoanedUser.setCurrentUserId(id);
-
 		return "users/userInterface";
 	}
 	
