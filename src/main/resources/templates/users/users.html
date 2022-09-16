@@ -34,6 +34,8 @@
               <th>Last Name</th>
               <th>Email</th>
               <th>Status</th>
+              <th>Role</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -45,6 +47,13 @@
                 <div th:switch="${users.active}">
                   <div th:case="true">Active</div>
                   <div th:case="false">Inactive</div>
+                  <div th:case="*">Unknown</div>
+                </div>
+              </td>
+              <td>
+                <div th:switch="${users.role}">
+                  <div th:case="1">Admin</div>
+                  <div th:case="2">User</div>
                   <div th:case="*">Unknown</div>
                 </div>
               </td>
