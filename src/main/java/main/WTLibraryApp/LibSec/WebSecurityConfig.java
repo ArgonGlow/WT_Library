@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-			.antMatchers("/images/*","/fonts/*", "/style.css").permitAll()
+			.antMatchers("/images/*","/fonts/*", "/style.css", "/favicon.ico").permitAll()
 		.and()
          	.authorizeRequests()
          	.antMatchers("/","/books","/reservations/createReservation/*","/reservations/cancel/*","/reservations/cancelUI/*","/books/edit/*","/user").hasAnyAuthority("1","2")
@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         	.formLogin()
             	.loginPage("/login")
             	.permitAll()
-        .and()
+        .and() 
         	.logout().invalidateHttpSession(true)
             	.clearAuthentication(true).permitAll();
    }
