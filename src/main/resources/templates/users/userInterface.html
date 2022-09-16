@@ -46,7 +46,9 @@
 			<input type="password" th:field="*{passphrase}" id="passphrase" placeholder="" />
 
 			<input class="btn btn-primary" type="submit" value="Update User" />
-			<a class="btn btn-danger" th:href="@{/users/delete-user/{id}(id=${user.id})}">Delete</a>
+			<div sec:authorize="hasAnyAuthority('1')">
+				<a class="btn btn-danger" th:href="@{/users/delete-user/{id}(id=${user.id})}">Delete</a>
+			</div>
 
 			<!-- Displays loaned books -->
 			<table class="table table-striped">
