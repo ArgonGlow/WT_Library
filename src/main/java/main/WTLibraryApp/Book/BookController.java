@@ -22,6 +22,7 @@ import main.WTLibraryApp.Book.Copy.Copy;
 import main.WTLibraryApp.Book.Copy.CopyService;
 import main.WTLibraryApp.Reservation.Reservation;
 import main.WTLibraryApp.Reservation.ReservationService;
+import main.WTLibraryApp.Transaction.TransactionType;
 import main.WTLibraryApp.User.User;
 import main.WTLibraryApp.User.UserService;
 
@@ -55,12 +56,13 @@ public class BookController {
         long userId = currentUser.getId();
         
         //create map of (Book, bool) to establish 1 time reservations
-        Map<Book, Boolean> mapBookReservations = new LinkedHashMap<>();
+        Map<Book, TransactionType> mapBookReservations = new LinkedHashMap<>();
        
         for(Book reservationBook : list) {
-        	List<Reservation> reservations = reservationService.findByBookAndUser(reservationBook, currentUser);
+        	//List<Reservation> reservations = reservationService.findByBookAndUser(reservationBook, currentUser);
+        	reservationBook.getReservations().stream().anyMatch(item -> currentUser.equals(item.getUser()));
 
-        	mapBookReservations.put(reservationBook, reservations.size() <= 0);
+        	mapBookReservations.put(reservationBook, reservationBook.getReservations().stream().anyMatch(item -> currentUser.equals(item.getUser())) ? TransactionType.RESERVED : TransactionType.RETURNED);
         }
 
         model.addAttribute("books", mapBookReservations);
