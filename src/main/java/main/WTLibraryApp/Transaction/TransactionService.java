@@ -1,6 +1,10 @@
 package main.WTLibraryApp.Transaction;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import main.WTLibraryApp.Book.Book;
@@ -12,6 +16,18 @@ public class TransactionService {
 	
 	@Autowired
 	private TransactionRepository repo;
+	
+	public List<Transaction> allTransactions() {
+		return repo.findAll(Sort.by(Sort.Direction.DESC, "timestamp"));
+	}
+	
+	public Object transactionsByUserId(Transaction userTrans) {
+		return repo.findAll(Example.of(userTrans), Sort.by(Sort.Direction.DESC, "timestamp"));
+	}
+
+	public Object transactionsByBookId(Transaction bookTrans) {
+		return repo.findAll(Example.of(bookTrans), Sort.by(Sort.Direction.DESC, "timestamp"));
+	}
 	
 	public void logReservation(User user, Book book, TransactionType type) {
 		Transaction newTransaction = new Transaction(user, type);
@@ -25,11 +41,4 @@ public class TransactionService {
 		newTransaction.setCopy(copy);
 		repo.save(newTransaction);
 	}
-	
-	
-//	public void logLoan(long user_id, CopyPK id,TransactionType type) {
-//		Transaction newTransaction = new Transaction(user_id, type);
-//		newTransaction.setCopy_id(id.getCopyId());
-//		repo.save(newTransaction);
-//	}
 }

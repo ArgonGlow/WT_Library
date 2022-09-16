@@ -11,32 +11,42 @@
   crossorigin="anonymous" />
   <!-- General CSS -->
   <link rel="stylesheet" href="../../static/style.css" th:href="@{../../style.css}" />
-  <title>Working Talent Library - Add User</title>
+  <title>Working Talent Library - Reservations</title>
 </head>
 <body>
-  <!--_____________navigation bar_______________-->
+  <!--______________navigation bar______________-->
   <!-- <div th:insert="@{../fragments/navbar.html}" id="cur-nav"></div> -->
   <div th:insert="@{../fragments/navbar-new.html}"></div>
   <!--______________end navigation bar______________-->
 
-  
   <!-- ______________Main page view______________ -->
   <div class="container">
     <br>
-    <h1>Add User</h1>
+    <h1>Transaction History</h1>
 
-    <form action="#" th:action="@{add-user}" th:object="${user}" method="post">
-      <label for="first_name">First Name: </label>
-      <input type="text" th:field="*{first_name}" id="firstName" placeholder="First Name" />
-
-      <label for="last_name">Last Name: </label>
-      <input type="text" th:field="*{last_name}" id="lastName" placeholder="Last Name" />
-
-      <label for="email">Email: </label>
-      <input type="text" th:field="*{email}"  id="email" placeholder="Email" />
-      
-      <input class="btn btn-primary" type="submit" value="Add User" />
-    </form>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>User</th>
+          <th>Status</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="transaction : ${transactions}">
+          <td th:text="@{{bookId}.{version}(bookId = ${transaction.book.id}, version = ${transaction.copy?.version})}"></td>
+          <td th:text="${transaction.book.title}"></td>
+          <td th:text="${transaction.user.fullName}"></td>
+          <td th:text="${transaction.transaction_type}"></td>
+          <td th:text="${transaction.timestamp}"></td>
+          <td>
+            <!-- <a th:href="@{transactions/user/1}">Edit</a> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <!-- ______________End of main page view______________ -->
 
