@@ -108,8 +108,20 @@
     </div>
   </div>
 
-    
 
+      <label for="title">Title: </label>
+      <input type="text" th:field="*{title}" id="title" placeholder="Title" />
+      
+      <label for="isbn">Isbn: </label>
+      <input type="text" th:field="*{isbn}" id="lisbn" placeholder="Isbn" />
+
+      <label for="author">Author: </label>
+      <input type="text" th:field="*{author}" id="author" placeholder="Author" />
+
+      <label for="image">Book cover: </label>
+      <input type="file" name="image" id="image" placeholder="Image" />
+      <input class="btn btn-primary" type="submit" value="Update Book" />
+    </form>
       <!-- Display copies -->
     <div th:switch="${copies}">
       <div th:case="*">
@@ -138,6 +150,14 @@
         </div>
       </div>
     </div>
+
+    <!-- Add copy -->
+  <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
+    <label>Add version: </label>
+    <input type="number" th:field="*{version}" id="copy" placeholder="copy" min="1" />
+    <input class="btn btn-primary" type="submit" value="Submit" />
+  </form>
+      
   </div>
   <!-- ______________End of main page view______________ -->
 

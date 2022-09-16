@@ -1,15 +1,16 @@
 package main.WTLibraryApp.Book.Copy;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import main.WTLibraryApp.Book.Book;
 import main.WTLibraryApp.Book.BookService;
@@ -54,7 +55,7 @@ public class CopyController {
 		if (bookOptional.isPresent()) {
 			Book book = bookOptional.get(); 
 			
-			model.addAttribute("copies", copyService.findByBookAndCopy(book, 1));
+			model.addAttribute("copies", copyService.findByBookAndVersion(book, 1));
 		} else {
 			model.addAttribute("copies", new ArrayList<>());
 		}
@@ -69,7 +70,7 @@ public class CopyController {
 			copyService.deleteCopy(copyOptional.get());
 		}
 
-		return "redirect:/books/edit/" + id; 
+		return "redirect:/books/edit/" + copyOptional.get().getBook().getId(); 
 	}  
 	
 	//administrator withdraws copies of books to users
@@ -119,32 +120,26 @@ public class CopyController {
 		return path;
 	}
 	
+	@PostMapping("/copies/create/{bookId}")
+	public String create(Copy copy, @PathVariable long bookId, BindingResult result,  Model model) {
+		Optional<Book> bookOptional = bookService.find(bookId);
+
+		if(bookOptional.isPresent()) {
+			copy.setBook(bookOptional.get());
+			
+//			//auto add versions
+//			for(int i = 1; i <= 10; i++) {
+//				if(copyService.findByBookAndVersion(copy.getBook(),i).isEmpty()) {
+//					copy.setVersion(i);
+//					break;
+//				}
+//			}
+			
+			copyService.saveCopy(copy);   
+		}
+		return "redirect:/books/edit/{bookId}";          
+	}    
 	
-	
-//	//deletes copy by bookId and copyId combination in the user interface
-//	@GetMapping("copies/deleteInUserInterface/{bookId}/{copyId}/{userId}")
-//	public String deleteInUser(@PathVariable long bookId, @PathVariable long copyId) {
-//			 
-//		CopyPK id = new CopyPK(bookId, copyId); 
-//		service.deleteCopy(id);             
-//		return "redirect:/users/edit-user/{userId}"; 
-//	}  
-	
-//	@GetMapping("copies/create")
-//	public String create(Copy copy) {
-//		return "copies";
-//	}
-	
-//	@PostMapping("/copies/create")
-//	public String create(Copy copy, BindingResult result, Model model) {
-//		if (result.hasErrors()) {
-//			return "copies";  
-//		}   
-//   
-//		service.saveCopy(copy);                   
-//		return "redirect:/copies";                 
-//	}    
-	 
 //	@PostMapping(value = "copies/assign/{bookId}/{copyId}/{userId}")
 //	public void assignCopy(@PathVariable long bookId, @PathVariable long copyId, @PathVariable long userId) {
 //		
