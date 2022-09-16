@@ -69,59 +69,40 @@
     <div class="modal fade" id="bookEditor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
-              <div class="visually-hidden">
-                <label for="id">ID: </label>
-                <input type="text" th:field="*{id}" id="id" placeholder="Id" />
-              </div>
+          <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
+            <div class="modal-header">
+                <div class="modal-body">
 
-              <label for="title">Title: </label>
-              <input type="text" th:field="*{title}" id="title" placeholder="Title" />
+                <div class="visually-hidden">
+                  <label for="id">ID: </label>
+                  <input type="text" th:field="*{id}" id="id" placeholder="Id" />
+                </div>
+
+                <label for="title">Title: </label>
+                <input type="text" th:field="*{title}" id="title" placeholder="Title" />
+                
+                <label for="isbn">Isbn: </label>
+                <input type="text" th:field="*{isbn}" id="lisbn" placeholder="Isbn" />
+
+                <label for="author">Author: </label>
+                <input type="text" th:field="*{author}" id="author" placeholder="Author" />
+
+                <label for="image">Book cover: </label>
+                <input type="file" name="image" id="image" placeholder="Image" />
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <input class="btn btn-primary" type="submit" value="Update Book" />
+                </div>
               
-              <label for="isbn">Isbn: </label>
-              <input type="text" th:field="*{isbn}" id="lisbn" placeholder="Isbn" />
-
-              <label for="author">Author: </label>
-              <input type="text" th:field="*{author}" id="author" placeholder="Author" />
-
-              <label for="image">Book cover: </label>
-              <input type="file" name="image" id="image" placeholder="Image" />
-
-              <div th:if="${bookReserveable}">
-                <input class="btn btn-primary" type="submit" value="Update Book" />
-                <!-- Reserve/cancel reseration button -->
-                <td>
-                  <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${book.id})}">Reserve</a>
-                </td>
-              </div>
-              <div th:unless="${bookReserveable}">
-                <input class="btn btn-primary" type="submit" value="Update Book" />
-                <td>
-                  <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${book.id})}">Cancel reservation</a>
-                </td>
-              </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
 
-
-      <label for="title">Title: </label>
-      <input type="text" th:field="*{title}" id="title" placeholder="Title" />
-      
-      <label for="isbn">Isbn: </label>
-      <input type="text" th:field="*{isbn}" id="lisbn" placeholder="Isbn" />
-
-      <label for="author">Author: </label>
-      <input type="text" th:field="*{author}" id="author" placeholder="Author" />
-
-      <label for="image">Book cover: </label>
-      <input type="file" name="image" id="image" placeholder="Image" />
-      <input class="btn btn-primary" type="submit" value="Update Book" />
-    </form>
       <!-- Display copies -->
     <div th:switch="${copies}">
       <div th:case="*">
