@@ -124,7 +124,7 @@
      <!-- Add copy -->
      <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
         <label>Add version: </label>
-        <input type="text" th:field="*{version}" id="copy" placeholder="copy" />
+        <input type="number" th:field="*{version}" id="copy" placeholder="copy" min="1" />
         <input class="btn btn-primary" type="submit" value="Submit" />
     </form>
   </div>

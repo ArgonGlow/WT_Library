@@ -28,7 +28,9 @@ public class Copy {
 	@ManyToOne(optional = true)
 	private User user;
 	
-	private Integer version;
+	private Integer defaultVersion = 1;
+	
+	private Integer version = defaultVersion;
 	
 	@OneToMany(mappedBy = "copy", orphanRemoval = false)
 	private List<Transaction> transactions;

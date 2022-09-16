@@ -22,7 +22,7 @@ public class CopyService {
 		return repo.findAll();
 	}
 	
-	public List<Copy> findByBookAndCopy(Book book, int version) {
+	public Optional<Copy> findByBookAndCopy(Book book, int version) {
 		return repo.findByBookAndVersion(book, version);
 	} 
 
@@ -43,8 +43,13 @@ public class CopyService {
 		repo.save(copy);
 	}
 	
+	//prevents double copies
 	public void saveCopy(Copy copy) {
-		repo.save(copy);
+		if(repo.findByBookAndVersion(copy.getBook(), copy.getVersion()).isEmpty()) {
+			repo.save(copy);
+		}else {
+			
+		}
 	}
 	
 //	public List<Copy> findCopyByReservationUserId(Long userId){
