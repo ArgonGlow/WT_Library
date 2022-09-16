@@ -1,5 +1,7 @@
 package main.WTLibraryApp.Book;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,10 +91,12 @@ public class BookController {
 		Optional<Book> bookOptional = bookService.find(bookId);
 		if (bookOptional.isPresent()) {
 			Book book = bookOptional.get();
+			model.addAttribute("book", book);
 
-			model.addAttribute("book", bookOptional.get());
 
 			List<Copy> copyList = book.getCopies();
+			//sort copies by version
+			copyList.sort((o1, o2) -> o1.getVersion() - o2.getVersion());
 			model.addAttribute("copies", copyList);
 			
 			Copy newCopy = new Copy();

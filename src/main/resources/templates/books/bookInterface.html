@@ -81,20 +81,6 @@
 
       <label for="image">Book cover: </label>
       <input type="file" name="image" id="image" placeholder="Image" />
-
-      <div th:if="${bookReserveable}">
-        <input class="btn btn-primary" type="submit" value="Update Book" />
-        <!-- Reserve/cancel reseration button -->
-        <td>
-          <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${book.id})}">Reserve</a>
-        </td>
-      </div>
-      <div th:unless="${bookReserveable}">
-        <input class="btn btn-primary" type="submit" value="Update Book" />
-        <td>
-          <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${book.id})}">Cancel reservation</a>
-        </td>
-      </div>
     </form>
       <!-- Display copies -->
     <div th:switch="${copies}">

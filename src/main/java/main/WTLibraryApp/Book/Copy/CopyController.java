@@ -55,7 +55,7 @@ public class CopyController {
 		if (bookOptional.isPresent()) {
 			Book book = bookOptional.get(); 
 			
-			model.addAttribute("copies", copyService.findByBookAndCopy(book, 1));
+			model.addAttribute("copies", copyService.findByBookAndVersion(book, 1));
 		} else {
 			model.addAttribute("copies", new ArrayList<>());
 		}
@@ -126,6 +126,15 @@ public class CopyController {
 
 		if(bookOptional.isPresent()) {
 			copy.setBook(bookOptional.get());
+			
+//			//auto add versions
+//			for(int i = 1; i <= 10; i++) {
+//				if(copyService.findByBookAndVersion(copy.getBook(),i).isEmpty()) {
+//					copy.setVersion(i);
+//					break;
+//				}
+//			}
+			
 			copyService.saveCopy(copy);   
 		}
 		return "redirect:/books/edit/{bookId}";          

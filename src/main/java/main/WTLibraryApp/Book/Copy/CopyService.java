@@ -22,7 +22,7 @@ public class CopyService {
 		return repo.findAll();
 	}
 	
-	public Optional<Copy> findByBookAndCopy(Book book, int version) {
+	public Optional<Copy> findByBookAndVersion(Book book, int version) {
 		return repo.findByBookAndVersion(book, version);
 	} 
 
