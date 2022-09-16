@@ -3,6 +3,7 @@ package main.WTLibraryApp.Book;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import main.WTLibraryApp.Book.Copy.Copy;
 import main.WTLibraryApp.Book.Copy.CopyService;
 import main.WTLibraryApp.Reservation.Reservation;
 import main.WTLibraryApp.Reservation.ReservationService;
+import main.WTLibraryApp.Transaction.TransactionType;
 import main.WTLibraryApp.User.User;
 import main.WTLibraryApp.User.UserService;
 
@@ -55,12 +57,13 @@ public class BookController {
         long userId = currentUser.getId();
         
         //create map of (Book, bool) to establish 1 time reservations
-        Map<Book, Boolean> mapBookReservations = new LinkedHashMap<>();
+        Map<Book, TransactionType> mapBookReservations = new LinkedHashMap<>();
        
         for(Book reservationBook : list) {
-        	List<Reservation> reservations = reservationService.findByBookAndUser(reservationBook, currentUser);
-
-        	mapBookReservations.put(reservationBook, reservations.size() <= 0);
+        	mapBookReservations.put(reservationBook, 
+        			reservationBook.getReservations().stream().anyMatch(item -> currentUser.equals(item.getUser())) ? TransactionType.RESERVED 
+        			: reservationBook.getCopies().stream().anyMatch(item -> currentUser.equals(item.getUser()) ) ? TransactionType.LOANED 
+        			: TransactionType.RETURNED);
         }
 
         model.addAttribute("books", mapBookReservations);
