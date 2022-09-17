@@ -134,7 +134,6 @@ public class CopyController {
 			if(copyOptional.isEmpty()) {
 				copyService.saveCopy(copy);  
 			} else {
-				System.out.println("version taken");
 				return "redirect:/books/edit/{bookId}?versionTaken"; 
 			}
 		}

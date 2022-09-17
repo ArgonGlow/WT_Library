@@ -69,8 +69,11 @@
     <div class="modal fade" id="bookEditor">
       <div class="modal-dialog">
         <div class="modal-content">
-          <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
-            <div class="modal-body">
+          <div class="modal-header">
+            <h1>Edit book</h1>
+          </div>
+          <div class="modal-body">
+            <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
               <div class="visually-hidden">
                 <label for="id">ID: </label>
                 <input type="text" th:field="*{id}" id="id" placeholder="Id" />
@@ -90,30 +93,34 @@
               <br>
               <label for="image">Book cover: </label>
               <input type="file" name="image" id="image" placeholder="Image" />
-            </div>
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
+              <br>
+              <br>
               <input class="btn btn-primary" type="submit" value="Update Book" />
-            </div>
-          </form>
+            </form>
+            <br>
+            <br>
+                  <!-- Add copy -->
+            <form action="#" th:action="@{/copies/quickAdd/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
+              <input class="btn btn-primary" type="submit" value="Quick add version" />
+            </form>
+            <br>
+            <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
+              <label>Add version: </label>
+              <input type="number" th:field="*{version}" id="copy" placeholder="copy" min="1" />
+              <input class="btn btn-primary" type="submit" value="Submit" />
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 
-        <!-- Add copy -->
-    <form action="#" th:action="@{/copies/quickAdd/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
-      <input class="btn btn-primary" type="submit" value="Quick add version" />
-    </form>
-    <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
-      <label>Add version: </label>
-      <input type="number" th:field="*{version}" id="copy" placeholder="copy" min="1" />
-      <input class="btn btn-primary" type="submit" value="Submit" />
-    </form>
-
-    <div th:if="${param.versionTaken}">
-      <p><mark>Version already exists</mark></p>
-    </div>
+  <!-- version already exists notification -->
+  <div th:if="${param.versionTaken}">
+    <p><mark>Version already exists</mark></p>
   </div>
 
     <!-- Display copies -->
