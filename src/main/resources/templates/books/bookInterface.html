@@ -96,14 +96,11 @@
               <br>
               <br>
               <input class="btn btn-primary" type="submit" value="Update Book" />
+              <input class="btn btn-primary" type="submit" value="Quick add version" th:formaction="@{/copies/quickAdd/{bookId} (bookId=${book.id})}"/>
             </form>
             <br>
             <br>
                   <!-- Add copy -->
-            <form action="#" th:action="@{/copies/quickAdd/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
-              <input class="btn btn-primary" type="submit" value="Quick add version" />
-            </form>
-            <br>
             <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
               <label>Add version: </label>
               <input type="number" th:field="*{version}" id="copy" placeholder="copy" min="1" />
