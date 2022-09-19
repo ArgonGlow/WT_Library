@@ -124,7 +124,7 @@ public class BookController {
 			return "books/bookInterface";
 		}
 		bookService.saveBook(file, book);
-		return "redirect:/books";
+		return "redirect:/books/edit/{bookId}";
 	}
 	
 	//Deletes an book from the table.
