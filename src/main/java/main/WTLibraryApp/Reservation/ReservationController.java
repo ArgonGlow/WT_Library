@@ -153,7 +153,7 @@ public class ReservationController {
 	}
 	
 	// Cancels a user's reservations by removing it from the reservations table
-	@GetMapping("reservations/cancel/{bookId}")
+	@GetMapping("reservations/cancelBI/{bookId}")
 	public String cancelReservation(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
 		
 		Optional<Book> optional = bookService.find(bookId);
@@ -172,7 +172,7 @@ public class ReservationController {
 	}
 	
 	// Cancels a user's reservations by removing it from the reservations table
-	@GetMapping("reservations/cancelBI/{bookId}")
+	@GetMapping("reservations/cancel/{bookId}")
 	public String cancelReservationCatalog(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
 		
 		Optional<Book> optional = bookService.find(bookId);
