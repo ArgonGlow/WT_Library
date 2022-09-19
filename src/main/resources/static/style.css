@@ -77,6 +77,10 @@ tr {
 
 }
 
+mark {
+  background-color: yellow;
+}
+
 /* .alt-nav ul {
   list-style-type: none;
   margin: 0;
