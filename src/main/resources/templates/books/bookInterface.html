@@ -67,7 +67,7 @@
             <br>
             <br>
             <label for="image">Book cover: </label>
-            <input type="file" name="image" id="image" placeholder="Image" />
+            <input type="file" name="image" id="image" />
             <br>
             <br>
             <input class="btn btn-primary" type="submit" value="Update Book" />
@@ -75,7 +75,7 @@
           </form>
           <br>
           <br>
-                <!-- Add copy -->
+          <!-- Add copy -->
           <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
             <label>Add version: </label>
             <input type="number" th:field="*{version}" id="copy" placeholder="copy" min="1" />
@@ -124,19 +124,18 @@
     <button type="button" class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#bookEditor}">Edit</button>
   </div>
   <br>
-    
-    <!-- Reserve/cancel reseration button -->
-    <div th:if="${bookReserveable}">
-      <td>
-        <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${book.id})}">Reserve</a>
-      </td>
-    </div>
-    <div th:unless="${bookReserveable}">
-      <td>
-        <button type="button" class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#cancellationModal}">Cancel reservation</button>
-      </td>
-    </div>
-    <br>
+  <!-- Reserve/cancel reseration button -->
+  <div th:if="${bookReserveable}">
+    <td>
+      <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${book.id})}">Reserve</a>
+    </td>
+  </div>
+  <div th:unless="${bookReserveable}">
+    <td>
+      <button type="button" class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#cancellationModal}">Cancel reservation</button>
+    </td>
+  </div>
+  <br>
 
   <!-- version already exists notification -->
   <div th:if="${param.versionTaken}">
