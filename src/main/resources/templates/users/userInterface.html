@@ -31,7 +31,7 @@
           <p th:text="@{Are you sure you want to cancel your reservation for title {book}?(book = ${reservation.book.id})}"></p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
           <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
           <a class="btn btn-primary" th:href="@{/reservations/cancelUI/{id}(id=${reservation.reservationId})}">Confirm</a>
         </div>
@@ -47,6 +47,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h1>Edit user</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
         <div class="modal-body">
@@ -73,6 +74,7 @@
             <input type="password" th:field="*{passphrase}" id="passphrase" placeholder="" />
             <br>
             <br>
+            <br>
             <input class="btn btn-primary" type="submit" value="Update User" />
             <div sec:authorize="hasAnyAuthority('1')">
               <a class="btn btn-danger" th:href="@{/users/delete-user/{id}(id=${user.id})}">Delete</a>
@@ -80,9 +82,9 @@
           </form>
         </div>
 
-        <div class="modal-footer">
+        <!-- <div class="modal-footer">
           <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
