@@ -123,6 +123,7 @@ public class BookController {
 		if (result.hasErrors()) {
 			return "books/bookInterface";
 		}
+		
 		bookService.saveBook(file, book);
 		return "redirect:/books/edit/{bookId}";
 	}
