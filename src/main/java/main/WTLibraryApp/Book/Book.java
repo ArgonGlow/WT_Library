@@ -7,10 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import main.WTLibraryApp.Book.Copy.Copy;
+import main.WTLibraryApp.Book.Label.Label;
 import main.WTLibraryApp.Reservation.Reservation;
 
 @Entity
@@ -33,6 +35,9 @@ public class Book {
 
 	@OneToMany(mappedBy = "book")
 	private List<Copy> copies;
+	
+	@ManyToMany
+	private List<Label> labels;
 
 	public String getTitle() {
 		return title;
