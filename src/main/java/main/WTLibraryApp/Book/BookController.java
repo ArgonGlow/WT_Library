@@ -118,13 +118,14 @@ public class BookController {
 	} 
 	 
 	//edits a book from the table
-	@PostMapping("/books/edit/{id}")
-	public String edit(@PathVariable("id") long id, Book book, BindingResult result, Model model, @RequestParam("image") MultipartFile file) {
+	@PostMapping("/books/edit/{bookId}")
+	public String edit(@PathVariable long bookId, Book book, BindingResult result, Model model, @RequestParam("image") MultipartFile file) {
 		if (result.hasErrors()) {
 			return "books/bookInterface";
 		}
+		
 		bookService.saveBook(file, book);
-		return "redirect:/books";
+		return "redirect:/books/edit/{bookId}";
 	}
 	
 	//Deletes an book from the table.
