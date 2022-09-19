@@ -54,7 +54,7 @@
               <td th:text="${reservation.book.title}"></td>
               <td th:text="${reservation.user.fullName}"></td>
               <td>
-                <a class="btn btn-secondary" th:href="@{/users/edit-user/{id}(id=${reservation.user.id})}">View</a>
+                <a class="btn btn-primary" th:href="@{/users/edit-user/{id}(id=${reservation.user.id})}">View</a>
               </td>
               <td>
                 <!-- <a th:href="@{/reservations/cancel/{id}(id=${reservation.reservationId})}">Cancel</a> -->
