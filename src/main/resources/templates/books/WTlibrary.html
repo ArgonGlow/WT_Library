@@ -9,6 +9,25 @@
   <div th:insert="@{../fragments/navbar-new.html}"></div>
   <!--______________end navigation bar______________-->
   
+  <!-- ______________Cancellation Modal______________ -->
+  <div th:each="books : ${books}" class="modal fade" th:id="@{cancellationModal{bookId}(bookId = ${books.key.id})}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm Cancellation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p th:text="@{Are you sure you want to cancel your reservation?}"></p>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+          <a class="btn btn-primary" th:href="@{/reservations/cancel/{id}(id=${books.key.id})}">Confirm</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ______________End of Cancellation Modal______________ -->
 
   <!--______________Main page view______________-->
   <div class="container">
@@ -53,7 +72,7 @@
               <a class="btn btn-primary" th:href="@{/reservations/createReservationBI/{id}(id=${books.key.id})}">Reserve</a>
             </td>
             <td th:case="'RESERVED'">
-              <a class="btn btn-secondary" th:href="@{/reservations/cancelBI/{id}(id=${books.key.id})}">Cancel</a>
+              <a class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#cancellationModal{bookId}(bookId = ${books.key.id})}">Cancel</a>
             </td>
             <td th:case="'LOANED'">
               <a class="btn disabled" >No doubles!</a>

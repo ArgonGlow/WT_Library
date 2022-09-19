@@ -113,7 +113,7 @@ public class UserController {
 			return "users/edit-user"; 
 		} 
 		service.saveUser(users, id);
-		return "redirect:/users";
+		return "redirect:/users/edit-user/" + id;
 	}
 
 //	Deletes an user from the table.

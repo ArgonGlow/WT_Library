@@ -9,143 +9,220 @@
   <div th:insert="@{../fragments/navbar-new.html}"></div>
 	<!--______________end navigation bar______________-->
 
+  <!-- ______________Cancellation Modal______________ -->
+  <div th:each="reservation : ${user.reservations}" class="modal fade" th:id="@{cancellationModal}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm Cancellation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p th:text="@{Are you sure you want to cancel your reservation for title {book}?(book = ${reservation.book.id})}"></p>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+          <a class="btn btn-primary" th:href="@{/reservations/cancelUI/{id}(id=${reservation.reservationId})}">Confirm</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ______________End of Cancellation Modal______________ -->
+
+  <!-- ______________Deletion Modal______________ -->
+  <div class="modal fade" th:id="@{deletionModal}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p th:text="@{Deleting this user will erase personal data but saves the transaction history. Do you want to continue?}"></p>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+          <a class="btn btn-primary" th:href="@{/users/delete-user/{id1}(id1=${user.id})}">Confirm</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ______________End of Deletion Modal______________ -->
+
+  <!-- ___________________Editor modal______________________ -->
+
+  <div class="modal fade" id="userEditor">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1>Edit user</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <!--Update user function-->
+          <form action="#" th:action="@{${action}}" th:object="${user}" method="post">
+            <div class="visually-hidden">
+              <label for="id">User ID</label>
+              <input type="text" th:field="*{id}" id="id" placeholder="User ID" />
+            </div>
+
+            <label for="first_name">First Name: </label>
+            <input type="text" th:field="*{first_name}" id="first_name" placeholder="First Name" />
+            <br>
+            <br>
+            <label for="last_name">Last Name: </label>
+            <input type="text" th:field="*{last_name}" id="last_name" placeholder="Last Name" />
+            <br>
+            <br>
+            <label for="email">Email: </label>
+            <input type="text" th:field="*{email}" id="email" placeholder="Email" />
+            <br>
+            <br>
+            <label for="passphrase">Passphrase: </label>
+            <input type="password" th:field="*{passphrase}" id="passphrase" placeholder="" />
+            <br>
+            <br>
+            <br>
+            <input class="btn btn-primary" type="submit" value="Update User" />
+            <div sec:authorize="hasAnyAuthority('1')">
+              <a class="btn btn-danger" th:data-bs-toggle="modal" th:data-bs-target="@{#deletionModal}">Delete</a>
+            </div>
+          </form>
+        </div>
+
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ___________________End of Editor modal_______________ -->
+
+  <!-- ________Deletion modal__________ -->
+
+  <!-- ________End of Deletion modal__________ -->
 
 	<!-- ______________Main page view______________ -->
-	<div class="container">
-		<br>
-		<h1>User info</h1>
+  <div class="container">
+    <br>
+    <h1 th:text="${user.fullName}"></h1>
+          
+    <!-- Edit user -->
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#userEditor}">Edit</button>
+    <br>
 
-		<!--Update user function-->
-		<form action="#" th:action="@{${action}}" th:object="${user}" method="post">
-			<div class="visually-hidden">
-				<label for="id">User ID</label>
-				<input type="text" th:field="*{id}" id="id" placeholder="User ID" />
-			</div>
-
-			<label for="first_name">First Name: </label>
-			<input type="text" th:field="*{first_name}" id="first_name" placeholder="First Name" />
-
-			<label for="last_name">Last Name: </label>
-			<input type="text" th:field="*{last_name}" id="last_name" placeholder="Last Name" />
-
-			<label for="email">Email: </label>
-			<input type="text" th:field="*{email}" id="email" placeholder="Email" />
-
-			<label for="passphrase">Passphrase: </label>
-			<input type="password" th:field="*{passphrase}" id="passphrase" placeholder="" />
-
-			<input class="btn btn-primary" type="submit" value="Update User" />
-			<div sec:authorize="hasAnyAuthority('1')">
-				<a class="btn btn-danger" th:href="@{/users/delete-user/{id}(id=${user.id})}">Delete</a>
-			</div>
-
-			<!-- Displays copies op loaned books -->
-			<table class="table table-striped">
-        <br>
+    <!-- Displays loaned books -->
+    <table class="table table-striped">
+      <thead>
         <h2>Loaned</h2>
+        <tr>
+          <th>Book id</th>
+          <th>Title</th>
+          <th>Author</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="books : ${books}">
+          <td th:text="${books.id}"></td>
+          <td th:text="${books.title}"></td>
+          <td th:text="${books.author}"></td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <!-- Displays copies op loaned books -->
+    <table class="table table-striped">
+      <thead>
+        <br>
+        <tr>
+          <th>Book</th>
+          <th>Version</th>
+          <th>User</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="copies : ${copies}">
+          <td th:text="${copies.book.title}"></td>
+          <td th:text="${copies.version}"></td>
+          <td th:text="${copies.user.fullName}"></td>
+          <div th:switch="${copies.user}">
+            <td th:case=null></td>
+            <td th:case="*">
+              <div sec:authorize="hasAnyAuthority('1')">
+                <a class="btn btn-secondary" th:href="@{/copies/withdraw/{id1}/{id2}/{id3} (id1=${copies.book.id}, id2=${copies.id}, id3=${copies.user.id})}">withdraw</a>
+              </div>
+            </td>
+          </div>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Displays reserved books -->
+    <table class="table table-striped">
+      <thead>
+        <br>
+        <h2>Reserved</h2>
+        <tr>
+          <th>Reservation id</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="reservation : ${user.reservations}">
+          <td th:text="${reservation.book.title}"></td>
+          <td th:text="${reservation.book.author}"></td>
+          <!-- <td>
+            <a class="btn btn-secondary" th:href="@{/reservations/cancelUI/{reservationId} (reservationId=${reservation.reservationId})}">Cancel reservation</a>
+          </td> -->
+          <td>
+            <button type="button" class="btn btn-secondary" th:id="${reservation.reservationId}" 
+              data-bs-toggle="modal" th:data-bs-target="@{#cancellationModal}">
+              Cancel
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Displays copies of reserved books -->
+    <div sec:authorize="hasAnyAuthority('1')">
+      <table class="table table-striped">
         <thead>
-					<tr>
-						<th>ID</th>
-						<th>Title</th>
-						<th>Author</th>
-						<th>ISBN</th>
-            <th sec:authorize="hasAnyAuthority('1')">Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-          <tr th:each="copies : ${copies}">
-            <td th:text="@{ {book}.{version}(book = ${copies.book.id}, version = ${copies.version})}"></td>
-						<td th:text="${copies.book.title}"></td>
-						<td th:text="${copies.book.author}"></td>
-						<td th:text="${copies.book.isbn}"></td>
-						<div th:switch="${copies.user}">
-							<td th:case=null></td>
-							<td th:case="*">
-								<div sec:authorize="hasAnyAuthority('1')">
-									<a class="btn btn-secondary" th:href="@{/copies/withdraw/{id1}/{id2}/{id3} (id1=${copies.book.id}, id2=${copies.id}, id3=${copies.user.id})}">withdraw</a>
-								</div>
-							</td>
-						</div>
-					</tr>
-				</tbody>
-			</table>
+          <br>
+          <tr>
+            <th>Book</th>
+            <th>Version</th>
+            <th>User</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <div th:each="reservation : ${user.reservations}">
+            <tr th:each="copy : ${reservation.book.copies}">
+              <td th:text="${copy.book.title}"></td>
+              <td th:text="${copy.version}"></td>
+              <td th:text="${copy.user?.fullName}"></td>
+              <div th:switch="${copy.user}">
+                <td th:case=null>
+                  <a class="btn btn-primary"
+                    th:href="@{/copies/loan/{reservationId}/{copyId}/{userId} (reservationId=${reservation.reservationId}, copyId=${copy.id}, userId=${user.id})}">loan</a>
+                </td>
+              </div>
+            </tr>
+          </div>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-			<!-- Displays reserved books -->
-			<table class="table table-striped">
-				<thead>
-					<br>
-					<h2>Reserved</h2>
-					<tr>
-						<th>Reservation id</th>
-						<th>Title</th>
-						<th>Author</th>
-            <th>Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="reservation : ${user.reservations}">
-						<td th:text="${reservation.reservationId}"></td>
-						<td th:text="${reservation.book.title}"></td>
-						<td th:text="${reservation.book.author}"></td>
-						<td>
-              <span class="dropdown" sec:authorize="hasAnyAuthority('1')">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Loan</button>
-                <ul class="dropdown-menu">
-                  <li th:each="copy : ${reservation.book.copies}" th:switch="${copy.user}">
-                    <a th:case="null" class="dropdown-item" th:text="@{ {book}.{version}(book = ${copy.book.id}, version = ${copy.version}) }" 
-                    th:href="@{/copies/loan/{reservationId}/{copyId}/{userId} (reservationId=${reservation.reservationId}, copyId=${copy.id}, userId=${user.id})}"></a>
-                    
-                    <a th:case="*" class="dropdown-item disabled" th:text="@{ {book}.{version}(book = ${copy.book.id}, version = ${copy.version}) }">Unavailable</a>
-                  </li>
-                </ul>
-              </span>
-							<a class="btn btn-danger" th:href="@{/reservations/cancelUI/{reservationId} (reservationId=${reservation.reservationId})}">Cancel</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-
-			<!-- Displays copies of reserved books -->
-			<!-- <div sec:authorize="hasAnyAuthority('1')">
-				<table class="table table-striped">
-					<thead>
-						<br>
-						<tr>
-							<th>Book</th>
-							<th>Version</th>
-							<th>User</th>
-              <th></th>
-						</tr>
-					</thead>
-					 <tbody>
-						<div th:each="reservation : ${user.reservations}">
-							<tr th:each="copy : ${reservation.book.copies}">
-								<td th:text="${copy.book.title}"></td>
-								<td th:text="${copy.version}"></td>
-								<td th:text="${copy.user?.fullName}"></td>
-								<div th:switch="${copy.user}">
-									<td th:case=null>
-                    <div class="dropdown">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown button
-                      </button>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                      </div>
-                    </div>
-										<a class="btn btn-primary"
-											th:href="@{/copies/loan/{reservationId}/{copyId}/{userId} (reservationId=${reservation.reservationId}, copyId=${copy.id}, userId=${user.id})}">loan</a>
-									</td>
-								</div>
-							</tr>
-						</div>
-					</tbody> -->
-				</table>
-			</div>
-		</form>
-	</div>
 	<!-- ______________End of main page view______________ -->
 
 	<!-- ______________________Footer_____________________ -->
