@@ -23,7 +23,7 @@
 	<!-- ______________Main page view______________ -->
   <div class="container">
     <br>
-    <h1>User info</h1>
+    <h1 th:text="${user.fullName}"></h1>
           
     <!-- Edit user -->
     <div sec:authorize="hasAnyAuthority('1')">
@@ -73,6 +73,7 @@
         </div>
       </div>
     </div>
+    <br>
 
         <!-- Displays loaned books -->
         <table class="table table-striped">
