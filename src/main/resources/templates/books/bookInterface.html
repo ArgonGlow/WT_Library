@@ -20,7 +20,7 @@
   <!--______________End navigation bar______________-->
 
   <!-- ______________Main page view______________ -->
-  <div class="container">
+<div class="container">
     <br>
     <h1>Book info</h1>
 
@@ -61,73 +61,91 @@
     </div>
     <br>
 
-
     <!-- Edit book -->
   <div sec:authorize="hasAnyAuthority('1')">
-    <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
-      <div class="visually-hidden">
-        <label for="id">ID: </label>
-        <input type="text" th:field="*{id}" id="id" placeholder="Id" />
-      </div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#bookEditor}">Edit</button>
+    <!-- Modal body -->
+    <div class="modal fade" id="bookEditor">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1>Edit book</h1>
+          </div>
+          <div class="modal-body">
+            <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
+              <div class="visually-hidden">
+                <label for="id">ID: </label>
+                <input type="text" th:field="*{id}" id="id" placeholder="Id" />
+              </div>
 
-      <label for="title">Title: </label>
-      <input type="text" th:field="*{title}" id="title" placeholder="Title" />
-      
-      <label for="isbn">Isbn: </label>
-      <input type="text" th:field="*{isbn}" id="lisbn" placeholder="Isbn" />
-
-      <label for="author">Author: </label>
-      <input type="text" th:field="*{author}" id="author" placeholder="Author" />
-
-      <label for="image">Book cover: </label>
-      <input type="file" name="image" id="image" placeholder="Image" />
-
-      <div th:if="${bookReserveable}">
-        <input class="btn btn-primary" type="submit" value="Update Book" />
-        <!-- Reserve/cancel reseration button -->
-        <td>
-          <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${book.id})}">Reserve</a>
-        </td>
-      </div>
-      <div th:unless="${bookReserveable}">
-        <input class="btn btn-primary" type="submit" value="Update Book" />
-        <td>
-          <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${book.id})}">Cancel reservation</a>
-        </td>
-      </div>
-    </form>
-  </div>
-    
-
-      <!-- Display copies -->
-    <div th:switch="${copies}">
-      <div th:case="*">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Book</th>
-              <th>Version</th>
-              <th>User</th>
-              <th></th>
-            </tr>
-           </thead>
-           <tbody>
-              <tr th:each="copies : ${copies}">
-                <td th:text="${copies.book.title}"></td>
-                <td th:text="${copies.version}"></td>
-                <td th:text="${copies.user == null ? '-' : copies.user.fullName}"></td>
-                <td>
-                  <div sec:authorize="hasAnyAuthority('1')">
-                    <a class="btn btn-danger" th:href="@{/copies/delete/{id1}(id1=${copies.id})}">Delete</a>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+              <label for="title">Title: </label>
+              <input type="text" th:field="*{title}" id="title" placeholder="Title" />
+              <br>
+              <br>
+              <label for="isbn">Isbn: </label>
+              <input type="text" th:field="*{isbn}" id="lisbn" placeholder="Isbn" />
+              <br>
+              <br>
+              <label for="author">Author: </label>
+              <input type="text" th:field="*{author}" id="author" placeholder="Author" />
+              <br>
+              <br>
+              <label for="image">Book cover: </label>
+              <input type="file" name="image" id="image" placeholder="Image" />
+              <br>
+              <br>
+              <input class="btn btn-primary" type="submit" value="Update Book" />
+              <input class="btn btn-primary" type="submit" value="Quick add version" th:formaction="@{/copies/quickAdd/{bookId} (bookId=${book.id})}"/>
+            </form>
+            <br>
+            <br>
+                  <!-- Add copy -->
+            <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
+              <label>Add version: </label>
+              <input type="number" th:field="*{version}" id="copy" placeholder="copy" min="1" />
+              <input class="btn btn-primary" type="submit" value="Submit" />
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- version already exists notification -->
+  <div th:if="${param.versionTaken}">
+    <p><mark>Version already exists</mark></p>
+  </div>
+
+    <!-- Display copies -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Book</th>
+        <th>Version</th>
+        <th>User</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr th:each="copies : ${copies}">
+          <td th:text="${copies.book.title}"></td>
+          <td th:text="${copies.version}"></td>
+          <td th:text="${copies.user == null ? '-' : copies.user.fullName}"></td>
+          <td>
+            <div sec:authorize="hasAnyAuthority('1')">
+              <a class="btn btn-danger" th:href="@{/copies/delete/{id1}(id1=${copies.id})}">Delete</a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+</div>
+
   <!-- ______________End of main page view______________ -->
 
   <!-- JavaScript Bundle with Popper -->
