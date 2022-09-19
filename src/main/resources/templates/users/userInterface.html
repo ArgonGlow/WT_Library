@@ -88,7 +88,7 @@
 						<td th:text="${reservation.book.title}"></td>
 						<td th:text="${reservation.book.author}"></td>
 						<td>
-              <span class="dropdown">
+              <span class="dropdown" sec:authorize="hasAnyAuthority('1')">
                 <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Loan</button>
                 <ul class="dropdown-menu">
                   <li th:each="copy : ${reservation.book.copies}" th:switch="${copy.user}">

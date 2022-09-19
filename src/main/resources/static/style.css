@@ -84,6 +84,15 @@ tr {
 
 }
 
+footer {
+  background-color: #000;
+  color: #fff;
+}
+
+footer a {
+  color: #fff;
+}
+
 mark {
   background-color: yellow;
 }
