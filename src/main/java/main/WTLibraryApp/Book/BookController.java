@@ -1,5 +1,7 @@
 package main.WTLibraryApp.Book;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +56,6 @@ public class BookController {
         model.addAttribute("books", list);
         
         User currentUser = userService.findByEmail(authentication.getName());
-        long userId = currentUser.getId();
         
         //create map of (Book, bool) to establish 1 time reservations
         Map<Book, TransactionType> mapBookReservations = new LinkedHashMap<>();
@@ -89,26 +90,31 @@ public class BookController {
 	// Also shows all copies of the book	                 
 	@GetMapping("/books/edit/{bookId}")
 	public String edit(@PathVariable("bookId") long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication, Model model) {
-		
+
 		Optional<Book> bookOptional = bookService.find(bookId);
 		if (bookOptional.isPresent()) {
 			Book book = bookOptional.get();
+			model.addAttribute("book", book);
 
-			model.addAttribute("book", bookOptional.get());
 
 			List<Copy> copyList = book.getCopies();
+			//sort copies by version
+			copyList.sort((o1, o2) -> o1.getVersion() - o2.getVersion());
 			model.addAttribute("copies", copyList);
+			
+			Copy newCopy = new Copy();
+			model.addAttribute("copy", newCopy);
 	
 			User currentUser = userService.findByEmail(authentication.getName());
 		        
 			boolean bookReserveable;
 			List<Reservation> reservation = reservationService.findByBookAndUser(book, currentUser);
 			bookReserveable = reservation.size() <= 0;
-	
+			
 	        model.addAttribute("bookReserveable", bookReserveable);
 		}
 		
-		return "books/bookInterface"; 
+		return "books/bookInterface";
 	} 
 	 
 	//edits a book from the table
