@@ -39,6 +39,18 @@ public class Book {
 	@ManyToMany
 	private List<Label> labels;
 
+	public List<Label> getLabels() {
+		return labels;
+	}
+
+	public void setLabels(List<Label> labels) {
+		this.labels = labels;
+	}
+	
+	public void addLabel(Label label) {
+		this.labels.add(label);
+	}
+
 	public String getTitle() {
 		return title;
 	}

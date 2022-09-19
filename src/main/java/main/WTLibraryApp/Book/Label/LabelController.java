@@ -26,7 +26,7 @@ public class LabelController {
 		return "books/label";
 	}
 	
-	@PostMapping("/label")
+	@PostMapping("/label/edit")
 	public String Editlabel(@ModelAttribute Label label) {
 		labelService.updateLabel(label);
 		return "redirect:/label";

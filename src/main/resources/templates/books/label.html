@@ -24,49 +24,49 @@
     <br>
 
     <!-- Show and edit label -->
-  <div sec:authorize="hasAnyAuthority('1')">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Edit</th>
-        </tr>
-      </thead>>
-      <tbody>
-          <form th:each="label: ${labels}" action="#" th:action="@{/label}" th:object="${label}" method="post" >
+    <div sec:authorize="hasAnyAuthority('1')">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Edit</th>
+          </tr>
+        </thead>>
+        <tbody>
+          <form th:each="label: ${labels}" action="#" th:action="@{/label/edit}" th:object="${label}" method="post" >
             <tr>
-            <div class="visually-hidden">
-              <label for="id">Label ID</label>
-              <input type="text" th:value="*{id}" id="id" name="id" placeholder="Label ID" />
-            </div>
-          <td>
-            <label for="name">Title: </label>
-            <input type="text" th:value="*{name}" id="name" name="name" placeholder="Label" />
-          </td>
-          <td>
-            <button href="#" class="btn btn-primary" >Edit label</button>
-            <button th:formaction="@{/label/delete}" class="btn btn-danger" >Remove label</button>
-          </td>
-        </tr>
+              <div class="visually-hidden">
+                <label for="id">Label ID</label>
+                <input type="text" th:value="*{id}" id="id" name="id" placeholder="Label ID" />
+              </div>
+              <td>
+                <label for="name">Label: </label>
+                <input type="text" th:value="*{name}" id="name" name="name" placeholder="Label" />
+              </td>
+              <td>
+                <button href="#" class="btn btn-primary" >Edit label</button>
+                <button th:formaction="@{/label/delete}" class="btn btn-danger" >Remove label</button>
+              </td>
+            </tr>
           </form>  
           <form action="#" th:action="@{/label/add}" th:object="${label}" method="post" >
             <tr>
-            <div class="visually-hidden">
-              <label for="id">Label ID</label>
-              <input type="text" th:field="*{id}" id="id" placeholder="Label ID" />
-            </div>
-          <td>
-            <label for="name">Title: </label>
-            <input type="text" th:field="*{name}" id="name" placeholder="Label" />
-          </td>
-          <td>
-            <button href="#" class="btn btn-primary" >Add label</button>
-          </td>
-        </tr>
+              <div class="visually-hidden">
+                <label for="id">Label ID</label>
+                <input type="text" th:field="*{id}" id="id" placeholder="Label ID" />
+              </div>
+              <td>
+                <label for="name">Label: </label>
+                <input type="text" th:field="*{name}" id="name" placeholder="Label" />
+              </td>
+              <td>
+                <button href="#" class="btn btn-primary" >Add label</button>
+              </td>
+            </tr>
           </form>  
-
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
   <!-- ______________End of main page view______________ -->
 

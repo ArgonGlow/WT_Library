@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import main.WTLibraryApp.Book.Copy.Copy;
 import main.WTLibraryApp.Book.Copy.CopyService;
+import main.WTLibraryApp.Book.Label.Label;
+import main.WTLibraryApp.Book.Label.LabelService;
 import main.WTLibraryApp.Reservation.Reservation;
 import main.WTLibraryApp.Reservation.ReservationService;
 import main.WTLibraryApp.Transaction.TransactionType;
@@ -41,6 +43,9 @@ public class BookController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private LabelService labelService;
 	   
 	//	Returns all books from the books table.      
 	@GetMapping("/books")
@@ -112,6 +117,11 @@ public class BookController {
 			bookReserveable = reservation.size() <= 0;
 			
 	        model.addAttribute("bookReserveable", bookReserveable);
+	        List<Label> labels = labelService.allLabels();
+	        labelService.allLabels().removeAll(book.getLabels());
+	        System.out.println(labels);
+	        model.addAttribute("missingGenres", labels);
+	        model.addAttribute("Genres", book.getLabels());
 		}
 		
 		return "books/bookInterface";
@@ -119,11 +129,11 @@ public class BookController {
 	 
 	//edits a book from the table
 	@PostMapping("/books/edit/{bookId}")
-	public String edit(@PathVariable long bookId, Book book, BindingResult result, Model model, @RequestParam("image") MultipartFile file) {
+	public String edit(@PathVariable long bookId,Label label, Book book, BindingResult result, Model model, @RequestParam("image") MultipartFile file) {
 		if (result.hasErrors()) {
 			return "books/bookInterface";
 		}
-		
+		book.addLabel(label);
 		bookService.saveBook(file, book);
 		return "redirect:/books/edit/{bookId}";
 	}

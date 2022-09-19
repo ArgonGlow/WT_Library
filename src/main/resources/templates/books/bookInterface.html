@@ -100,11 +100,70 @@
       </td>
     </div>
     <br>
+    <!--<button th:each="genre : ${Genres}" type="button" th:text="${genre.name}" href="#"></button>
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Genre
+      </button>
+      <ul class="dropdown-menu" >
+        <form sec:authorize="hasAnyAuthority('1')" th:each="genre : ${missingGenres}" action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
+        <li><button class="dropdown-item" type="submit" th:text="${genre.name}" th:value="${genre}" href="#"></button></li></form>
+      </ul>
+    </div>
+  </form>-->
 
     <!-- Edit book -->
   <div sec:authorize="hasAnyAuthority('1')">
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#bookEditor}">Edit</button>
+    <!-- Modal body -->
+    <div class="modal fade" id="bookEditor">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1>Edit book</h1>
+          </div>
+          <div class="modal-body">
+            <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
+              <div class="visually-hidden">
+                <label for="id">ID: </label>
+                <input type="text" th:field="*{id}" id="id" placeholder="Id" />
+              </div>
+
+              <label for="title">Title: </label>
+              <input type="text" th:field="*{title}" id="title" placeholder="Title" />
+              <br>
+              <br>
+              <label for="isbn">Isbn: </label>
+              <input type="text" th:field="*{isbn}" id="lisbn" placeholder="Isbn" />
+              <br>
+              <br>
+              <label for="author">Author: </label>
+              <input type="text" th:field="*{author}" id="author" placeholder="Author" />
+              <br>
+              <br>
+              <label for="image">Book cover: </label>
+              <input type="file" name="image" id="image" placeholder="Image" />
+              <br>
+              <br>
+              <input class="btn btn-primary" type="submit" value="Update Book" />
+              <input class="btn btn-primary" type="submit" value="Quick add version" th:formaction="@{/copies/quickAdd/{bookId} (bookId=${book.id})}"/>
+            </form>
+            <br>
+            <br>
+                  <!-- Add copy -->
+            <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
+              <label>Add version: </label>
+              <input type="number" th:field="*{version}" id="copy" placeholder="copy" min="1" />
+              <input class="btn btn-primary" type="submit" value="Submit" />
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- version already exists notification -->
