@@ -39,57 +39,6 @@
   </div>
   <!-- ______________End of Cancellation Modal______________ -->
 
- <!-- __________________Book editor Modal___________________ -->
-  <div class="modal fade" id="bookEditor">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5>Edit book</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
-            <div class="visually-hidden">
-              <label for="id">ID: </label>
-              <input type="text" th:field="*{id}" id="id" placeholder="Id" />
-            </div>
-
-            <label for="title">Title: </label>
-            <input type="text" th:field="*{title}" id="title" placeholder="Title" />
-            <br>
-            <br>
-            <label for="isbn">Isbn: </label>
-            <input type="text" th:field="*{isbn}" id="lisbn" placeholder="Isbn" />
-            <br>
-            <br>
-            <label for="author">Author: </label>
-            <input type="text" th:field="*{author}" id="author" placeholder="Author" />
-            <br>
-            <br>
-            <label for="image">Book cover: </label>
-            <input type="file" name="image" id="image" />
-            <br>
-            <br>
-            <input class="btn btn-primary" type="submit" value="Update Book" />
-            <input class="btn btn-primary" type="submit" value="Quick add version" th:formaction="@{/copies/quickAdd/{bookId} (bookId=${book.id})}"/>
-          </form>
-          <br>
-          <br>
-          <!-- Add copy -->
-          <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
-            <label>Add version: </label>
-            <input type="number" th:field="*{version}" id="copy" placeholder="copy" min="1" />
-            <input class="btn btn-primary" type="submit" value="Submit" />
-          </form>
-        </div>
-        <!-- <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
-        </div> -->
-      </div>
-    </div>
-  </div>
-  <!-- _______________End of Book editor Modal_________________ -->
-   
   <!-- ______________Main page view______________ -->
 <div class="container">
     <br>
@@ -98,7 +47,8 @@
     <!-- Book cover image -->
     <img th:src="*{'data:image/jpeg;base64, '+{book.cover_image}}" alt="Book Cover" width="100" height="100" />
 
-    <!-- Book info -->
+    <!-- Edit book -->
+    <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post" enctype="multipart/form-data">
     <table class="table">
       <thead>
         <tr>
@@ -117,25 +67,73 @@
         </tr>
       </tbody>
     </table>
+    
+    <!-- Reserve/cancel reseration button -->
+    <div th:if="${bookReserveable}">
+      <td>
+        <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${book.id})}">Reserve</a>
+      </td>
+    </div>
+    <div th:unless="${bookReserveable}">
+      <td>
+        <button type="button" class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#cancellationModal}">Cancel reservation</button>
+      </td>
+    </div>
+    <br>
 
-     <!-- Edit book -->
+    <!-- Edit book -->
   <div sec:authorize="hasAnyAuthority('1')">
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#bookEditor}">Edit</button>
+    <!-- Modal body -->
+    <div class="modal fade" id="bookEditor">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1>Edit book</h1>
+          </div>
+          <div class="modal-body">
+            <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
+              <div class="visually-hidden">
+                <label for="id">ID: </label>
+                <input type="text" th:field="*{id}" id="id" placeholder="Id" />
+              </div>
+
+              <label for="title">Title: </label>
+              <input type="text" th:field="*{title}" id="title" placeholder="Title" />
+              <br>
+              <br>
+              <label for="isbn">Isbn: </label>
+              <input type="text" th:field="*{isbn}" id="lisbn" placeholder="Isbn" />
+              <br>
+              <br>
+              <label for="author">Author: </label>
+              <input type="text" th:field="*{author}" id="author" placeholder="Author" />
+              <br>
+              <br>
+              <label for="image">Book cover: </label>
+              <input type="file" name="image" id="image" placeholder="Image" />
+              <br>
+              <br>
+              <input class="btn btn-primary" type="submit" value="Update Book" />
+              <input class="btn btn-primary" type="submit" value="Quick add version" th:formaction="@{/copies/quickAdd/{bookId} (bookId=${book.id})}"/>
+            </form>
+            <br>
+            <br>
+                  <!-- Add copy -->
+            <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
+              <label>Add version: </label>
+              <input type="number" th:field="*{version}" id="copy" placeholder="copy" min="1" />
+              <input class="btn btn-primary" type="submit" value="Submit" />
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <br>
-  <!-- Reserve/cancel reseration button -->
-  <div th:if="${bookReserveable}">
-    <td>
-      <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${book.id})}">Reserve</a>
-    </td>
-  </div>
-  <div th:unless="${bookReserveable}">
-    <td>
-      <button type="button" class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#cancellationModal}">Cancel reservation</button>
-    </td>
-  </div>
-  <br>
 
   <!-- version already exists notification -->
   <div th:if="${param.versionTaken}">
