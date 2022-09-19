@@ -26,49 +26,49 @@
     <h1 th:text="${user.fullName}"></h1>
           
     <!-- Edit user -->
-    <div sec:authorize="hasAnyAuthority('1')">
-      <!-- Button trigger modal -->
-      <button type="button" class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#userEditor}">Edit</button>
-      <!-- Modal body -->
-      <div class="modal fade" id="userEditor">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1>Edit user</h1>
-            </div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#userEditor}">Edit</button>
+    <!-- Modal body -->
+    <div class="modal fade" id="userEditor">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1>Edit user</h1>
+          </div>
 
-            <div class="modal-body">
-              <!--Update user function-->
-              <form action="#" th:action="@{${action}}" th:object="${user}" method="post">
-                <div class="visually-hidden">
-                  <label for="id">User ID</label>
-                  <input type="text" th:field="*{id}" id="id" placeholder="User ID" />
-                </div>
+          <div class="modal-body">
+            <!--Update user function-->
+            <form action="#" th:action="@{${action}}" th:object="${user}" method="post">
+              <div class="visually-hidden">
+                <label for="id">User ID</label>
+                <input type="text" th:field="*{id}" id="id" placeholder="User ID" />
+              </div>
 
-                <label for="first_name">First Name: </label>
-                <input type="text" th:field="*{first_name}" id="first_name" placeholder="First Name" />
-                <br>
-                <br>
-                <label for="last_name">Last Name: </label>
-                <input type="text" th:field="*{last_name}" id="last_name" placeholder="Last Name" />
-                <br>
-                <br>
-                <label for="email">Email: </label>
-                <input type="text" th:field="*{email}" id="email" placeholder="Email" />
-                <br>
-                <br>
-                <label for="passphrase">Passphrase: </label>
-                <input type="password" th:field="*{passphrase}" id="passphrase" placeholder="" />
-                <br>
-                <br>
-                <input class="btn btn-primary" type="submit" value="Update User" />
-                <input class="btn btn-danger" type="submit" value="Delete User" th:formaction="@{/users/delete-user/{id}(id=${user.id})}" />
-              </form>
+              <label for="first_name">First Name: </label>
+              <input type="text" th:field="*{first_name}" id="first_name" placeholder="First Name" />
+              <br>
+              <br>
+              <label for="last_name">Last Name: </label>
+              <input type="text" th:field="*{last_name}" id="last_name" placeholder="Last Name" />
+              <br>
+              <br>
+              <label for="email">Email: </label>
+              <input type="text" th:field="*{email}" id="email" placeholder="Email" />
+              <br>
+              <br>
+              <label for="passphrase">Passphrase: </label>
+              <input type="password" th:field="*{passphrase}" id="passphrase" placeholder="" />
+              <br>
+              <br>
+              <input class="btn btn-primary" type="submit" value="Update User" />
+            <div sec:authorize="hasAnyAuthority('1')">
+              <a class="btn btn-danger" th:href="@{/users/delete-user/{id}(id=${user.id})}">Delete</a>
             </div>
+          </form>
+          </div>
 
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
-            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
