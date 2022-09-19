@@ -113,6 +113,9 @@
     <!-- Edit user -->
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#userEditor}">Edit</button>
+    <div th:if="${param.sepeku}">
+      <p><mark>Cannot delete self</mark></p>
+    </div>
     <br>
 
     <!-- Displays loaned books -->
