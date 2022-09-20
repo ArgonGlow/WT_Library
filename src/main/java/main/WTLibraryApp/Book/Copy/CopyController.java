@@ -69,9 +69,14 @@ public class CopyController {
 	public String deleteInBook(@PathVariable long id) {
 		Optional<Copy> copyOptional = copyService.findCopyById(id);
 		if (copyOptional.isPresent()) {
-			copyService.deleteCopy(copyOptional.get());
+			Copy copy = copyOptional.get();
+			System.out.println(copy.getUser().getFullName());
+			if(copy.getUser()==null) {
+				copyService.deleteCopy(copy);
+			} else {
+				return "redirect:/books/edit/" + copyOptional.get().getBook().getId() + "?loaned"; 
+			}
 		}
-
 		return "redirect:/books/edit/" + copyOptional.get().getBook().getId(); 
 	}  
 	

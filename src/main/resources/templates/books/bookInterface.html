@@ -156,6 +156,10 @@
   <div th:if="${param.versionTaken}">
     <p><mark>Version already exists</mark></p>
   </div>
+    <!-- version already exists notification -->
+    <div th:if="${param.loaned}">
+      <p><mark>Cannot delete loaned version</mark></p>
+    </div>
 
   <!-- Display copies -->
   <table class="table">
