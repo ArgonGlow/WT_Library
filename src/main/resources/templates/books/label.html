@@ -31,7 +31,7 @@
             <th>Name</th>
             <th>Edit</th>
           </tr>
-        </thead>>
+        </thead>
         <tbody>
           <form th:each="label: ${labels}" action="#" th:action="@{/label/edit}" th:object="${label}" method="post" >
             <tr>
