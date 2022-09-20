@@ -141,8 +141,5 @@ public class UserController {
 			service.saveUser(oldUser);
 			return "redirect:/users/edit-user/{userId}";
 		}
-		
-
 	}
-
 }
