@@ -78,11 +78,15 @@ tr {
   color: white;
 
 }
-
 .dropdown-item:hover {
   background-color: rgb(15, 110, 40);
   color: white;
+}
 
+.dropdown-submenu:hover > .dropdown-menu{
+  display: block !important;
+    left: 100%;
+    margin-top: -37px;
 }
 
 footer {
