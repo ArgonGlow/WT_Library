@@ -23,17 +23,25 @@ public class UserService {
 	public void saveUser(User users) {
 		repo.save(users);
 	}
-
+	
 	public void saveUser(User users, long id) {
-		if(users.getPassphrase().length() > 0) {
-			users.setPassphrase(BCrypt.hashpw(users.getPassphrase().toString(), BCrypt.gensalt()));
+		User tempUser = repo.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("Invalid user Id: " + id));
+		users.setPassphrase(tempUser.getPassphrase());
+		repo.save(users);
+	}
+
+	public void saveUser(User users, long id, String passphrase) {
+		if(passphrase.length() > 0) {
+			users.setPassphrase(BCrypt.hashpw(passphrase, BCrypt.gensalt()));
+			repo.save(users);
 		}
 		else {
 			User tempUser = repo.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id: " + id));
 			users.setPassphrase(tempUser.getPassphrase());
+			repo.save(users);
 		}
-		repo.save(users);
 	}
 	
 	public void changePassword(User user, long id) {

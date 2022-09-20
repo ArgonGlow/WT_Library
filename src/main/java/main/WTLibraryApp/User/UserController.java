@@ -69,10 +69,20 @@ public class UserController {
 	
 	//edits user in the table
 	@PostMapping("/user")
-	public String updateCurrentUserPost(@CurrentSecurityContext(expression = "authentication") Authentication authentication, User users, BindingResult result, Model model) {
+	public String updateCurrentUserPost(@CurrentSecurityContext(expression = "authentication") Authentication authentication, User users, 
+			BindingResult result, Model model, @RequestParam(name = "passphrase") String newPass) {
 		User currentuser = service.findByEmail(authentication.getName());
 		if (!result.hasErrors()) {
-			service.saveUser(users, currentuser.getId());
+			if (newPass.length() > 0) {
+				if (newPass.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,64}$")) {
+					service.saveUser(users, currentuser.getId(), newPass);
+//					emailService.sendSimpleMessage(currentuser.getEmail(), "Passphrase Changed", "Passphrase changed to " + newPass);
+				} else {
+					return "redirect:/user?invalidPassphrase";
+				}
+			} else {
+				service.saveUser(users, currentuser.getId());
+			}
 		} 
 		return "redirect:/user";
 	} 
@@ -116,39 +126,6 @@ public class UserController {
 		} 
 		service.saveUser(users, id);
 		return "redirect:/users/edit-user/" + id;
-	}
-	
-//	Shows change password form in browser
-	@GetMapping("/users/edit-user/{id}/change-password")
-	public String showChangePassword(@PathVariable("id") long id, Model model) {
-		User user = service.findUser(id);
-		model.addAttribute("user", user);
-		
-		return "users/changePassword";
-	}
-	
-//	Edits password from the user
-	@PostMapping("/users/edit-user/{id}/change-password")
-	public String changePassword(@PathVariable("id") long id, Model model, 
-			@RequestParam(name = "newPassword") String newPass,
-			@RequestParam(name = "confirmPassword") String confirmPass,
-			@RequestParam(name = "oldPassword") String oldPass) {
-		
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		User user = service.findUser(id);
-		
-		boolean correctNewPass = newPass.equals(confirmPass);
-		boolean correctOldPass = encoder.matches(oldPass, user.getPassphrase());
-		
-		if (correctNewPass && correctOldPass) {
-			user.setPassphrase(encoder.encode(newPass));
-			service.saveUser(user);
-			return "redirect:/users/edit-user/"+id;
-		} else {
-			return "redirect:/users/edit-user/"+id+"/change-password";
-		}
-		
-		
 	}
 
 //	Deletes an user from the table.
