@@ -124,7 +124,6 @@ public class BookController {
 	        }
 	        model.addAttribute("genres", labels);
 		
-		//________________________________________________
 	        //create map of (Book, bool) to establish 1 time reservations
 	        Map<Book, TransactionType> mapBookReservations = new LinkedHashMap<>();
 	       
