@@ -109,16 +109,29 @@ public class BookController {
 	
 			User currentUser = userService.findByEmail(authentication.getName());
 		        
-			boolean bookReserveable;
-			List<Reservation> reservation = reservationService.findByBookAndUser(book, currentUser);
-			bookReserveable = reservation.size() <= 0;
+//			boolean bookReserveable;
+//			List<Reservation> reservation = reservationService.findByBookAndUser(book, currentUser);
+//			bookReserveable = reservation.size() <= 0;
+//			
+//	        model.addAttribute("bookReserveable", bookReserveable);
 			
-	        model.addAttribute("bookReserveable", bookReserveable);
 	        Map<Label, Boolean> labels = new LinkedHashMap<>();
 	        for(Label label: labelService.allLabels()) {
 	        	labels.put(label, book.getLabels().contains(label));
 	        }
 	        model.addAttribute("genres", labels);
+		
+		//________________________________________________
+	        //create map of (Book, bool) to establish 1 time reservations
+	        Map<Book, TransactionType> mapBookReservations = new LinkedHashMap<>();
+	       
+        	mapBookReservations.put(book, 
+        			book.getReservations().stream().anyMatch(item -> currentUser.equals(item.getUser())) ? TransactionType.RESERVED 
+        			: book.getCopies().stream().anyMatch(item -> currentUser.equals(item.getUser()) ) ? TransactionType.LOANED 
+        			: book.getCopies().isEmpty() ? TransactionType.UNAVAILABLE	
+        			: TransactionType.RETURNED);
+	        
+	        model.addAttribute("books", mapBookReservations);
 		}
 		
 		return "books/bookInterface";
