@@ -3,7 +3,7 @@
 <head th:include="@{../fragments/sharedHead.html}">
   <title id="pageTitle">Working Talent Library - Add User</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
   <!--_____________navigation bar_______________-->
   <!-- <div th:insert="@{../fragments/navbar.html}" id="cur-nav"></div> -->
   <div th:insert="@{../fragments/navbar-new.html}"></div>
@@ -31,10 +31,10 @@
   <!-- ______________End of main page view______________ -->
 
   <!-- ______________________Footer_____________________ -->
-  <div style="background-color: black">
+	<div class="mt-auto" style="background-color: black">
     <div class="container" th:insert="@{../fragments/footer.html}"></div>
   </div>
-  <!-- __________________ End of Footer_________________ -->
+	<!-- __________________ End of Footer_________________ -->
   
   <!-- JavaScript Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
