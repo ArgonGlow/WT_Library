@@ -30,7 +30,7 @@
   <!-- ______________End of Cancellation Modal______________ -->
 
   <!-- ______________Deletion Modal______________ -->
-  <div th:each="copy : ${copies}" class="modal fade" th:id="@{deletionModal}">
+  <div th:each="copy : ${copies}" class="modal fade" th:id="@{deletionModal{id1}(id1=${copy.id})}">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -172,15 +172,15 @@
       </tr>
       </thead>
       <tbody>
-        <tr th:each="copies : ${copies}">
-          <td th:text="${copies.book.title}"></td>
-          <td th:text="${copies.version}"></td>
-          <td th:text="${copies.user == null ? '-' : copies.user.fullName}"></td>
-          <td>
-            <div sec:authorize="hasAnyAuthority('1')">
-              <a class="btn btn-danger" th:data-bs-toggle="modal" th:data-bs-target="@{#deletionModal}">Delete</a>
-            </div>
-          </td>
+        <tr th:each="copy : ${copies}">
+          <td th:text="${copy.book.title}"></td>
+          <td th:text="${copy.version}"></td>
+          <td th:text="${copy.user == null ? '-' : copy.user.fullName}"></td>
+          <div sec:authorize="hasAnyAuthority('1')">
+            <td>
+              <a class="btn btn-danger" th:data-bs-toggle="modal" th:data-bs-target="@{#deletionModal{id1}(id1=${copy.id})}">Delete</a>
+            </td>
+          </div>
         </tr>
       </tbody>
     </table>
