@@ -1,23 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Bootstrap CSS Import -->
-  <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
-  integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" 
-  crossorigin="anonymous" />
-  <!-- General CSS -->
-  <link rel="stylesheet" href="../../static/style.css" th:href="@{../../style.css}" />
-  <title>Working Talent Library - Edit Book</title>
+<head th:include="@{../fragments/sharedHead.html}">
+  <title id="pageTitle">Working Talent Library - Edit Book</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
   <!--______________Navigation bar______________-->
   <!-- <div th:insert="@{../fragments/navbar.html}" id="cur-nav"></div> -->
   <div th:insert="@{../fragments/navbar-new.html}"></div>
   <!--______________End navigation bar______________-->
+
+  <!-- ______________Cancellation Modal______________ -->
+  <div th:each="books : ${books}" class="modal fade" th:id="@{cancellationModal{bookId}(bookId = ${books.key.id})}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm Cancellation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p th:text="@{Are you sure you want to cancel your reservation?}"></p>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+          <a class="btn btn-primary" th:href="@{/reservations/cancelBI/{id}(id=${books.key.id})}">Confirm</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ______________End of Cancellation Modal______________ -->
+
+  <!-- ______________Deletion Modal______________ -->
+  <div th:each="copy : ${copies}" class="modal fade" th:id="@{deletionModal{id1}(id1=${copy.id})}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p th:text="@{Are you sure you want to delete this copy?}"></p>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+          <a class="btn btn-primary" th:href="@{/copies/delete/{id1}(id1=${copy.id})}">Confirm</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ______________End of Deletion Modal______________ -->
 
   <!-- ______________Main page view______________ -->
   <div class="container">
@@ -25,7 +55,7 @@
     <h1>Book info</h1>
 
     <!-- Book cover image -->
-    <img th:src="*{'data:image/jpeg;base64, '+{book.cover_image}}" alt="Book Cover" width="100" height="100" />
+    <img th:src="*{'data:image/jpeg;base64, '+{book.cover_image}}" alt="Book Cover" width="300" height="300" />
 
     <!-- Edit book -->
     <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post" enctype="multipart/form-data">
@@ -47,88 +77,185 @@
         </tr>
       </tbody>
     </table>
-    
-    <!-- Reserve/cancel reseration button -->
-    <div th:if="${bookReserveable}">
-      <td>
-        <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${book.id})}">Reserve</a>
-      </td>
-    </div>
-    <div th:unless="${bookReserveable}">
-      <td>
-        <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${book.id})}">Cancel reservation</a>
-      </td>
-    </div>
     <br>
-
+    <label>Genres:</label>
+    <button th:each="label : ${book.labels}" th:text="${label.name}" class="btn btn-info" disabled></button>
+    <br>
+    <br>
+    <!-- Reserve/cancel reseration button -->
+    <tr th:each="books : ${books}">
+      <div th:switch="${books.value.name()}">
+        <td th:case="'RETURNED'">
+          <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${books.key.id})}">Reserve</a>
+        </td>
+        <td th:case="'RESERVED'">
+          <a class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#cancellationModal{bookId}(bookId = ${books.key.id})}">Cancel</a>
+        </td>
+        <td th:case="'UNAVAILABLE'">
+          <a class="btn disabled" >Unavailable</a>
+        </td>
+        <td th:case="'LOANED'">
+          <a class="btn disabled" >No doubles!</a>
+        </td>
+      </div>
+    </tr>
+  </form>
+  <br>
 
     <!-- Edit book -->
   <div sec:authorize="hasAnyAuthority('1')">
-    <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
-      <div class="visually-hidden">
-        <label for="id">ID: </label>
-        <input type="text" th:field="*{id}" id="id" placeholder="Id" />
-      </div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#bookEditor}">Edit</button>
+    <!-- Modal body -->
+    <div class="modal fade" id="bookEditor">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1>Edit book</h1>
+          </div>
+          <div class="modal-body">
+            <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post" enctype="multipart/form-data">
+              <div class="visually-hidden">
+                <label for="id">ID: </label>
+                <input type="text" th:field="*{id}" id="id" placeholder="Id" />
+              </div>
 
-      <label for="title">Title: </label>
-      <input type="text" th:field="*{title}" id="title" placeholder="Title" />
-      
-      <label for="isbn">Isbn: </label>
-      <input type="text" th:field="*{isbn}" id="lisbn" placeholder="Isbn" />
+              <label for="title">Title: </label>
+              <input type="text" th:field="*{title}" id="title" placeholder="Title" />
+              <br>
+              <br>
+              <label for="isbn">Isbn: </label>
+              <input type="text" th:field="*{isbn}" id="lisbn" placeholder="Isbn" />
+              <br>
+              <br>
+              <label for="author">Author: </label>
+              <input type="text" th:field="*{author}" id="author" placeholder="Author" />
+              <br>
+              <br>
+                <div th:each="genre : ${genres}" class="form-check form-check-inline">
 
-      <label for="author">Author: </label>
-      <input type="text" th:field="*{author}" id="author" placeholder="Author" />
-
-      <label for="image">Book cover: </label>
-      <input type="file" name="image" id="image" placeholder="Image" />
-
-      <div th:if="${bookReserveable}">
-        <input class="btn btn-primary" type="submit" value="Update Book" />
-        <!-- Reserve/cancel reseration button -->
-        <td>
-          <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${book.id})}">Reserve</a>
-        </td>
-      </div>
-      <div th:unless="${bookReserveable}">
-        <input class="btn btn-primary" type="submit" value="Update Book" />
-        <td>
-          <a class="btn btn-secondary" th:href="@{/reservations/cancel/{id}(id=${book.id})}">Cancel reservation</a>
-        </td>
-      </div>
-    </form>
-  </div>
-    
-
-      <!-- Display copies -->
-    <div th:switch="${copies}">
-      <div th:case="*">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Book</th>
-              <th>Version</th>
-              <th>User</th>
-              <th></th>
-            </tr>
-           </thead>
-           <tbody>
-              <tr th:each="copies : ${copies}">
-                <td th:text="${copies.book.title}"></td>
-                <td th:text="${copies.version}"></td>
-                <td th:text="${copies.user == null ? '-' : copies.user.fullName}"></td>
-                <td>
-                  <div sec:authorize="hasAnyAuthority('1')">
-                    <a class="btn btn-danger" th:href="@{/copies/delete/{id1}(id1=${copies.id})}">Delete</a>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  <input  name="labels" 
+                    class="form-check-input" th:value="${genre.key.id}" 
+                    th:text="${genre.key.name}" th:field="*{labels}" 
+                    th:checked="${genre.value}" type="checkbox">
+                </div>
+              <br>
+              <br>
+              <label for="image">Book cover: </label>
+              <input type="file" name="image" id="image" placeholder="Image" />
+              <br>
+              <br>
+              <input class="btn btn-primary" type="submit" value="Update Book" />
+              <input class="btn btn-primary" type="submit" value="Quick add version" th:formaction="@{/copies/quickAdd/{bookId} (bookId=${book.id})}"/>
+            </form>
+            <br>
+            <br>
+                  <!-- Add copy -->
+            <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
+              <label>Add version: </label>
+              <input type="number" th:field="*{version}" id="copy" placeholder="copy" min="1" />
+              <input class="btn btn-primary" type="submit" value="Submit" />
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- version already exists notification -->
+  <div th:if="${param.versionTaken}">
+    <p><mark>Version already exists</mark></p>
+  </div>
+    <!-- version already exists notification -->
+    <div th:if="${param.loaned}">
+      <p><mark>Cannot delete loaned version</mark></p>
+    </div>
+
+  <!-- Display copies -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Book</th>
+        <th>Version</th>
+        <th>Loaned by</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr th:each="copy : ${copies}">
+          <td th:text="${copy.book.title}"></td>
+          <td th:text="${copy.version}"></td>
+          <td th:text="${copy.user == null ? '-' : copy.user.fullName}"></td>
+          <div sec:authorize="hasAnyAuthority('1')">
+            <td>
+              <a class="btn btn-danger" th:data-bs-toggle="modal" th:data-bs-target="@{#deletionModal{id1}(id1=${copy.id})}">Delete</a>
+            </td>
+          </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <!-- ______________End of main page view______________ -->
+
+  <!-- ____________________Editor modal___________________ -->
+  <div class="modal fade" id="bookEditor">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1>Edit book</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
+            <div class="visually-hidden">
+              <label for="id">ID: </label>
+              <input type="text" th:field="*{id}" id="id" placeholder="Id" />
+            </div>
+
+            <label for="title">Title: </label>
+            <input type="text" th:field="*{title}" id="title" placeholder="Title" />
+            <br>
+            <br>
+            <label for="isbn">Isbn: </label>
+            <input type="text" th:field="*{isbn}" id="lisbn" placeholder="Isbn" />
+            <br>
+            <br>
+            <label for="author">Author: </label>
+            <input type="text" th:field="*{author}" id="author" placeholder="Author" />
+            <br>
+            <br>
+            <label for="image">Book cover: </label>
+            <input type="file" name="image" id="image" placeholder="Image" />
+            <br>
+            <br>
+            <input class="btn btn-primary" type="submit" value="Update Book" />
+            <input class="btn btn-primary" type="submit" value="Quick add version" th:formaction="@{/copies/quickAdd/{bookId} (bookId=${book.id})}"/>
+          </form>
+          <br>
+          <br>
+          <!-- Add copy -->
+          <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
+            <label>Add version: </label>
+            <input type="number" th:field="*{version}" id="copy" placeholder="copy" min="1" />
+            <input class="btn btn-primary" type="submit" value="Submit" />
+          </form>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <!-- ________________End of Editor modal___________________ -->
+
+  <!-- ______________________Footer_____________________ -->
+	<div class="mt-auto" style="background-color: black">
+    <div class="container" th:insert="@{../fragments/footer.html}"></div>
+  </div>
+	<!-- __________________ End of Footer_________________ -->
 
   <!-- JavaScript Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"

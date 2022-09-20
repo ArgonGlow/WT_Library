@@ -24,17 +24,36 @@ public class BookService {
 		return repo.findAll();
 	}
 
-	public void saveBook(MultipartFile file, Book book) {
+	public void saveBook(MultipartFile file, Book newBook) {
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 		if (fileName.contains("..")) {
 			System.out.println("Invalid file.");
 		}
 		try {
-			book.setCover_image(Base64.getEncoder().encodeToString(file.getBytes()));
+			newBook.setCover_image(Base64.getEncoder().encodeToString(file.getBytes()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		repo.save(book);
+		repo.save(newBook);
+	}
+	
+	public void updateBook(MultipartFile file, Book newBook) {
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+		if (fileName.contains("..")) {
+			System.out.println("Invalid file.");
+		}
+		try {
+			//use current image if no image is added
+			if(file.isEmpty()) {
+				Book oldBook = find(newBook.getId()).get();
+				newBook.setCover_image(oldBook.getCover_image());
+			} else {
+			newBook.setCover_image(Base64.getEncoder().encodeToString(file.getBytes()));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		repo.save(newBook);
 	}
 	
 	public Optional<Book> find(long id) {

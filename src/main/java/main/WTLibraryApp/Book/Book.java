@@ -2,21 +2,27 @@ package main.WTLibraryApp.Book;
  
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import main.WTLibraryApp.Book.Copy.Copy;
+import main.WTLibraryApp.Book.Label.Label;
 import main.WTLibraryApp.Reservation.Reservation;
 
 @Entity
 @Table(name="books") 
 public class Book {    
-	 
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -33,7 +39,23 @@ public class Book {
 
 	@OneToMany(mappedBy = "book")
 	private List<Copy> copies;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	/*@JoinTable(name = "books_labels", 
+    joinColumns = { @JoinColumn(name = "books_id", referencedColumnName = "id",
+            nullable = false, updatable = true) }, 
+    inverseJoinColumns = { @JoinColumn(name = "labels_id", referencedColumnName = "id",
+            nullable = false, updatable = true) })*/
+	private List<Label> labels;
 
+	public List<Label> getLabels() {
+		return labels;
+	}
+
+	public void setLabels(List<Label> labels) {
+		this.labels = labels;
+	}
+	
 	public String getTitle() {
 		return title;
 	}

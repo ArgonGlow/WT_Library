@@ -44,9 +44,16 @@ public class ReservationController {
 	// list all entries from reservations table
 	// returns list of Reservation objects
 	@GetMapping(value = "/reservations")
-	public String findAllReservations(Model model) {
-		model.addAttribute("reservations", reservationService.allReservations());
-		return "/reservations/reservations";
+	public String findAllReservations(Model model, String keyword) {	
+		List<Reservation> list;
+		if (keyword != null) {
+            list = reservationService.findByKeyword(keyword);
+        } else {
+            list = reservationService.allReservations();
+        }
+		
+        model.addAttribute("reservations", list);
+        return "/reservations/reservations";
 	}
 	
 	@GetMapping(value = "/reservations/user/{id}")
@@ -91,8 +98,8 @@ public class ReservationController {
 			long userId = currentUser.getId();
 			
 			//check if book is already reserved
-	    	List<Reservation> reservations = reservationService.findByBookAndUser(book, currentUser);
-	    	if(reservations.size() <= 0) {
+			if(!(book.getReservations().stream().anyMatch(item -> currentUser.equals(item.getUser())) || book.getCopies().stream().anyMatch(item -> currentUser.equals(item.getUser())))) {
+				
 	    		// Initialization
 	    		User user = userService.findUser(userId);
 	    		
@@ -108,8 +115,44 @@ public class ReservationController {
 
 					//log in transactions table
 					transactionService.logReservation(user, book, TransactionType.RESERVED);
-	    		}
-	    	}
+		    	}
+			}
+		}
+
+		String path = "redirect:/books/edit/{bookId}";
+		return path;
+	}
+	
+	@GetMapping("reservations/createReservationBI/{bookId}")
+	public String createReservationBookInterface(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication, Model model) {
+		Optional<Book> bookOptional = bookService.find(bookId);
+		if (bookOptional.isPresent()) {
+			Book book = bookOptional.get();
+
+			//get logged-in user
+			User currentUser = userService.findByEmail(authentication.getName());
+			long userId = currentUser.getId();
+			
+			//check if book is already reserved
+			if(!(book.getReservations().stream().anyMatch(item -> currentUser.equals(item.getUser())) || book.getCopies().stream().anyMatch(item -> currentUser.equals(item.getUser())))) {
+				
+	    		// Initialization
+	    		User user = userService.findUser(userId);
+	    		
+	    		if (bookOptional.isPresent()) {
+		    		// Create object
+					Reservation reservation = new Reservation();
+					reservation.setBook(book);
+					reservation.setUser(user);
+					reservationService.saveReservation(reservation);
+					
+					// Send email
+					emailService.sendSimpleMessage(user.getEmail(), "Reserved " + book.getTitle(), "Dear " + user.getFirst_name() + " " + user.getLast_name() + ",\nYou seem to believe we will help you get your hands on "+ book.getTitle()+" written by "+book.getAuthor()+". People can believe anything these days I suppose. Well..\nSee you!\n"+currentUser.getFirst_name()+" "+currentUser.getLast_name());
+
+					//log in transactions table
+					transactionService.logReservation(user, book, TransactionType.RESERVED);
+		    	}
+			}
 		}
 
 		String path = "redirect:/books";
@@ -117,8 +160,27 @@ public class ReservationController {
 	}
 	
 	// Cancels a user's reservations by removing it from the reservations table
-	@GetMapping("reservations/cancel/{bookId}")
+	@GetMapping("reservations/cancelBI/{bookId}")
 	public String cancelReservation(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
+		
+		Optional<Book> optional = bookService.find(bookId);
+		if (optional.isPresent()) {
+			Book book = optional.get();
+
+			//get logged-in user
+			User currentUser = userService.findByEmail(authentication.getName());
+			
+			List<Reservation> reservation = reservationService.findByBookAndUser(book, currentUser);
+			reservationService.deleteReservation(reservation.get(0));
+		}
+	    
+		String path = "redirect:/books/edit/{bookId}";
+		return path;
+	}
+	
+	// Cancels a user's reservations by removing it from the reservations table
+	@GetMapping("reservations/cancel/{bookId}")
+	public String cancelReservationCatalog(@PathVariable long bookId, @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
 		
 		Optional<Book> optional = bookService.find(bookId);
 		if (optional.isPresent()) {

@@ -1,21 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Bootstrap CSS Import -->
-  <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
-  integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" 
-  crossorigin="anonymous" />
-  <!-- General CSS -->
-  <link rel="stylesheet" href="../../static/style.css" th:href="@{../../style.css}" />
-  <title>Working Talent Library - Reservations</title>
+<head th:include="@{../fragments/sharedHead.html}">
+  <title id="pageTitle">Working Talent Library - Reservations</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
   <!--______________navigation bar______________-->
-  <!-- <div th:insert="@{../fragments/navbar.html}" id="cur-nav"></div> -->
   <div th:insert="@{../fragments/navbar-new.html}"></div>
   <!--______________end navigation bar______________-->
 
@@ -24,10 +13,18 @@
     <br>
     <h1>Transaction History</h1>
 
-    <table class="table">
+    <!-- Search Book Function -->
+    <div id="search">
+      <form th:action="@{/transactions}" action="get">
+        <input type="text" name="keyword" th:value="${keyword}" placeholder="Search..." />
+        <button type="submit" class="btn btn-primary" >Search</button>
+        <a href="/transactions" class="btn btn-secondary">Reset</a>
+      </form>
+    </div>
+
+    <table class="table table-striped">
       <thead>
         <tr>
-          <th>ID</th>
           <th>Title</th>
           <th>User</th>
           <th>Status</th>
@@ -36,7 +33,7 @@
       </thead>
       <tbody>
         <tr th:each="transaction : ${transactions}">
-          <td th:text="@{{bookId}.{version}(bookId = ${transaction.book.id}, version = ${transaction.copy?.version})}"></td>
+          <!-- <td th:text="@{ {bookId}.{version}(bookId = ${transaction.book.id}, version = ${transaction.copy?.version})}"></td> -->
           <td th:text="${transaction.book.title}"></td>
           <td th:text="${transaction.user.fullName}"></td>
           <td th:text="${transaction.transaction_type}"></td>
@@ -50,6 +47,12 @@
   </div>
   <!-- ______________End of main page view______________ -->
 
+  <!-- ______________________Footer_____________________ -->
+	<div class="mt-auto" style="background-color: black">
+    <div class="container" th:insert="@{../fragments/footer.html}"></div>
+  </div>
+	<!-- __________________ End of Footer_________________ -->
+  
   <!-- JavaScript Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"

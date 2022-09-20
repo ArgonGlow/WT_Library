@@ -10,15 +10,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import main.WTLibraryApp.Book.Book;
 import main.WTLibraryApp.Transaction.Transaction;
 import main.WTLibraryApp.User.User;
 
+
 @Entity
 @Table(name="copies")
 public class Copy {
-	 
-	// double-primary-key object
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -28,8 +30,8 @@ public class Copy {
 
 	@ManyToOne(optional = true)
 	private User user;
-	
-	private Long version;
+
+	private Integer version = 1;
 	
 	@OneToMany(mappedBy = "copy", orphanRemoval = false)
 	private List<Transaction> transactions;
@@ -50,11 +52,11 @@ public class Copy {
 		this.book = book;
 	}
 
-	public Long getVersion() {
+	public Integer getVersion() {
 		return version;
 	}
-	
-	public void setVersion(Long version) {
+
+	public void setVersion(Integer version) {
 		this.version = version;
 	}
 

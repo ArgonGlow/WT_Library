@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import main.WTLibraryApp.Book.Book;
@@ -38,6 +39,10 @@ public class ReservationService {
 	
 	public List<Reservation> findByBookAndUser(Book book, User user){
 		return repo.findByBookAndUser(book, user);
+	}
+	
+	public List<Reservation> findByKeyword(String keyword){
+		return repo.findByKeyword(keyword);
 	}
 	
 }

@@ -52,12 +52,12 @@ public class UserService {
 		return users;
 	}
 	
-	public void deleteUser(User users, long id) {
-		users.setId(id);
-		users.setFirst_name("Removed");
-		users.setLast_name("Removed");
-		users.setActive(false);
-		users.setPassphrase(users.getPassphrase());
-		repo.save(users);
+	public void deleteUser(User user, long id) {
+		user.setId(id);
+		user.setFirst_name(String.valueOf(id));
+		user.setLast_name("Removed");
+		user.setActive(false);
+		user.setPassphrase(user.getPassphrase());
+		repo.save(user);
 	}
 }
