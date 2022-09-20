@@ -14,7 +14,7 @@
   <!-- General CSS -->
   <link rel="stylesheet" href="../../static/style.css" th:href="@{../style.css}" />
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
   <!--_____________navigation bar_______________-->
   <div th:insert="@{../fragments/navbar.html}"></div>
   <!--______________end navigation bar______________-->
@@ -64,10 +64,10 @@
   <!-- ______________End of main page view______________ -->
 
   <!-- ______________________Footer_____________________ -->
-  <div style="background-color: black">
+	<div class="mt-auto" style="background-color: black">
     <div class="container" th:insert="@{../fragments/footer.html}"></div>
   </div>
-  <!-- __________________ End of Footer_________________ -->
+	<!-- __________________ End of Footer_________________ -->
   
   <!-- Javascript -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
