@@ -84,12 +84,22 @@
             <input type="password" th:field="*{passphrase}" id="passphrase" placeholder="" />
             <br>
             <br>
+            <!-- <label >Admin: </label>
+            <input type="number" placeholder="yes" th:field="*{role}" min="1" max="2"> -->
             <br>
             <input class="btn btn-primary" type="submit" value="Update User" />
             <div sec:authorize="hasAnyAuthority('1')">
               <a class="btn btn-danger" th:data-bs-toggle="modal" th:data-bs-target="@{#deletionModal}">Delete</a>
             </div>
           </form>
+          <br>
+          <form th:action="@{/users/admin/{userId} (userId=${user.id})}">
+          <select th:field="*{user.role}">
+            <option value="2" >User</option>
+            <option value="1" >Admin</option>
+          </select>
+          <input class="btn btn-secondary" type="submit" value="submit">
+        </form>
         </div>
 
         <!-- <div class="modal-footer">
@@ -113,6 +123,12 @@
     <!-- Edit user -->
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#userEditor}">Edit</button>
+    <div th:if="${param.sepeku}">
+      <p><mark>Cannot delete self</mark></p>
+    </div>
+    <div th:if="${param.noadmin}">
+      <p><mark>Cannot change own role</mark></p>
+    </div>
     <br>
 
     <!-- Displays loaned books and version -->

@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import main.WTLibraryApp.Book.Book;
 import main.WTLibraryApp.Book.Copy.Copy;
+import main.WTLibraryApp.Reservation.Reservation;
 import main.WTLibraryApp.User.User;
 
 @Service
@@ -40,5 +42,9 @@ public class TransactionService {
 		newTransaction.setBook(copy.getBook());
 		newTransaction.setCopy(copy);
 		repo.save(newTransaction);
+	}
+	
+	public List<Transaction> findByKeyword(String keyword){
+		return repo.findByKeyword(keyword);
 	}
 }

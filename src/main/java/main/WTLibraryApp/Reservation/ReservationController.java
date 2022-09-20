@@ -44,9 +44,16 @@ public class ReservationController {
 	// list all entries from reservations table
 	// returns list of Reservation objects
 	@GetMapping(value = "/reservations")
-	public String findAllReservations(Model model) {
-		model.addAttribute("reservations", reservationService.allReservations());
-		return "/reservations/reservations";
+	public String findAllReservations(Model model, String keyword) {	
+		List<Reservation> list;
+		if (keyword != null) {
+            list = reservationService.findByKeyword(keyword);
+        } else {
+            list = reservationService.allReservations();
+        }
+		
+        model.addAttribute("reservations", list);
+        return "/reservations/reservations";
 	}
 	
 	@GetMapping(value = "/reservations/user/{id}")
