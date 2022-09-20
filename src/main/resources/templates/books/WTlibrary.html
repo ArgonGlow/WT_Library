@@ -75,6 +75,9 @@
             <td th:case="'RESERVED'">
               <a class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#cancellationModal{bookId}(bookId = ${books.key.id})}">Cancel</a>
             </td>
+            <td th:case="'UNAVAILABLE'">
+              <a class="btn disabled" >Unavailable</a>
+            </td>
             <td th:case="'LOANED'">
               <a class="btn disabled" >No doubles!</a>
             </td>
