@@ -35,22 +35,27 @@
     <br>
     <h1>Reservations</h1>
 
-    <!-- <input placeholder="Search Title...", type="text", id="searchBar">
-    <button onclick="search()">Search</button> -->
+    <!-- Search Book Function -->
+    <div id="search">
+      <form th:action="@{/reservations}" action="get">
+        <input type="text" name="keyword" th:value="${keyword}" placeholder="Search..." />
+        <button type="submit" class="btn btn-primary" >Search</button>
+        <a href="/reservations" class="btn btn-secondary">Reset</a>
+      </form>
+    </div>
+
     <div th:switch="${reservations}">
       <div th:case="*">
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Reservation ID</th>
               <th>Book Title</th>
-              <th>By User</th>
-              <th>Actions</th>
+              <th>Reserved by</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             <tr th:each="reservation : ${reservations}">
-              <td th:text="${reservation.reservationId}"></td>
               <td th:text="${reservation.book.title}"></td>
               <td th:text="${reservation.user.fullName}"></td>
               <td>

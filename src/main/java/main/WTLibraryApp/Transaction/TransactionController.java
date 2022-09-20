@@ -1,5 +1,6 @@
 package main.WTLibraryApp.Transaction;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import main.WTLibraryApp.Book.Book;
 import main.WTLibraryApp.Book.BookService;
+import main.WTLibraryApp.Reservation.Reservation;
 import main.WTLibraryApp.User.User;
 import main.WTLibraryApp.User.UserService;
 
@@ -31,8 +33,17 @@ public class TransactionController {
 	// list all entries from transactions table
 	// returns list of Transaction objects
 	@GetMapping(value = "/transactions")
-	public String findAllTransactions(Model model) {
-		model.addAttribute("transactions", transactionService.allTransactions());
+	public String findAllTransactions(Model model, String keyword) {
+		
+		List<Transaction> list;
+		if (keyword != null) {
+            list = transactionService.findByKeyword(keyword);
+        } else {
+            list = transactionService.allTransactions();
+        }
+		
+        model.addAttribute("transactions", list);
+//		model.addAttribute("transactions", transactionService.allTransactions());
 		return "transactions/transaction-list";
 	}
 	

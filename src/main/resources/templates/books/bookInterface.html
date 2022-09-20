@@ -55,7 +55,7 @@
     <h1>Book info</h1>
 
     <!-- Book cover image -->
-    <img th:src="*{'data:image/jpeg;base64, '+{book.cover_image}}" alt="Book Cover" width="100" height="100" />
+    <img th:src="*{'data:image/jpeg;base64, '+{book.cover_image}}" alt="Book Cover" width="300" height="300" />
 
     <!-- Edit book -->
     <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post" enctype="multipart/form-data">
@@ -163,7 +163,7 @@
       <tr>
         <th>Book</th>
         <th>Version</th>
-        <th>User</th>
+        <th>Loaned by</th>
         <th></th>
       </tr>
       </thead>

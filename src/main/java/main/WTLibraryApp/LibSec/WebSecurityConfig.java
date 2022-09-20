@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/images/*","/fonts/*", "/style.css", "/favicon.ico").permitAll()
 		.and()
          	.authorizeRequests()
-         	.antMatchers("/","/books","/reservations/createReservation/*","/reservations/cancel/*","/reservations/cancelUI/*","/books/edit/*","/user").hasAnyAuthority("1","2")
+         	.antMatchers("/","/books","/reservations/createReservation/*","/reservations/createReservationBI/*","/reservations/cancel/*","/reservations/cancelUI/*","/books/edit/*","/user").hasAnyAuthority("1","2")
         .and()
         	.authorizeRequests()
             .antMatchers("/**").hasAnyAuthority("1")
