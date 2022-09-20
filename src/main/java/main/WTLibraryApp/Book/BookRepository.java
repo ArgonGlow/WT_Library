@@ -23,6 +23,9 @@ public interface BookRepository extends JpaRepository<Book, Long>{
 	List<Book> findBookByReservationUserId(long userId);
 
 	//finds book by keyword
-    @Query(value = "select * from books where title like %:keyword% or author like %:keyword% or isbn like %:keyword%", nativeQuery = true)
+    @Query(value = "select DISTINCT books.* \r\n"
+    		+ "from books LEFT OUTER JOIN books_labels ON books.id = books_labels.book_id \r\n"
+    		+ "LEFT OUTER JOIN labels ON books_labels.labels_id = labels.id \r\n"
+    		+ "where title like %:keyword% or author like %:keyword% or isbn like %:keyword% or name like %:keyword%", nativeQuery = true)
     List<Book> findByKeyword(@Param("keyword") String keyword);
 }
