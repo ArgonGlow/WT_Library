@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import main.WTLibraryApp.Book.Copy.Copy;
 import main.WTLibraryApp.Book.Copy.CopyService;
+import main.WTLibraryApp.Book.Label.Label;
+import main.WTLibraryApp.Book.Label.LabelService;
 import main.WTLibraryApp.Reservation.Reservation;
 import main.WTLibraryApp.Reservation.ReservationService;
 import main.WTLibraryApp.Transaction.TransactionType;
@@ -41,6 +43,9 @@ public class BookController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private LabelService labelService;
 	   
 	//	Returns all books from the books table.      
 	@GetMapping("/books")
@@ -112,6 +117,11 @@ public class BookController {
 			bookReserveable = reservation.size() <= 0;
 			
 	        model.addAttribute("bookReserveable", bookReserveable);
+	        Map<Label, Boolean> labels = new LinkedHashMap<>();
+	        for(Label label: labelService.allLabels()) {
+	        	labels.put(label, book.getLabels().contains(label));
+	        }
+	        model.addAttribute("genres", labels);
 		}
 		
 		return "books/bookInterface";
@@ -123,7 +133,6 @@ public class BookController {
 		if (result.hasErrors()) {
 			return "books/bookInterface";
 		}
-		
 		bookService.saveBook(file, book);
 		return "redirect:/books/edit/{bookId}";
 	}
