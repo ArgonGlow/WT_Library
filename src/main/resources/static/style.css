@@ -2,7 +2,7 @@
   font-family: 'EuclidSquare';
   font-style: normal;
   font-weight: normal;
-  src: url('./EuclidSquare-Regular.otf') format('opentype');
+  src: url('./fonts/EuclidSquare-Regular.otf') format('opentype');
 }
 
 * {
@@ -14,6 +14,7 @@ body {
   /* font-size: 48px; */
   background-color: white;
   /* background-color: #131516; */
+  margin-bottom: 0;
 }
 
 /* Bootstrap Buttons */
@@ -49,11 +50,18 @@ body {
   --bs-btn-disabled-border-color: #008200;
   --bs-gradient: none;
 }
+/* End of Bootstrap Buttons */
 
+.edit-book-buttons {
+  margin: 1rem 0;
+}
 
+/* Tables */
 tr {
   vertical-align: middle;
 }
+/* End of Tables */
+
 
 /* Navbar link-list */
 .navbar {
@@ -75,6 +83,19 @@ tr {
   display: block !important;
     left: 100%;
     margin-top: -37px;
+}
+
+footer {
+  /* background-color: #000; */
+  color: #fff;
+}
+
+footer a {
+  color: #fff;
+}
+
+footer a:hover {
+  color: #00e600;
 }
 
 mark {
