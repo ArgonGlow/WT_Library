@@ -47,10 +47,6 @@ public class Book {
 		this.labels = labels;
 	}
 	
-	public void addLabel(Label label) {
-		this.labels.add(label);
-	}
-
 	public String getTitle() {
 		return title;
 	}
