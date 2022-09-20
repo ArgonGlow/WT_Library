@@ -42,6 +42,14 @@ public class BookController {
 	
 	@Autowired
 	private LabelService labelService;
+	
+	private Map<Label, Boolean> AvailableLabels(Book book){
+        Map<Label, Boolean> labels = new LinkedHashMap<>();
+        for(Label label: labelService.allLabels()) {
+        	labels.put(label, book.getLabels() != null ? book.getLabels().contains(label): false);
+        }
+        return labels;
+	}
 	   
 	//	Returns all books from the books table.      
 	@GetMapping("/books")
@@ -75,7 +83,8 @@ public class BookController {
 	
 	//	Adds a new book to the books table
 	@GetMapping("/books/create")
-	public String create(Book book) {
+	public String create(Model model, Book book) {
+		model.addAttribute("genres", AvailableLabels(book));
 		return "books/createBook";
 	}  
 	
@@ -132,6 +141,7 @@ public class BookController {
         			: TransactionType.RETURNED);
 	        
 	        model.addAttribute("books", mapBookReservations);
+	        model.addAttribute("genres", AvailableLabels(book));
 		}
 		
 		return "books/bookInterface";

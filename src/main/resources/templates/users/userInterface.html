@@ -3,7 +3,7 @@
 <head th:include="@{../fragments/sharedHead.html}">
 	<title id="pageTitle">Working Talent Library - Edit User</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 	<!--______________navigation bar______________-->
 	<!-- <div th:insert="@{../fragments/navbar.html}" id="cur-nav"></div> -->
   <div th:insert="@{../fragments/navbar-new.html}"></div>
@@ -51,7 +51,6 @@
   <!-- ______________End of Deletion Modal______________ -->
 
   <!-- ___________________Editor modal______________________ -->
-
   <div class="modal fade" id="userEditor">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -101,14 +100,12 @@
           <input class="btn btn-secondary" type="submit" value="submit">
         </form>
         </div>
-
         <!-- <div class="modal-footer">
           <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
         </div> -->
       </div>
     </div>
   </div>
-
   <!-- ___________________End of Editor modal_______________ -->
 
   <!-- ________Deletion modal__________ -->
@@ -206,7 +203,7 @@
 	<!-- ______________End of main page view______________ -->
 
 	<!-- ______________________Footer_____________________ -->
-	<div style="background-color: black">
+	<div class="mt-auto" style="background-color: black">
     <div class="container" th:insert="@{../fragments/footer.html}"></div>
   </div>
 	<!-- __________________ End of Footer_________________ -->

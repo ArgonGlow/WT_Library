@@ -3,7 +3,7 @@
 <head th:include="@{../fragments/sharedHead.html}">
   <title id="pageTitle">WT library</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
   <!--______________navigation bar______________-->
   <!-- <div th:insert="@{../fragments/navbar.html}" id="cur-nav"></div> -->
   <div th:insert="@{../fragments/navbar-new.html}"></div>
@@ -50,7 +50,7 @@
           <!-- <th>ID</th> -->
           <th>Cover</th>
           <th>title</th>
-          <!-- <th>isbn</th> -->
+          <th>Genres</th>
           <th>author</th>
           <th></th>
           <th></th>
@@ -61,6 +61,7 @@
           <!-- <td th:text="${books.key.id}"></td> -->
           <td><img th:src="*{'data:image/jpeg;base64, '+{books.key.cover_image}}" alt="Book Cover" width="100" height="100" /></td>
           <td th:text="${books.key.title}"></td>
+          <td><button th:each="label : ${books.key.labels}" th:text="${label.name}" class="btn btn-info" disabled></button></td>
           <!-- <td th:text="${books.key.isbn}"></td> -->
           <td th:text="${books.key.author}"></td>
           <td>
@@ -88,10 +89,10 @@
   <!-- ______________End of main page view______________ -->
   
   <!-- ______________________Footer_____________________ -->
-  <div style="background-color: black">
+	<div class="mt-auto" style="background-color: black">
     <div class="container" th:insert="@{../fragments/footer.html}"></div>
   </div>
-  <!-- __________________ End of Footer_________________ -->
+	<!-- __________________ End of Footer_________________ -->
 
   <!-- JavaScript Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"

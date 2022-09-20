@@ -78,6 +78,9 @@ tr {
   color: white;
 
 }
+.dropdown-item {
+  margin: 3px 0;
+}
 .dropdown-item:hover {
   background-color: rgb(15, 110, 40);
   color: white;
