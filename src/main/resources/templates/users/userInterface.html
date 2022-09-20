@@ -131,42 +131,25 @@
     </div>
     <br>
 
-    <!-- Displays loaned books -->
+    <!-- Displays loaned books and version -->
     <table class="table table-striped">
+      <br>
+      <h2>Loaned</h2>
       <thead>
-        <h2>Loaned</h2>
         <tr>
-          <th>Book id</th>
+          <th>Copy</th>
           <th>Title</th>
           <th>Author</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="books : ${books}">
-          <td th:text="${books.id}"></td>
-          <td th:text="${books.title}"></td>
-          <td th:text="${books.author}"></td>
-        </tr>
-
-      </tbody>
-    </table>
-
-    <!-- Displays copies op loaned books -->
-    <table class="table table-striped">
-      <thead>
-        <br>
-        <tr>
-          <th>Book</th>
-          <th>Version</th>
-          <th>User</th>
-          <th></th>
+          <th>ISBN</th>
+          <th sec:authorize="hasAnyAuthority('1')">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr th:each="copies : ${copies}">
+          <td th:text="@{ {book}.{version}(book = ${copies.book.id}, version = ${copies.version})}"></td>
           <td th:text="${copies.book.title}"></td>
-          <td th:text="${copies.version}"></td>
-          <td th:text="${copies.user.fullName}"></td>
+          <td th:text="${copies.book.author}"></td>
+          <td th:text="${copies.book.isbn}"></td>
           <div th:switch="${copies.user}">
             <td th:case=null></td>
             <td th:case="*">
@@ -185,21 +168,33 @@
         <br>
         <h2>Reserved</h2>
         <tr>
-          <th>Reservation id</th>
+          <th>Reservation #</th>
           <th>Title</th>
           <th>Author</th>
-          <th></th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr th:each="reservation : ${user.reservations}">
-          <td th:text="${reservation.book.title}"></td>
-          <td th:text="${reservation.book.author}"></td>
+          <td th:text="${reservation.reservationId}"></td>
+					<td th:text="${reservation.book.title}"></td>
+					<td th:text="${reservation.book.author}"></td>
           <!-- <td>
             <a class="btn btn-secondary" th:href="@{/reservations/cancelUI/{reservationId} (reservationId=${reservation.reservationId})}">Cancel reservation</a>
           </td> -->
           <td>
-            <button type="button" class="btn btn-secondary" th:id="${reservation.reservationId}" 
+            <span class="dropdown" sec:authorize="hasAnyAuthority('1')">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Loan</button>
+              <ul class="dropdown-menu">
+                <li th:each="copy : ${reservation.book.copies}" th:switch="${copy.user}">
+                  <a th:case="null" class="dropdown-item" th:text="@{ {book}.{version}(book = ${copy.book.id}, version = ${copy.version}) }" 
+                  th:href="@{/copies/loan/{reservationId}/{copyId}/{userId} (reservationId=${reservation.reservationId}, copyId=${copy.id}, userId=${user.id})}"></a>
+                  
+                  <a th:case="*" class="dropdown-item disabled" th:text="@{ {book}.{version}(book = ${copy.book.id}, version = ${copy.version}) }">Unavailable</a>
+                </li>
+              </ul>
+            </span>
+            <button type="button" class="btn btn-danger" th:id="${reservation.reservationId}" 
               data-bs-toggle="modal" th:data-bs-target="@{#cancellationModal}">
               Cancel
             </button>
@@ -207,38 +202,7 @@
         </tr>
       </tbody>
     </table>
-
-    <!-- Displays copies of reserved books -->
-    <div sec:authorize="hasAnyAuthority('1')">
-      <table class="table table-striped">
-        <thead>
-          <br>
-          <tr>
-            <th>Book</th>
-            <th>Version</th>
-            <th>User</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <div th:each="reservation : ${user.reservations}">
-            <tr th:each="copy : ${reservation.book.copies}">
-              <td th:text="${copy.book.title}"></td>
-              <td th:text="${copy.version}"></td>
-              <td th:text="${copy.user?.fullName}"></td>
-              <div th:switch="${copy.user}">
-                <td th:case=null>
-                  <a class="btn btn-primary"
-                    th:href="@{/copies/loan/{reservationId}/{copyId}/{userId} (reservationId=${reservation.reservationId}, copyId=${copy.id}, userId=${user.id})}">loan</a>
-                </td>
-              </div>
-            </tr>
-          </div>
-        </tbody>
-      </table>
-    </div>
   </div>
-
 	<!-- ______________End of main page view______________ -->
 
 	<!-- ______________________Footer_____________________ -->
