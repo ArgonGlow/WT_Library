@@ -36,6 +36,10 @@ public class UserService {
 		repo.save(users);
 	}
 	
+	public void changePassword(User user, long id) {
+		System.out.println("This works!");
+	}
+	
 	public User findUser(long id) {
 		User users = repo.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id: " + id));

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import main.WTLibraryApp.Book.BookService;
 import main.WTLibraryApp.Book.Copy.CopyService;
@@ -114,6 +116,39 @@ public class UserController {
 		} 
 		service.saveUser(users, id);
 		return "redirect:/users";
+	}
+	
+//	Shows change password form in browser
+	@GetMapping("/users/edit-user/{id}/change-password")
+	public String showChangePassword(@PathVariable("id") long id, Model model) {
+		User user = service.findUser(id);
+		model.addAttribute("user", user);
+		
+		return "users/changePassword";
+	}
+	
+//	Edits password from the user
+	@PostMapping("/users/edit-user/{id}/change-password")
+	public String changePassword(@PathVariable("id") long id, Model model, 
+			@RequestParam(name = "newPassword") String newPass,
+			@RequestParam(name = "confirmPassword") String confirmPass,
+			@RequestParam(name = "oldPassword") String oldPass) {
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		User user = service.findUser(id);
+		
+		boolean correctNewPass = newPass.equals(confirmPass);
+		boolean correctOldPass = encoder.matches(oldPass, user.getPassphrase());
+		
+		if (correctNewPass && correctOldPass) {
+			user.setPassphrase(encoder.encode(newPass));
+			service.saveUser(user);
+			return "redirect:/users/edit-user/"+id;
+		} else {
+			return "redirect:/users/edit-user/"+id+"/change-password";
+		}
+		
+		
 	}
 
 //	Deletes an user from the table.

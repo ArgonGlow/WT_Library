@@ -40,11 +40,12 @@
 
 			<label for="email">Email: </label>
 			<input type="text" th:field="*{email}" id="email" placeholder="Email" />
-
+			
 			<label for="passphrase">Passphrase: </label>
 			<input type="password" th:field="*{passphrase}" id="passphrase" placeholder="" />
 
 			<input class="btn btn-primary" type="submit" value="Update User" />
+			<a th:href="@{./{id}/change-password(id=${user.id})}" class="btn btn-primary">Change password</a>
 			<div sec:authorize="hasAnyAuthority('1')">
 				<a class="btn btn-danger" th:href="@{/users/delete-user/{id}(id=${user.id})}">Delete</a>
 			</div>
