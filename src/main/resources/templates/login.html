@@ -18,7 +18,7 @@
   <style>
     #loginForm {
       position:fixed;
-      top:45%;
+      top:40%;
       left: calc(50vw - 105px);
       text-align: center;
     }
@@ -47,28 +47,28 @@
     </div>
   </nav>
 
-
-  <!-- Invalid login responses -->
-  <div th:if = "${param.error}">
-   <p>Invalid username and password.</p>
+  <div class="container">
+    <!-- Invalid login responses -->
+    <div th:if = "${param.error}">
+    <p>Invalid username and password.</p>
+    </div>
+    <div th:if = "${param.logout}">
+    <p>You have been logged out.</p>
+    </div>
+    
+    <!-- Login prompts -->
+    <form id="loginForm" th:action = "@{/login}" method = "post">
+      <div class="username">
+        <label> User Name: </label><input type = "text" name = "username"/>
+      </div>
+      <div class="password">
+        <label> Password: </label><input type = "password" name = "password"/>
+      </div>
+      <div>
+        <input class="btn btn-primary" type = "submit" value = "Sign In"/>
+      </div>
+    </form>
   </div>
-  <div th:if = "${param.logout}">
-   <p>You have been logged out.</p>
-  </div>
-  
-  <!-- Login prompts -->
-  <form id="loginForm" th:action = "@{/login}" method = "post">
-    <div class="username">
-      <label> User Name: </label><input type = "text" name = "username"/>
-    </div>
-    <div class="password">
-      <label> Password: </label><input type = "password" name = "password"/>
-    </div>
-    <div>
-      <input class="btn btn-primary" type = "submit" value = "Sign In"/>
-    </div>
-  </form>
-
   <!-- ______________________Footer_____________________ -->
 	<div class="mt-auto" style="background-color: black">
     <div class="container" th:insert="@{../fragments/footer.html}"></div>
