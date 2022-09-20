@@ -70,7 +70,6 @@ public class CopyController {
 		Optional<Copy> copyOptional = copyService.findCopyById(id);
 		if (copyOptional.isPresent()) {
 			Copy copy = copyOptional.get();
-			System.out.println(copy.getUser().getFullName());
 			if(copy.getUser()==null) {
 				copyService.deleteCopy(copy);
 			} else {
