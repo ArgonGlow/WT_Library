@@ -1,11 +1,8 @@
 package main.WTLibraryApp.Book;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import main.WTLibraryApp.Book.Copy.Copy;
-import main.WTLibraryApp.Book.Copy.CopyService;
 import main.WTLibraryApp.Book.Label.Label;
 import main.WTLibraryApp.Book.Label.LabelService;
 import main.WTLibraryApp.Reservation.Reservation;
@@ -77,6 +73,7 @@ public class BookController {
         	mapBookReservations.put(reservationBook, 
         			reservationBook.getReservations().stream().anyMatch(item -> currentUser.equals(item.getUser())) ? TransactionType.RESERVED 
         			: reservationBook.getCopies().stream().anyMatch(item -> currentUser.equals(item.getUser()) ) ? TransactionType.LOANED 
+        			: reservationBook.getCopies().isEmpty() ? TransactionType.UNAVAILABLE	
         			: TransactionType.RETURNED);
         }
 
@@ -120,12 +117,23 @@ public class BookController {
 			model.addAttribute("copy", newCopy);
 	
 			User currentUser = userService.findByEmail(authentication.getName());
-		        
-			boolean bookReserveable;
-			List<Reservation> reservation = reservationService.findByBookAndUser(book, currentUser);
-			bookReserveable = reservation.size() <= 0;
-			
-	        model.addAttribute("bookReserveable", bookReserveable);
+
+	        Map<Label, Boolean> labels = new LinkedHashMap<>();
+	        for(Label label: labelService.allLabels()) {
+	        	labels.put(label, book.getLabels().contains(label));
+	        }
+	        model.addAttribute("genres", labels);
+		
+	        //create map of (Book, bool) to establish 1 time reservations
+	        Map<Book, TransactionType> mapBookReservations = new LinkedHashMap<>();
+	       
+        	mapBookReservations.put(book, 
+        			book.getReservations().stream().anyMatch(item -> currentUser.equals(item.getUser())) ? TransactionType.RESERVED 
+        			: book.getCopies().stream().anyMatch(item -> currentUser.equals(item.getUser()) ) ? TransactionType.LOANED 
+        			: book.getCopies().isEmpty() ? TransactionType.UNAVAILABLE	
+        			: TransactionType.RETURNED);
+	        
+	        model.addAttribute("books", mapBookReservations);
 	        model.addAttribute("genres", AvailableLabels(book));
 		}
 		

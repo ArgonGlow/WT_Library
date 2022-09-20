@@ -31,9 +31,7 @@ public class Copy {
 	@ManyToOne(optional = true)
 	private User user;
 
-	private Integer defaultVersion = 1;
-	
-	private Integer version = defaultVersion;
+	private Integer version = 1;
 	
 	@OneToMany(mappedBy = "copy", orphanRemoval = false)
 	private List<Transaction> transactions;

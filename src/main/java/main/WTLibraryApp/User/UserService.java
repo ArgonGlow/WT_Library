@@ -50,7 +50,7 @@ public class UserService {
 	
 	public void deleteUser(User user, long id) {
 		user.setId(id);
-		user.setFirst_name("Removed");
+		user.setFirst_name(String.valueOf(id));
 		user.setLast_name("Removed");
 		user.setActive(false);
 		user.setPassphrase(user.getPassphrase());
