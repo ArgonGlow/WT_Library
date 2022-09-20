@@ -24,7 +24,20 @@
       
       <label for="author">Author: </label>
       <input  type="text"  th:field="*{author}" id="author" placeholder="Author" />
+      <br>
+      <br>
+      
+      <label for="labels">Genres: </label>
+      <div th:each="genre : ${genres}" class="form-check form-check-inline">
 
+        <input  name="labels" 
+          class="form-check-input" th:value="${genre.key.id}" 
+          th:text="${genre.key.name}" th:field="*{labels}" 
+          th:checked="${genre.value}" type="checkbox">
+      </div>
+      
+      <br>
+      <br>
       <label for="image">Book cover: </label>
       <input type="file" name="image" id="image" placeholder="Image" />
 

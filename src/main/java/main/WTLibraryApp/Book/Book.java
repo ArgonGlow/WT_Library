@@ -2,11 +2,15 @@ package main.WTLibraryApp.Book;
  
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -36,7 +40,12 @@ public class Book {
 	@OneToMany(mappedBy = "book")
 	private List<Copy> copies;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
+	/*@JoinTable(name = "books_labels", 
+    joinColumns = { @JoinColumn(name = "books_id", referencedColumnName = "id",
+            nullable = false, updatable = true) }, 
+    inverseJoinColumns = { @JoinColumn(name = "labels_id", referencedColumnName = "id",
+            nullable = false, updatable = true) })*/
 	private List<Label> labels;
 
 	public List<Label> getLabels() {
