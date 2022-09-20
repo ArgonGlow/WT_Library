@@ -53,9 +53,7 @@ public class ReservationController {
         }
 		
         model.addAttribute("reservations", list);
-		
-//		model.addAttribute("reservations", reservationService.allReservations());
-		return "/reservations/reservations";
+        return "/reservations/reservations";
 	}
 	
 	@GetMapping(value = "/reservations/user/{id}")

@@ -13,6 +13,15 @@
     <br>
     <h1>Transaction History</h1>
 
+    <!-- Search Book Function -->
+    <div id="search">
+      <form th:action="@{/transactions}" action="get">
+        <input type="text" name="keyword" th:value="${keyword}" placeholder="Search..." />
+        <button type="submit" class="btn btn-primary" >Search</button>
+        <a href="/transactions" class="btn btn-secondary">Reset</a>
+      </form>
+    </div>
+
     <table class="table table-striped">
       <thead>
         <tr>

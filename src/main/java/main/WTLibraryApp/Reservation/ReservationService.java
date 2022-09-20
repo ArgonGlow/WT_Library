@@ -41,7 +41,7 @@ public class ReservationService {
 		return repo.findByBookAndUser(book, user);
 	}
 	
-	List<Reservation> findByKeyword(@Param("keyword") String keyword){
+	public List<Reservation> findByKeyword(String keyword){
 		return repo.findByKeyword(keyword);
 	}
 	
