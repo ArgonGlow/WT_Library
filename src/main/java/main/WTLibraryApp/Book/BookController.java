@@ -117,11 +117,11 @@ public class BookController {
 			bookReserveable = reservation.size() <= 0;
 			
 	        model.addAttribute("bookReserveable", bookReserveable);
-	        List<Label> labels = labelService.allLabels();
-	        labelService.allLabels().removeAll(book.getLabels());
-	        System.out.println(labels);
-	        model.addAttribute("missingGenres", labels);
-	        model.addAttribute("Genres", book.getLabels());
+	        Map<Label, Boolean> labels = new LinkedHashMap<>();
+	        for(Label label: labelService.allLabels()) {
+	        	labels.put(label, book.getLabels().contains(label));
+	        }
+	        model.addAttribute("genres", labels);
 		}
 		
 		return "books/bookInterface";
@@ -129,11 +129,10 @@ public class BookController {
 	 
 	//edits a book from the table
 	@PostMapping("/books/edit/{bookId}")
-	public String edit(@PathVariable long bookId,Label label, Book book, BindingResult result, Model model, @RequestParam("image") MultipartFile file) {
+	public String edit(@PathVariable long bookId, Book book, BindingResult result, Model model, @RequestParam("image") MultipartFile file) {
 		if (result.hasErrors()) {
 			return "books/bookInterface";
 		}
-		book.addLabel(label);
 		bookService.saveBook(file, book);
 		return "redirect:/books/edit/{bookId}";
 	}
