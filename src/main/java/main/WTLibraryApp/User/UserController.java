@@ -129,4 +129,20 @@ public class UserController {
 			return "redirect:/users";
 		}
 	}
+	
+	@GetMapping("/users/admin/{userId}")
+	public String adminRole(@PathVariable long userId, @CurrentSecurityContext(expression = "authentication") Authentication authentication, User user, Model model) {
+		User oldUser = service.findUser(userId);
+		User currentUser = service.findByEmail(authentication.getName());
+		if(oldUser==currentUser) {
+			return "redirect:/users/edit-user/" + userId + "?noadmin";
+		} else {
+			oldUser.setRole(user.getRole());
+			service.saveUser(oldUser);
+			return "redirect:/users/edit-user/{userId}";
+		}
+		
+
+	}
+
 }
