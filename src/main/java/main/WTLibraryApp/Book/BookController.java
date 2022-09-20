@@ -117,13 +117,7 @@ public class BookController {
 			model.addAttribute("copy", newCopy);
 	
 			User currentUser = userService.findByEmail(authentication.getName());
-		        
-//			boolean bookReserveable;
-//			List<Reservation> reservation = reservationService.findByBookAndUser(book, currentUser);
-//			bookReserveable = reservation.size() <= 0;
-//			
-//	        model.addAttribute("bookReserveable", bookReserveable);
-			
+
 	        Map<Label, Boolean> labels = new LinkedHashMap<>();
 	        for(Label label: labelService.allLabels()) {
 	        	labels.put(label, book.getLabels().contains(label));
