@@ -122,7 +122,7 @@ public class UserController {
 	public String updateUserPost(@PathVariable("id") long id, User users, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			users.setId(id);
-			return "users/edit-user"; 
+			return "users/edit-user";
 		} 
 		service.saveUser(users, id);
 		return "redirect:/users/edit-user/" + id;
