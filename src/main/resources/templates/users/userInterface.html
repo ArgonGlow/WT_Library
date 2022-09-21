@@ -54,8 +54,8 @@
   <div class="modal fade" id="userEditor">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
-          <h1>Edit user</h1>
+        <div class="modal-header px-4">
+          <h2 class="m-0">Edit user</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
@@ -66,34 +66,32 @@
               <label for="id">User ID</label>
               <input type="text" th:field="*{id}" id="id" placeholder="User ID" />
             </div>
-
-            <label for="first_name">First Name: </label>
-            <input type="text" th:field="*{first_name}" id="first_name" placeholder="First Name" />
-            <br>
-            <br>
-            <label for="last_name">Last Name: </label>
-            <input type="text" th:field="*{last_name}" id="last_name" placeholder="Last Name" />
-            <br>
-            <br>
-            <label for="email">Email: </label>
-            <input type="text" th:field="*{email}" id="email" placeholder="Email" />
-						<br>
-						<br>
-						<label for="passphrase">New passphrase: </label>
-						<input type="password" th:field="*{passphrase}" name="passphrase" id="passphrase" placeholder="Optional" />
-						<br>
-						<br>
+            <div class="field">
+              <label for="first_name">First Name: </label>
+              <input type="text" th:field="*{first_name}" id="first_name" placeholder="First Name" />
+            </div>
+            <div class="field">
+              <label for="last_name">Last Name: </label>
+              <input type="text" th:field="*{last_name}" id="last_name" placeholder="Last Name" />
+            </div>
+            <div class="field">
+              <label for="email">Email: </label>
+              <input type="text" th:field="*{email}" id="email" placeholder="Email" />
+						</div>
+            <div class="field">
+              <label for="passphrase">New passphrase: </label>
+              <input type="password" th:field="*{passphrase}" name="passphrase" id="passphrase" placeholder="Optional" />
+            </div>
             <!-- <label >Admin: </label>
             <input type="number" placeholder="yes" th:field="*{role}" min="1" max="2"> -->
-            <br>
-            <input class="btn btn-primary" type="submit" value="Update User" />
-						<br>
-            <div sec:authorize="hasAnyAuthority('1')">
-              <a class="btn btn-danger" th:data-bs-toggle="modal" th:data-bs-target="@{#deletionModal}">Delete</a>
+            <div class="buttons">
+              <span sec:authorize="hasAnyAuthority('1')">
+                <a class="btn btn-danger" th:data-bs-toggle="modal" th:data-bs-target="@{#deletionModal}">Delete</a>
+              </span>
+              <input class="btn btn-primary" type="submit" value="Update User" />
             </div>
           </form>
-          <br>
-          <form th:action="@{/users/admin/{userId} (userId=${user.id})}">
+          <form class="role-select" th:action="@{/users/admin/{userId} (userId=${user.id})}">
           <select th:field="*{user.role}">
             <option value="2" >User</option>
             <option value="1" >Admin</option>
