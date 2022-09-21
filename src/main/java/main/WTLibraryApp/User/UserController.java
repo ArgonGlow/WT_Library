@@ -117,15 +117,23 @@ public class UserController {
 		return "users/userInterface";
 	}
 	
-//edits user in the table
+//  Edits user in the table
 	@PostMapping("/users/edit-user/{id}")
-	public String updateUserPost(@PathVariable("id") long id, User users, BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			users.setId(id);
-			return "users/edit-user";
-		} 
-		service.saveUser(users, id);
-		return "redirect:/users/edit-user/" + id;
+	public String updateUserPost(@PathVariable("id") long id, User users, BindingResult result, Model model, @RequestParam(name = "passphrase") String newPass) {
+		User currentuser = service.findUser(id);
+		if (!result.hasErrors()) {
+			if (newPass.length() > 0) {
+				if (newPass.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,64}$")) {
+					service.saveUser(currentuser, currentuser.getId(), newPass);
+//					emailService.sendSimpleMessage(currentuser.getEmail(), "Passphrase Changed", "Passphrase changed to " + newPass);
+				} else {
+					return "redirect:/users/edit-user/" + id + "?invalidPassphrase";
+				}
+			} else {
+				service.saveUser(currentuser, currentuser.getId());
+			}
+		}
+		return "redirect:/users/edit-user/" + id + "?updated";
 	}
 
 //	Deletes an user from the table.
