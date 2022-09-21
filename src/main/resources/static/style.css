@@ -82,6 +82,10 @@ tr {
 }
 /* End of User Interface */
 
+a.btn-reserve,a.btn-cancel,a.btn-disabled {
+  min-width: 8rem;
+}
+
 /* Navbar */
 .navbar {
   --bs-bg-opacity: 0;
