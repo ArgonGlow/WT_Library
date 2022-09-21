@@ -93,13 +93,15 @@
             </div>
           </form>
           <br>
-          <form th:action="@{/users/admin/{userId} (userId=${user.id})}">
-          <select th:field="*{user.role}">
-            <option value="2" >User</option>
-            <option value="1" >Admin</option>
-          </select>
-          <input class="btn btn-secondary" type="submit" value="submit">
-        </form>
+          <div sec:authorize="hasAnyAuthority('1')">
+            <form th:action="@{/users/admin/{userId} (userId=${user.id})}">
+              <select th:field="*{user.role}">
+                <option value="2" >User</option>
+                <option value="1" >Admin</option>
+              </select>
+              <input class="btn btn-secondary" type="submit" value="submit">
+            </form>
+          </div>
         </div>
         <!-- <div class="modal-footer">
           <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
