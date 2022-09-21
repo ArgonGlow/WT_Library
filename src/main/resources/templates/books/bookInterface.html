@@ -62,33 +62,31 @@
     </div>
     <!-- Display book details -->
     <!-- <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post" enctype="multipart/form-data"> -->
-    <table class="table" style="max-width:20vw; margin-bottom: .5rem;">
-      <thead>
-        <h3>Book Information</h3>
-        <!-- <tr>
-          <th></th>
-          <th></th>
-        </tr> -->
-      </thead>
-      <tbody>
-        <tr sec:authorize="hasAnyAuthority('1')">
-          <td class="fw-bold">ID</td>
-          <td th:text="${book.id}"></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Title</td>
-          <td th:text="${book.title}"></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Author</td>
-          <td th:text="${book.author}"></td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Isbn</td>
-          <td th:text="${book.isbn}"></td>
-        </tr>
-      </tbody>
-    </table>
+    <span>
+      <table class="table" style="max-width:20vw; margin-bottom: .5rem">
+        <thead>
+          <h3>Book Information</h3>
+        </thead>
+        <tbody>
+          <tr sec:authorize="hasAnyAuthority('1')">
+            <td class="fw-bold">ID</td>
+            <td th:text="${book.id}"></td>
+          </tr>
+          <tr>
+            <td class="fw-bold">Title</td>
+            <td th:text="${book.title}"></td>
+          </tr>
+          <tr>
+            <td class="fw-bold">Author</td>
+            <td th:text="${book.author}"></td>
+          </tr>
+          <tr>
+            <td class="fw-bold">Isbn</td>
+            <td th:text="${book.isbn}"></td>
+          </tr>
+        </tbody>
+      </table>
+    </span>
     <label class="fw-bold" style="margin-bottom:.5rem; margin-left:.5rem;" >Genres</label>
     <div>
       <button th:each="label : ${book.labels}" th:text="${label.name}" class="btn btn-outline-success mx-1 py-1 px-2" disabled></button>
