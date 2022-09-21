@@ -34,7 +34,6 @@ body {
   --bs-btn-disabled-bg: #008200;
   --bs-btn-disabled-border-color: #008200;
 }
-
 .btn-outline-success {
   --bs-btn-color: #008200;
   --bs-btn-border-color: #008200;
@@ -62,7 +61,6 @@ tr {
 }
 /* End of Tables */
 
-
 /* Navbar */
 .navbar {
   --bs-bg-opacity: 0;
@@ -84,7 +82,6 @@ tr {
   background-color: rgb(15, 110, 40);
   color: white;
 }
-
 .dropdown-submenu:hover > .dropdown-menu{
   display: block !important;
     left: 100%;
@@ -107,6 +104,29 @@ footer a:hover {
 mark {
   background-color: yellow;
 }
+
+/* Book Form */
+.add-book,.add-user {
+  max-width: 600px;
+}
+.add-book,.add-user input[type=text] {
+  margin-bottom: 10px;
+  width: 220px;
+}
+.add-book label {
+  width: 60px;
+}
+.add-user label {
+  width: 100px;
+}
+.add-book,.add-user hr {
+  margin: 10px 0;
+}
+.cover-upload label {
+  width: auto;
+  margin-top: 5px;
+}
+/* End of Book Form */
 
 /* Modals */
 .modal-body form {

@@ -15,33 +15,35 @@
     <br>
     <h1>Add Book</h1>
 
-    <form action="#" th:action="@{create}" th:object="${book}" method="post" enctype="multipart/form-data">
-      <label for="title">Title: </label>
-      <input type="text" th:field="*{title}" id="title" placeholder="Title" />
-      
-      <label for="isbn">Isbn: </label>
-      <input type="text" th:field="*{isbn}" id="isbn" placeholder="Isbn" />
-      
-      <label for="author">Author: </label>
-      <input  type="text"  th:field="*{author}" id="author" placeholder="Author" />
-      <br>
-      <br>
+    <form class="add-book" action="#" th:action="@{create}" th:object="${book}" method="post" enctype="multipart/form-data">
+      <div>
+        <label for="title">Title: </label>
+        <input type="text" th:field="*{title}" id="title" placeholder="Title" />
+      </div>
+      <div>
+        <label for="isbn">Isbn: </label>
+        <input type="text" th:field="*{isbn}" id="isbn" placeholder="Isbn" />
+      </div>
+      <div>
+        <label for="author">Author: </label>
+        <input type="text" th:field="*{author}" id="author" placeholder="Author" />
+      </div>
       
       <label for="labels">Genres: </label>
       <div th:each="genre : ${genres}" class="form-check form-check-inline">
-
         <input  name="labels" 
           class="form-check-input" th:value="${genre.key.id}" 
           th:text="${genre.key.name}" th:field="*{labels}" 
           th:checked="${genre.value}" type="checkbox">
       </div>
-      
-      <br>
-      <br>
-      <label for="image">Book cover: </label>
-      <input type="file" name="image" id="image" placeholder="Image" />
-
-      <input class="btn btn-primary" type="submit" value="Add book" />
+      <hr>
+      <div class="cover-upload">
+        <label for="image">Upload Cover: </label>
+        <input type="file" name="image" id="image" placeholder="Image" />
+      </div>
+      <div class="mt-3">
+        <input class="btn btn-primary" type="submit" value="Add book" />
+      </div>
     </form>
   </div>
   <!-- ______________End of main page view______________ -->
