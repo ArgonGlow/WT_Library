@@ -65,6 +65,9 @@
             <div class="visually-hidden">
               <label for="id">User ID</label>
               <input type="text" th:field="*{id}" id="id" placeholder="User ID" />
+            
+              <label for="role">User role</label>
+              <input type="text" th:field="*{role}" id="role" placeholder="User role" />
             </div>
 
             <label for="first_name">First Name: </label>
@@ -94,10 +97,10 @@
           </form>
           <br>
           <div sec:authorize="hasAnyAuthority('1')">
-            <form th:action="@{/users/admin/{userId} (userId=${user.id})}">
-              <select th:field="*{user.role}">
-                <option value="2" >User</option>
+            <form th:action="@{/users/admin/{userId} (userId=${user.id})}" th:object="${user}">
+              <select th:field="*{role}">
                 <option value="1" >Admin</option>
+                <option value="2" >User</option>
               </select>
               <input class="btn btn-secondary" type="submit" value="submit">
             </form>
