@@ -16,7 +16,6 @@ public interface LabelRepository extends JpaRepository<Label,Long>{
 	@Transactional
     @Modifying      // to mark delete or update query
     @Query(value = "DELETE from books_labels where books_labels.labels_id = :labelID\r\n",
-    		nativeQuery = true) 
-	//@Query("DELETE books_labels from books_labels INNER JOIN labels where books_labels.labels_id = labels.id and labels.id = :labelID") 
+    		nativeQuery = true)  
     public int deleteRelation(@Param("labelID") long labelID);
 }
