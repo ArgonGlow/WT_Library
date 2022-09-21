@@ -68,6 +68,9 @@
             
               <label for="role">User role</label>
               <input type="text" th:field="*{role}" id="role" placeholder="User role" />
+
+              <label for="email">Email: </label>
+              <input type="text" th:field="*{email}" id="email" placeholder="Email" />
             </div>
 
             <label for="first_name">First Name: </label>
@@ -78,10 +81,6 @@
             <input type="text" th:field="*{last_name}" id="last_name" placeholder="Last Name" />
             <br>
             <br>
-            <label for="email">Email: </label>
-            <input type="text" th:field="*{email}" id="email" placeholder="Email" />
-						<br>
-						<br>
 						<label for="passphrase">New passphrase: </label>
 						<input type="password" th:field="*{passphrase}" name="passphrase" id="passphrase" placeholder="Optional" />
 						<br>
