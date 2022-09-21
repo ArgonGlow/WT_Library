@@ -51,6 +51,14 @@ body {
 }
 /* End of Bootstrap Buttons */
 
+.container {
+  margin-bottom: 2rem;
+}
+
+.login {
+  min-height: 70vh;
+}
+
 .edit-book-buttons {
   margin: 1rem 0;
 }
@@ -60,6 +68,19 @@ tr {
   vertical-align: middle;
 }
 /* End of Tables */
+
+/* User Interface */
+.user-interface {}
+.title-name, .edit-user {
+  display: inline-block;
+  margin-right: .5rem;
+  
+}
+.edit-user {
+  vertical-align: middle;
+  margin-bottom: 1rem;
+}
+/* End of User Interface */
 
 /* Navbar */
 .navbar {
@@ -105,7 +126,7 @@ mark {
   background-color: yellow;
 }
 
-/* Book Form */
+/* Book & User Form */
 .add-book,.add-user {
   max-width: 450px;
 }
@@ -126,7 +147,7 @@ mark {
   width: auto;
   margin-top: 5px;
 }
-/* End of Book Form */
+/* End of Book & User Form */
 
 /* Modals */
 .modal-body form {
