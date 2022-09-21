@@ -84,7 +84,7 @@ public class UserController {
 				service.saveUser(users, currentuser.getId());
 			}
 		} 
-		return "redirect:/user";
+		return "redirect:/user?updated";
 	} 
 	
 //	Adds a new user to the users table

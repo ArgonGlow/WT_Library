@@ -121,6 +121,9 @@
     <!-- Edit user -->
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#userEditor}">Edit</button>
+    <div th:if="${param.updated}">
+      <p>User updated successfully</p>
+    </div>
 		<div th:if="${param.invalidPassphrase}">
 			<p><mark>Error: New passphrase doesn't meet the requirements:</mark></p>
 			<ul>
