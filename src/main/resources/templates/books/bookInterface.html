@@ -89,7 +89,7 @@
           <a class="btn btn-primary" th:href="@{/reservations/createReservation/{id}(id=${books.key.id})}">Reserve</a>
         </td>
         <td th:case="'RESERVED'">
-          <a class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#cancellationModal{bookId}(bookId = ${books.key.id})}">Cancel</a>
+          <a class="btn btn-danger" th:data-bs-toggle="modal" th:data-bs-target="@{#cancellationModal{bookId}(bookId = ${books.key.id})}">Cancel Reservation</a>
         </td>
         <td th:case="'UNAVAILABLE'">
           <a class="btn disabled" >Unavailable</a>
