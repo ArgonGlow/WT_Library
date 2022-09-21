@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import main.WTLibraryApp.Book.BookService;
 import main.WTLibraryApp.Book.Copy.CopyService;
@@ -67,12 +69,22 @@ public class UserController {
 	
 	//edits user in the table
 	@PostMapping("/user")
-	public String updateCurrentUserPost(@CurrentSecurityContext(expression = "authentication") Authentication authentication, User users, BindingResult result, Model model) {
+	public String updateCurrentUserPost(@CurrentSecurityContext(expression = "authentication") Authentication authentication, User users, 
+			BindingResult result, Model model, @RequestParam(name = "passphrase") String newPass) {
 		User currentuser = service.findByEmail(authentication.getName());
 		if (!result.hasErrors()) {
-			service.saveUser(users, currentuser.getId());
+			if (newPass.length() > 0) {
+				if (newPass.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,64}$")) {
+					service.saveUser(users, currentuser.getId(), newPass);
+//					emailService.sendSimpleMessage(currentuser.getEmail(), "Passphrase Changed", "Passphrase changed to " + newPass);
+				} else {
+					return "redirect:/user?invalidPassphrase";
+				}
+			} else {
+				service.saveUser(users, currentuser.getId());
+			}
 		} 
-		return "redirect:/user";
+		return "redirect:/user?updated";
 	} 
 	
 //	Adds a new user to the users table
