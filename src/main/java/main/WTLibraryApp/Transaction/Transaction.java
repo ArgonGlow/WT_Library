@@ -2,7 +2,6 @@ package main.WTLibraryApp.Transaction;
 
 import java.sql.Timestamp;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 import main.WTLibraryApp.Book.Book;
 import main.WTLibraryApp.Book.Copy.Copy;
 import main.WTLibraryApp.User.User;
@@ -41,61 +39,49 @@ public class Transaction {
 	@Enumerated(EnumType.ORDINAL)
 	private TransactionType transaction_type;
 	
-	// constructor
-	public Transaction() {
-		
-	}
+	// constructors
+	public Transaction() {}
 	
 	public Transaction(User user, TransactionType transaction_type) {
 		this.user = user;
 		this.transaction_type = transaction_type;
 	}
 
+	// getters and setters
 	public long getTransaction_id() {
 		return transaction_id;
 	}
 	public void setTransaction_id(long transaction_id) {
 		this.transaction_id = transaction_id;
 	}
-
 	public Book getBook() {
 		return book;
 	}
-
 	public void setBook(Book book) {
 		this.book = book;
 	}
-
 	public Copy getCopy() {
 		return copy;
 	}
-
 	public void setCopy(Copy copy) {
 		this.copy = copy;
 	}
-
 	public User getUser() {
 		return user;
 	}
-
 	public void setUser(User user) {
 		this.user = user;
 	}
-
 	public TransactionType getTransaction_type() {
 		return transaction_type;
 	}
-
 	public void setTransaction_type(TransactionType transaction_type) {
 		this.transaction_type = transaction_type;
 	}
-
 	public Timestamp getTimestamp() {
 		return timestamp;
 	}
-
 	public void setTimestamp(Timestamp timestamp) {
 		this.timestamp = timestamp;
 	}
-
 }
