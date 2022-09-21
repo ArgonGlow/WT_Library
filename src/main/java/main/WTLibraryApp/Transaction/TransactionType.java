@@ -4,5 +4,6 @@ public enum TransactionType {
 	RESERVED,
 	LOANED,
 	RETURNED,
+	CANCELED,
 	UNAVAILABLE
 }
