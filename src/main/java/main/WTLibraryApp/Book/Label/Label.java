@@ -1,14 +1,19 @@
 package main.WTLibraryApp.Book.Label;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CascadeType;
 
 import main.WTLibraryApp.Book.Book;
 
@@ -21,8 +26,8 @@ public class Label {
 	
 	private String name;
 	
-	@ManyToMany
-	private List<Book> books;
+	@ManyToMany(mappedBy="labels")
+	private Set<Book> books = new HashSet<>();
 
 	public long getId() {
 		return id;
@@ -40,11 +45,11 @@ public class Label {
 		this.name = name;
 	}
 
-	public List<Book> getBooks() {
+	public Set<Book> getBooks() {
 		return books;
 	}
 
-	public void setBooks(List<Book> books) {
+	public void setBooks(Set<Book> books) {
 		this.books = books;
 	}
 }

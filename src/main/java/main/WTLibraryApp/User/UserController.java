@@ -69,7 +69,7 @@ public class UserController {
 	@PostMapping("/user")
 	public String updateCurrentUserPost(@CurrentSecurityContext(expression = "authentication") Authentication authentication, User users, BindingResult result, Model model) {
 		User currentuser = service.findByEmail(authentication.getName());
-		if (!result.hasErrors()) {
+		if (!result.hasErrors() && users.getRole() == currentuser.getRole()) {
 			service.saveUser(users, currentuser.getId());
 		} 
 		return "redirect:/user";
