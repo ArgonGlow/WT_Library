@@ -65,6 +65,12 @@
             <div class="visually-hidden">
               <label for="id">User ID</label>
               <input type="text" th:field="*{id}" id="id" placeholder="User ID" />
+            
+              <label for="role">User role</label>
+              <input type="text" th:field="*{role}" id="role" placeholder="User role" />
+
+              <label for="email">Email: </label>
+              <input type="text" th:field="*{email}" id="email" placeholder="Email" />
             </div>
 
             <label for="first_name">First Name: </label>
@@ -75,10 +81,6 @@
             <input type="text" th:field="*{last_name}" id="last_name" placeholder="Last Name" />
             <br>
             <br>
-            <label for="email">Email: </label>
-            <input type="text" th:field="*{email}" id="email" placeholder="Email" />
-						<br>
-						<br>
 						<label for="passphrase">New passphrase: </label>
 						<input type="password" th:field="*{passphrase}" name="passphrase" id="passphrase" placeholder="Optional" />
 						<br>
@@ -93,13 +95,15 @@
             </div>
           </form>
           <br>
-          <form th:action="@{/users/admin/{userId} (userId=${user.id})}">
-          <select th:field="*{user.role}">
-            <option value="2" >User</option>
-            <option value="1" >Admin</option>
-          </select>
-          <input class="btn btn-secondary" type="submit" value="submit">
-        </form>
+          <div sec:authorize="hasAnyAuthority('1')">
+            <form th:action="@{/users/admin/{userId} (userId=${user.id})}" th:object="${user}">
+              <select th:field="*{role}">
+                <option value="1" >Admin</option>
+                <option value="2" >User</option>
+              </select>
+              <input class="btn btn-secondary" type="submit" value="submit">
+            </form>
+          </div>
         </div>
         <!-- <div class="modal-footer">
           <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
@@ -108,10 +112,6 @@
     </div>
   </div>
   <!-- ___________________End of Editor modal_______________ -->
-
-  <!-- ________Deletion modal__________ -->
-
-  <!-- ________End of Deletion modal__________ -->
 
 	<!-- ______________Main page view______________ -->
   <div class="container">
