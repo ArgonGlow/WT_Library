@@ -57,7 +57,7 @@
     <!-- Book cover image -->
     <img th:src="*{'data:image/jpeg;base64, '+{book.cover_image}}" alt="Book Cover" height="300" />
 
-    <!-- Edit book -->
+    <!-- Display book details -->
     <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post" enctype="multipart/form-data">
     <table class="table">
       <thead>
@@ -102,7 +102,7 @@
   </form>
   <br>
 
-  <!-- Edit book -->
+  <!-- ____________________Editor modal___________________ -->
   <div sec:authorize="hasAnyAuthority('1')">
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#bookEditor}">Edit</button>
@@ -112,6 +112,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h1>Edit book</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post" enctype="multipart/form-data">
@@ -157,13 +158,11 @@
               <input class="btn btn-primary" type="submit" value="Submit" />
             </form>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
-          </div>
         </div>
       </div>
     </div>
   </div>
+  <!-- _______________End of Editor modal___________________ -->
 
   <!-- version already exists notification -->
   <div th:if="${param.versionTaken}">
@@ -199,57 +198,6 @@
     </table>
   </div>
   <!-- ______________End of main page view______________ -->
-
-  <!-- ____________________Editor modal___________________ -->
-  <div class="modal fade" id="bookEditor">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1>Edit book</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
-            <div class="visually-hidden">
-              <label for="id">ID: </label>
-              <input type="text" th:field="*{id}" id="id" placeholder="Id" />
-            </div>
-
-            <label for="title">Title: </label>
-            <input type="text" th:field="*{title}" id="title" placeholder="Title" />
-            <br>
-            <br>
-            <label for="isbn">Isbn: </label>
-            <input type="text" th:field="*{isbn}" id="lisbn" placeholder="Isbn" />
-            <br>
-            <br>
-            <label for="author">Author: </label>
-            <input type="text" th:field="*{author}" id="author" placeholder="Author" />
-            <br>
-            <br>
-            <label for="image">Book cover: </label>
-            <input type="file" name="image" id="image" placeholder="Image" />
-            <br>
-            <br>
-            <input class="btn btn-primary" type="submit" value="Update Book" />
-            <input class="btn btn-primary" type="submit" value="Quick add version" th:formaction="@{/copies/quickAdd/{bookId} (bookId=${book.id})}"/>
-          </form>
-          <br>
-          <br>
-          <!-- Add copy -->
-          <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
-            <label>Add version: </label>
-            <input type="number" th:field="*{version}" id="copy" placeholder="copy" min="1" />
-            <input class="btn btn-primary" type="submit" value="Submit" />
-          </form>
-        </div>
-        <!-- <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
-        </div> -->
-      </div>
-    </div>
-  </div>
-  <!-- ________________End of Editor modal___________________ -->
 
   <!-- ______________________Footer_____________________ -->
 	<div class="mt-auto" style="background-color: black">

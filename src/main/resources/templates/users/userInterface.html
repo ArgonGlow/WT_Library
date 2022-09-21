@@ -65,6 +65,9 @@
             <div class="visually-hidden">
               <label for="id">User ID</label>
               <input type="text" th:field="*{id}" id="id" placeholder="User ID" />
+            
+              <label for="role">User role</label>
+              <input type="text" th:field="*{role}" id="role" placeholder="User role" />
             </div>
             <div class="field">
               <label for="first_name">First Name: </label>
@@ -91,13 +94,15 @@
               <input class="btn btn-primary" type="submit" value="Update User" />
             </div>
           </form>
-          <form class="role-select" th:action="@{/users/admin/{userId} (userId=${user.id})}">
-          <select th:field="*{user.role}">
-            <option value="2" >User</option>
-            <option value="1" >Admin</option>
-          </select>
-          <input class="btn btn-secondary" type="submit" value="submit">
-        </form>
+          <div sec:authorize="hasAnyAuthority('1')">
+            <form class="role-select" th:action="@{/users/admin/{userId} (userId=${user.id})}" th:object="${user}">
+              <select th:field="*{role}">
+                <option value="1" >Admin</option>
+                <option value="2" >User</option>
+              </select>
+              <input class="btn btn-secondary" type="submit" value="submit">
+            </form>
+          </div>
         </div>
         <!-- <div class="modal-footer">
           <button type="button" class="btn btn-secondary" th:data-bs-dismiss="modal">Close</button>
@@ -106,7 +111,6 @@
     </div>
   </div>
   <!-- ___________________End of Editor modal_______________ -->
-
 
 	<!-- ______________Main page view______________ -->
   <div class="container user-interface">

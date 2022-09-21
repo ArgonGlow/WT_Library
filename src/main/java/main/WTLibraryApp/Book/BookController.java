@@ -33,9 +33,6 @@ public class BookController {
 	
 	@Autowired 
 	private BookService bookService;
-
-	@Autowired
-	private ReservationService reservationService;
 	
 	@Autowired
 	private UserService userService;
