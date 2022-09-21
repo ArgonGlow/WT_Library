@@ -13,7 +13,7 @@
   <!-- ______________Main page view______________ -->
   <div class="container">
     <br>
-    <h1>Add Book</h1>
+    <h2>Add Book</h2>
     <hr>
     <form class="add-book" action="#" th:action="@{create}" th:object="${book}" method="post" enctype="multipart/form-data">
       <div>
@@ -30,7 +30,6 @@
       </div>
       
       <label for="labels">Genres: </label>
-      <!-- <br> -->
       <hr>
       <div th:each="genre : ${genres}" class="form-check form-check-inline">
         <input  name="labels" 

@@ -70,12 +70,11 @@ tr {
 /* End of Tables */
 
 /* User Interface */
-/* .user-interface {} */
 .title-name, .edit-user {
   display: inline-block;
   margin-right: .5rem;
-  
 }
+/* End of User Interface */
 .edit-user {
   vertical-align: middle;
   margin-bottom: 1rem;
@@ -173,3 +172,7 @@ mark {
   margin-bottom: 0;
 }
 /* End of Modals */
+
+.modal-body .cover-upload {
+  text-align: left;
+}

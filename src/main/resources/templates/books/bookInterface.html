@@ -52,35 +52,47 @@
   <!-- ______________Main page view______________ -->
   <div class="container">
     <br>
-    <h1>Book info</h1>
+    <h1 class="title-name">Book info</h1>
+    <!-- Button trigger modal -->
+    <button sec:authorize="hasAnyAuthority('1')" type="button" class="btn btn-secondary edit-user" th:data-bs-toggle="modal" th:data-bs-target="@{#bookEditor}">Edit</button>
 
     <!-- Book cover image -->
-    <img th:src="*{'data:image/jpeg;base64, '+{book.cover_image}}" alt="Book Cover" height="300" />
-
+    <div class="mb-3">
+      <img th:src="*{'data:image/jpeg;base64, '+{book.cover_image}}" alt="Book Cover" height="300" />
+    </div>
     <!-- Display book details -->
-    <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post" enctype="multipart/form-data">
-    <table class="table">
+    <!-- <form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post" enctype="multipart/form-data"> -->
+    <table class="table" style="max-width:20vw; margin-bottom: .5rem;">
       <thead>
-        <tr>
-          <th>Book id</th>
-          <th>Book title</th>
-          <th>Isbn</th>
-          <th>Author</th>
-        </tr>
+        <h3>Book Information</h3>
+        <!-- <tr>
+          <th></th>
+          <th></th>
+        </tr> -->
       </thead>
       <tbody>
-        <tr>
+        <tr sec:authorize="hasAnyAuthority('1')">
+          <td class="fw-bold">ID</td>
           <td th:text="${book.id}"></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Title</td>
           <td th:text="${book.title}"></td>
-          <td th:text="${book.isbn}"></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Author</td>
           <td th:text="${book.author}"></td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Isbn</td>
+          <td th:text="${book.isbn}"></td>
         </tr>
       </tbody>
     </table>
-    <br>
-    <label>Genres:</label>
-    <button th:each="label : ${book.labels}" th:text="${label.name}" class="btn btn-info" disabled></button>
-    <br>
+    <label class="fw-bold" style="margin-bottom:.5rem; margin-left:.5rem;" >Genres</label>
+    <div>
+      <button th:each="label : ${book.labels}" th:text="${label.name}" class="btn btn-outline-success mx-1 py-1 px-2" disabled></button>
+    </div>
     <br>
     <!-- Reserve/cancel reseration button -->
     <tr th:each="books : ${books}">
@@ -95,17 +107,15 @@
           <a class="btn disabled" >Unavailable</a>
         </td>
         <td th:case="'LOANED'">
-          <a class="btn disabled" >No doubles!</a>
+          <a class="btn disabled" >Loaned</a>
         </td>
       </div>
     </tr>
-  </form>
+  <!-- </form> -->
   <br>
 
   <!-- ____________________Editor modal___________________ -->
   <div sec:authorize="hasAnyAuthority('1')">
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#bookEditor}">Edit</button>
     <!-- Modal body -->
     <div class="modal fade" id="bookEditor">
       <div class="modal-dialog">
@@ -120,39 +130,39 @@
                 <label for="id">ID: </label>
                 <input type="text" th:field="*{id}" id="id" placeholder="Id" />
               </div>
+              <div class="field">
+                <label for="title">Title: </label>
+                <input type="text" th:field="*{title}" id="title" placeholder="Title" />
+              </div>
+              <div class="field">
+                <label for="isbn">Isbn: </label>
+                <input type="text" th:field="*{isbn}" id="lisbn" placeholder="Isbn" />
+              </div>
+              <div class="field">
+                <label for="author">Author: </label>
+                <input type="text" th:field="*{author}" id="author" placeholder="Author" />
+              </div>
 
-              <label for="title">Title: </label>
-              <input type="text" th:field="*{title}" id="title" placeholder="Title" />
-              <br>
-              <br>
-              <label for="isbn">Isbn: </label>
-              <input type="text" th:field="*{isbn}" id="lisbn" placeholder="Isbn" />
-              <br>
-              <br>
-              <label for="author">Author: </label>
-              <input type="text" th:field="*{author}" id="author" placeholder="Author" />
-              <br>
-              <br>
-                <div th:each="genre : ${genres}" class="form-check form-check-inline">
-
-                  <input  name="labels" 
-                    class="form-check-input" th:value="${genre.key.id}" 
-                    th:text="${genre.key.name}" th:field="*{labels}" 
-                    th:checked="${genre.value}" type="checkbox">
-                </div>
-              <br>
-              <br>
-              <label for="image">Book cover: </label>
-              <input type="file" name="image" id="image" placeholder="Image" />
-              <br>
-              <br>
-              <input class="btn btn-primary" type="submit" value="Update Book" />
-              <input class="btn btn-primary" type="submit" value="Quick add version" th:formaction="@{/copies/quickAdd/{bookId} (bookId=${book.id})}"/>
+              <label for="labels">Genres: </label>
+              <hr>
+              <div th:each="genre : ${genres}" class="form-check form-check-inline">
+                <input  name="labels" 
+                  class="form-check-input" th:value="${genre.key.id}" 
+                  th:text="${genre.key.name}" th:field="*{labels}" 
+                  th:checked="${genre.value}" type="checkbox">
+              </div>
+              <hr>
+              <div class="cover-upload">
+                <label for="image">Book cover: </label>
+                <input type="file" name="image" id="image" placeholder="Image" />
+              </div>
+              <div class="buttons mt-3">
+                <input class="btn btn-primary" type="submit" value="Update Book" />
+                <input class="btn btn-primary" type="submit" value="Quick add version" th:formaction="@{/copies/quickAdd/{bookId} (bookId=${book.id})}"/>
+              </div>
             </form>
-            <br>
-            <br>
                   <!-- Add copy -->
-            <form action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
+            <form class="buttons mb-0" action="#" th:action="@{/copies/create/{bookId} (bookId=${book.id})}" th:object="${copy}" method="post">
               <label>Add version: </label>
               <input type="number" th:field="*{version}" id="copy" placeholder="copy" min="1" />
               <input class="btn btn-primary" type="submit" value="Submit" />
@@ -174,18 +184,17 @@
     </div>
 
   <!-- Display copies -->
-  <table class="table">
+  <h2>Versions</h2>
+  <table class="table table-striped" style="max-width:20vw">
     <thead>
       <tr>
-        <th>Book</th>
-        <th>Version</th>
+        <th>#</th>
         <th>Loaned by</th>
-        <th></th>
+        <th sec:authorize="hasAnyAuthority('1')">Actions</th>
       </tr>
       </thead>
       <tbody>
         <tr th:each="copy : ${copies}">
-          <td th:text="${copy.book.title}"></td>
           <td th:text="${copy.version}"></td>
           <td th:text="${copy.user == null ? '-' : copy.user.fullName}"></td>
           <div sec:authorize="hasAnyAuthority('1')">
