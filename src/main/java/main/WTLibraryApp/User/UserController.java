@@ -120,7 +120,7 @@ public class UserController {
 //  Edits user in the table
 	@PostMapping("/users/edit-user/{id}")
 	public String updateUserPost(@PathVariable("id") long id, User users, BindingResult result, Model model, @RequestParam(name = "passphrase") String newPass) {
-		User currentuser = service.findUser(id);
+		User currentuser = users;
 		if (!result.hasErrors()) {
 			if (newPass.length() > 0) {
 				if (newPass.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,64}$")) {
