@@ -96,8 +96,8 @@
           <div sec:authorize="hasAnyAuthority('1')">
             <form th:action="@{/users/admin/{userId} (userId=${user.id})}">
               <select th:field="*{user.role}">
-                <option value="2" >User</option>
                 <option value="1" >Admin</option>
+                <option value="2" >User</option>
               </select>
               <input class="btn btn-secondary" type="submit" value="submit">
             </form>
