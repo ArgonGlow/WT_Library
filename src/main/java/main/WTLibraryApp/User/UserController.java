@@ -72,7 +72,7 @@ public class UserController {
 	public String updateCurrentUserPost(@CurrentSecurityContext(expression = "authentication") Authentication authentication, User users, 
 			BindingResult result, Model model, @RequestParam(name = "passphrase") String newPass) {
 		User currentuser = service.findByEmail(authentication.getName());
-		if (!result.hasErrors()) {
+		if (!result.hasErrors() && users.getRole() == currentuser.getRole()) {
 			if (newPass.length() > 0) {
 				if (newPass.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,64}$")) {
 					service.saveUser(users, currentuser.getId(), newPass);

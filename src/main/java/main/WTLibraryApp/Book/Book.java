@@ -1,6 +1,8 @@
 package main.WTLibraryApp.Book;  
  
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,19 +42,17 @@ public class Book {
 	@OneToMany(mappedBy = "book")
 	private List<Copy> copies;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	/*@JoinTable(name = "books_labels", 
-    joinColumns = { @JoinColumn(name = "books_id", referencedColumnName = "id",
-            nullable = false, updatable = true) }, 
-    inverseJoinColumns = { @JoinColumn(name = "labels_id", referencedColumnName = "id",
-            nullable = false, updatable = true) })*/
-	private List<Label> labels;
-
-	public List<Label> getLabels() {
+	@ManyToMany
+	@JoinTable(name = "books_labels", 
+    joinColumns = { @JoinColumn(name = "books_id") }, 
+    inverseJoinColumns = { @JoinColumn(name = "labels_id") })
+	private Set<Label> labels = new HashSet<>();
+	
+	public Set<Label> getLabels() {
 		return labels;
 	}
 
-	public void setLabels(List<Label> labels) {
+	public void setLabels(Set<Label> labels) {
 		this.labels = labels;
 	}
 	
