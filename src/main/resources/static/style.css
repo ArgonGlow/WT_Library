@@ -34,7 +34,6 @@ body {
   --bs-btn-disabled-bg: #008200;
   --bs-btn-disabled-border-color: #008200;
 }
-
 .btn-outline-success {
   --bs-btn-color: #008200;
   --bs-btn-border-color: #008200;
@@ -52,6 +51,14 @@ body {
 }
 /* End of Bootstrap Buttons */
 
+.container {
+  margin-bottom: 2rem;
+}
+
+.login {
+  min-height: 60vh;
+}
+
 .edit-book-buttons {
   margin: 1rem 0;
 }
@@ -62,22 +69,36 @@ tr {
 }
 /* End of Tables */
 
+/* User Interface */
+.title-name, .edit-user {
+  display: inline-block;
+  margin-right: .5rem;
+}
+/* End of User Interface */
+.edit-user {
+  vertical-align: middle;
+  margin-bottom: 1rem;
+}
+/* End of User Interface */
 
-/* Navbar link-list */
+a.btn-reserve,a.btn-cancel,a.btn-disabled {
+  min-width: 8rem;
+}
+
+/* Navbar */
 .navbar {
   --bs-bg-opacity: 0;
 }
-
 .nav-link {
   color: #000;;
-
 }
-
 .nav-link:hover {
   background-color: rgb(15, 110, 40);
   color: white;
-
 }
+/* End of Navbar */
+
+/* Dropdown Menus */
 .dropdown-item {
   margin: 3px 0;
 }
@@ -85,77 +106,73 @@ tr {
   background-color: rgb(15, 110, 40);
   color: white;
 }
-
 .dropdown-submenu:hover > .dropdown-menu{
   display: block !important;
     left: 100%;
     margin-top: -37px;
 }
+/* End of Dropdown Menus */
 
+/* Footer */
 footer {
-  /* background-color: #000; */
   color: #fff;
 }
-
 footer a {
   color: #fff;
 }
-
 footer a:hover {
   color: #00e600;
 }
+/* End of Footer */
 
 mark {
   background-color: yellow;
 }
 
-/* .alt-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-} 
-
-.alt-nav li {
-  float: left;
+/* Book & User Form */
+.add-book,.add-user {
+  max-width: 450px;
 }
-
-.alt-nav li a {
-  display: block;
-  color: black;
-  text-align: center;
-  padding: 10px 10px;
-  text-decoration: none;
-} */
-
-/* .alt-nav a:hover {
-  background-color: rgb(15, 110, 40);
-  color:white;
-} */
-
-
-
-
-/* Navbar link-list */
-/* #cur-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: rgb(0, 230, 0);
+.add-book input[type=text],.add-user input[type=text] {
+  margin-bottom: 10px;
+  width: 250px;
 }
-#cur-nav li {
-  float: left;
-  
+.add-book label {
+  width: 60px;
 }
-#cur-nav li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 10px 10px;
-  text-decoration: none;
-  color: black;
+.add-user label {
+  width: 100px;
 }
-#cur-nav li a:hover {
-  background-color: rgb(15, 110, 40);
-  color:white;
-} */
+.add-book hr,.add-user hr {
+  margin: 10px 0;
+}
+.cover-upload label {
+  width: auto;
+  margin-top: 5px;
+}
+/* End of Book & User Form */
+
+/* Modals */
+.modal-body form {
+  margin-bottom: 10px;
+}
+.modal-body .field {
+  margin-bottom: 10px;
+}
+.modal-body form label {
+  display: inline-block;
+  width: 150px;
+  text-align: right;
+}
+.modal-body .buttons {
+  text-align: right;
+}
+.modal-body .role-select {
+  text-align: right;
+  margin-bottom: 0;
+}
+/* End of Modals */
+
+.modal-body .cover-upload {
+  text-align: left;
+}

@@ -33,7 +33,7 @@
   <div class="container">
     <br>
     <h1>WT library</h1>
-
+    <hr>
     <!-- Search Book Function -->
     <div id="search">
       <form th:action="@{/books}" action="get">
@@ -44,42 +44,42 @@
     </div>
 
     <!-- Books Table -->
-    <table class="table">
+    <table class="table table-striped book-table">
       <thead>
         <tr>
           <!-- <th>ID</th> -->
           <th>Cover</th>
-          <th>title</th>
+          <th>Title</th>
           <th>Genres</th>
-          <th>author</th>
+          <th>Author</th>
           <th></th>
-          <th></th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr th:each="books : ${books}">
           <!-- <td th:text="${books.key.id}"></td> -->
-          <td><img th:src="*{'data:image/jpeg;base64, '+{books.key.cover_image}}" alt="Book Cover" width="100" height="100" /></td>
+          <td><img th:src="*{'data:image/jpeg;base64, '+{books.key.cover_image} }" alt="Book Cover" height="100" /></td>
           <td th:text="${books.key.title}"></td>
-          <td><button th:each="label : ${books.key.labels}" th:text="${label.name}" class="btn btn-info" disabled></button></td>
+          <td><button th:each="label : ${books.key.labels}" th:text="${label.name}" class="btn btn-outline-success m-1 py-1 px-2" disabled></button></td>
           <!-- <td th:text="${books.key.isbn}"></td> -->
           <td th:text="${books.key.author}"></td>
           <td>
             <a class="btn btn-primary" th:href="@{/books/edit/{id}(id=${books.key.id})}">Info</a>
           </td>
           <!-- Reserve/cancel reseration button -->
-          <div th:switch="${books.value.name()}">
-            <td th:case="'RETURNED'">
-              <a class="btn btn-primary" th:href="@{/reservations/createReservationBI/{id}(id=${books.key.id})}">Reserve</a>
+          <div th:switch="${books.value.name()}" >
+            <td th:case="'RETURNED'" class="pe-3">
+              <a class="btn btn-primary btn-reserve" th:href="@{/reservations/createReservationBI/{id}(id=${books.key.id})}">Reserve</a>
             </td>
-            <td th:case="'RESERVED'">
-              <a class="btn btn-secondary" th:data-bs-toggle="modal" th:data-bs-target="@{#cancellationModal{bookId}(bookId = ${books.key.id})}">Cancel</a>
+            <td th:case="'RESERVED'" class="pe-3">
+              <a class="btn btn-secondary btn-cancel" th:data-bs-toggle="modal" th:data-bs-target="@{#cancellationModal{bookId}(bookId = ${books.key.id})}">Cancel</a>
             </td>
-            <td th:case="'UNAVAILABLE'">
-              <a class="btn disabled" >Unavailable</a>
+            <td th:case="'UNAVAILABLE'" class="pe-3">
+              <a class="btn disabled btn-disabled" >Unavailable</a>
             </td>
-            <td th:case="'LOANED'">
-              <a class="btn disabled" >No doubles!</a>
+            <td th:case="'LOANED'" class="pe-3">
+              <a class="btn disabled btn-disabled">Loaned</a>
             </td>
           </div>
         </tr>

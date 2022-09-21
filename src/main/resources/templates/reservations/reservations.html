@@ -34,7 +34,7 @@
   <div class="container">
     <br>
     <h1>Reservations</h1>
-
+    <hr>
     <!-- Search Book Function -->
     <div id="search">
       <form th:action="@{/reservations}" action="get">
@@ -49,6 +49,7 @@
         <table class="table table-striped">
           <thead>
             <tr>
+              <th>#</th>
               <th>Book Title</th>
               <th>Reserved by</th>
               <th></th>
@@ -56,6 +57,7 @@
           </thead>
           <tbody>
             <tr th:each="reservation : ${reservations}">
+              <td th:text="${reservation.reservationId}"></td>
               <td th:text="${reservation.book.title}"></td>
               <td th:text="${reservation.user.fullName}"></td>
               <td>

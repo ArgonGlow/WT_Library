@@ -172,6 +172,9 @@ public class ReservationController {
 			
 			List<Reservation> reservation = reservationService.findByBookAndUser(book, currentUser);
 			reservationService.deleteReservation(reservation.get(0));
+			
+			//log in transactions table
+			transactionService.logReservation(currentUser, book, TransactionType.CANCELED);
 		}
 	    
 		String path = "redirect:/books/edit/{bookId}";
@@ -191,6 +194,9 @@ public class ReservationController {
 			
 			List<Reservation> reservation = reservationService.findByBookAndUser(book, currentUser);
 			reservationService.deleteReservation(reservation.get(0));
+			
+			//log in transactions table
+			transactionService.logReservation(currentUser, book, TransactionType.CANCELED);
 		}
 	    
 		String path = "redirect:/books";

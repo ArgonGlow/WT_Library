@@ -1,6 +1,6 @@
 package main.WTLibraryApp.User;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import main.WTLibraryApp.Book.Copy.Copy;
 import main.WTLibraryApp.Reservation.Reservation;
@@ -39,82 +41,71 @@ public class User {
 	@OneToMany(mappedBy = "user", orphanRemoval = false)
 	private List<Reservation> reservations;
 	
-	private Date create_time;
+	@CreationTimestamp
+	private Timestamp create_time;
 	
+	// getters and setters
 	public String getFullName() {
 		return this.first_name + " " + this.last_name;
 	}
-
 	public long getId() {
 		return id;
 	}
-	
 	public void setId(long id) {
 		this.id = id;
 	}
-
 	public String getFirst_name() {
 		return first_name;
 	}
-
 	public void setFirst_name(String first_name) {
 		this.first_name = first_name;
 	}
-
 	public String getLast_name() {
 		return last_name;
 	}
-
 	public void setLast_name(String last_name) {
 		this.last_name = last_name;
 	}
-
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 	public String getPassphrase() {
 		return passphrase;
 	}
-
 	public void setPassphrase(String passphrase) {
 		this.passphrase = passphrase;
 	}
-
 	public boolean isActive() {
 		return active;
 	}
-
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-
 	public List<Copy> getCopies() {
 		return copies;
 	}
-
 	public void setCopies(List<Copy> copies) {
 		this.copies = copies;
 	}
-
 	public List<Reservation> getReservations() {
 		return reservations;
 	}
-
 	public void setReservations(List<Reservation> reservations) {
 		this.reservations = reservations;
 	}
-
 	public int getRole() {
 		return role;
 	}
-
 	public void setRole(int role) {
 		this.role = role;
 	}
-	
+	public Timestamp getTimestamp() {
+		return create_time;
+	}
+	public void setTimestamp(Timestamp create_time) {
+		this.create_time = create_time;
+	}
 }
