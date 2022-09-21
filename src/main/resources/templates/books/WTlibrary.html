@@ -33,7 +33,7 @@
   <div class="container">
     <br>
     <h1>WT library</h1>
-
+    <hr>
     <!-- Search Book Function -->
     <div id="search">
       <form th:action="@{/books}" action="get">
@@ -79,7 +79,7 @@
               <a class="btn disabled" >Unavailable</a>
             </td>
             <td th:case="'LOANED'">
-              <a class="btn disabled" >No doubles!</a>
+              <a class="btn disabled" >Loaned</a>
             </td>
           </div>
         </tr>
