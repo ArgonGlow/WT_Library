@@ -146,8 +146,9 @@ public class CopyController {
 	}    
 	
 	@PostMapping("/copies/quickAdd/{bookId}")
-	public String quickAdd(Copy copy, @PathVariable long bookId, BindingResult result,  Model model) {
+	public String quickAdd(Copy placeholder, @PathVariable long bookId, BindingResult result,  Model model) {
 		Optional<Book> bookOptional = bookService.find(bookId);
+		Copy copy = new Copy();
 
 		if(bookOptional.isPresent()) {
 			copy.setBook(bookOptional.get());
